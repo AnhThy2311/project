@@ -17,7 +17,7 @@ import util.Email;
 import util.EncryptionPasword;
 
 @WebServlet(name = "InsertCustomer", urlPatterns = {"/InsertCustomer"})
-public class InsertCustomer extends HttpServlet {
+public class Register extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -65,12 +65,18 @@ public class InsertCustomer extends HttpServlet {
         String phone = request.getParameter("phone_number");
         System.out.println(phone);
         // mã hóa mật khẩu
+        String image = "default_user.jsp";
         passWord = EncryptionPasword.toSHA1(passWord);
-        Customer cter = new Customer(email, passWord, phone, fullName, date);
+        Customer cter = new Customer(email, passWord, phone, fullName, date, image);
         CustomerDao cusd = new CustomerDao();
-        cusd.inserintoCustomer(cter);
-        Email.sendEmail(cter.getEmail(), "Xác thực tài khoản tại bookstore.vn", getContent(cter));
-        response.sendRedirect("Loggin.jsp");
+        if (cusd.exitEmail(email) != null) {
+            request.setAttribute("errorMessage", "Email đã tồn tại!");
+            request.getRequestDispatcher("Register.jsp").forward(request, response);
+        } else {
+            cusd.inserintoCustomer(cter);
+            Email.sendEmail(cter.getEmail(), "Xác thực tài khoản tại bookstore.vn", getContent(cter));
+            response.sendRedirect("Loggin.jsp");
+        }
     }
 
     @Override

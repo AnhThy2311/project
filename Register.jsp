@@ -515,6 +515,10 @@
                                     data-msg="Không được phép để trống"
                                     />
                                 <label for="inputEmail">Email</label>
+                                <% String errorMessage = (String) request.getAttribute("errorMessage");
+                                   if (errorMessage != null) { %>
+                                <p style="color: red;"><%= errorMessage %></p>
+                                <% } %>
                             </div>
 
                             <div class="form-floating mb-3">

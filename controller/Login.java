@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import module.Customer;
 import util.EncryptionPasword;
 
@@ -46,18 +47,20 @@ public class Login extends HttpServlet {
         CustomerDao cd = new CustomerDao();
         password = EncryptionPasword.toSHA1(password);
         Customer c = cd.getCustomer(email, password);
-
+        System.out.println("anh dai dien: " +c.getImage());
         if (c != null) {
+            HttpSession http = request.getSession();
+            http.setAttribute("username", c.getFullName());
+            http.setAttribute("userImage", c.getImage());  // Lưu đường dẫn ảnh
             request.getRequestDispatcher("Header.jsp").forward(request, response);
         } else {
             request.setAttribute("errorMessage", "Email or password is incorrect!");
             request.getRequestDispatcher("Loggin.jsp").forward(request, response);
         }
     }
-
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

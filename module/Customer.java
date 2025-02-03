@@ -7,14 +7,18 @@ public class Customer {
      public String phone;
     public String fullName;
     public String birthDate;
+    public String image;
 
-    public Customer(String email, String password, String phone, String fullName, String birthDate ) {
+    public Customer(String email, String password, String phone, String fullName, String birthDate, String image) {
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.fullName = fullName;
         this.birthDate = birthDate;
+        this.image = image;
     }
+
+ 
 
 
     public String getPhone() {
@@ -39,6 +43,14 @@ public class Customer {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
    
 
