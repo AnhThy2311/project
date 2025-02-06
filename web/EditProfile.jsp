@@ -1,23 +1,28 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
+<%@ page import="model.Customer" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Header</title>
+        <title>Edit Profile</title>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous"
-            />
-        <link
+        />
+         <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
             />
         <link href="./css/header.css" rel="stylesheet" />
     </head>
     <body>
-        <header class="bg-white text-body shadow-sm sticky-top z-1021" id="header">
+         <header class="bg-white text-body shadow-sm sticky-top z-1021" id="header">
             <div class="container-xl">
                 <div
                     class="d-flex justify-content-between border-bottom"
@@ -126,16 +131,6 @@
                                                     <i class="icon user size-16"></i>
                                                 </span>
                                                 Cập nhật thông tin
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="ChangePassword.jsp">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon logout size-16"></i>
-                                                </span>
-                                                Thay Đổi Mật Khẩu
                                             </div>
                                         </a>
                                     </li>
@@ -275,7 +270,43 @@
                 </nav>
             </div>
         </header>
+        <div class="container mt-5">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center mb-4">Edit Profile</h2>
+                <form action="EditProfile" method="post" class="needs-validation" novalidate>
+                    <% Customer st1 = (Customer) request.getAttribute("customer"); %>
 
+                    <!-- Email (ID) -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input value="<%= st1.getEmail() %>" type="email" class="form-control" id="email" name="email" readonly>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input value="<%= st1.getFullName() %>" type="text" class="form-control" id="fullName" name="name" required>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input value="<%= st1.getPhone() %>" type="tel" class="form-control" id="phone" name="phone" required>
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="mb-3">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input value="<%= st1.getBirthDate() %>" type="date" class="form-control" id="dob" name="dob" required>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS -->
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

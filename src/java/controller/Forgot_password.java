@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Random;
 import model.Customer;
 import util.Email;
-import util.RandomNumber;
 
 @WebServlet(name = "Forgot_password", urlPatterns = {"/Forgot_password"})
 public class Forgot_password extends HttpServlet {

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
-<%@ page import="module.Customer" %>
+<%@ page import="model.Customer" %>
 <%@ page import="java.text.SimpleDateFormat, java.util.Date" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,6 +130,16 @@
                                                     <i class="icon user size-16"></i>
                                                 </span>
                                                 Cập nhật thông tin
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="ChangePassword.jsp">
+                                            <div class="d-flex">
+                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
+                                                    <i class="icon logout size-16"></i>
+                                                </span>
+                                                Thay Đổi Mật Khẩu
                                             </div>
                                         </a>
                                     </li>
@@ -317,6 +327,7 @@
                                 %>
                             </p>
                             <a href="upload.jsp" class="btn btn-primary">Edit Avatar</a>
+                            <a href="UpdateProfile?email=<%= customer.getEmail() %>" class="btn btn-primary">Edit Profile</a>
                         </div>
                     </div>
                 </div>

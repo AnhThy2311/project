@@ -74,7 +74,7 @@ public class Register extends HttpServlet {
             request.getRequestDispatcher("Register.jsp").forward(request, response);
         } else {
             cusd.inserintoCustomer(cter);
-            Email.sendEmail(cter.getEmail(), "Xác thực tài khoản tại bookstore.vn", getContent(cter));
+            Email.sendEmail(cter.getEmail(), "Xác thực tài khoản tại QuickRent.vn", getContent(cter));
             response.sendRedirect("Loggin.jsp");
         }
     }

@@ -1,9 +1,15 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Header</title>
+        <title>Change Password</title>
+        <link 
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+            crossorigin="anonymous"
+            />
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -130,7 +136,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="ChangePassword.jsp">
+                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Logout.jsp">
                                             <div class="d-flex">
                                                 <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
                                                     <i class="icon logout size-16"></i>
@@ -275,10 +281,51 @@
                 </nav>
             </div>
         </header>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow-lg">
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                        <div class="card-header text-center bg-primary text-white">
+                            <h4>Change Password</h4>
+                        </div>
+                        <div class="card-body">
+                            <%-- Hiển thị thông báo nếu có --%>
+
+                            <form action="ChangePassword" method="post">
+                                <div class="mb-3">
+                                    <label class="form-label">Old Password:</label>
+                                    <input type="password" name="oldPassword" class="form-control" required>
+                                </div>
+                                <% String errorMessage = (String) request.getAttribute("errorMessage");
+                                   if (errorMessage != null) { %>
+                                <p style="color: red;"><%= errorMessage %></p>
+                                <% } %>
+
+                                <div class="mb-3">
+                                    <label class="form-label">New Password:</label>
+                                    <input type="password" name="newPassword" class="form-control" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Confirm New Password:</label>
+                                    <input type="password" name="confirmPassword" class="form-control" required>
+                                </div>
+                                <% String errorMessage1 = (String) request.getAttribute("errorMessage1");
+                                   if (errorMessage1 != null) { %>
+                                <p style="color: red;"><%= errorMessage1 %></p>
+                                <% } %>
+                                <button type="submit" class="btn btn-primary w-100">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script 
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
             crossorigin="anonymous"
         ></script>
     </body>

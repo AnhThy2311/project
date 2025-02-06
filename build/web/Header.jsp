@@ -130,6 +130,16 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="ChangePassword.jsp">
+                                            <div class="d-flex">
+                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
+                                                    <i class="icon logout size-16"></i>
+                                                </span>
+                                                Thay Đổi Mật Khẩu
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Logout.jsp">
                                             <div class="d-flex">
                                                 <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">

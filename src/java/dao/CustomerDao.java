@@ -178,4 +178,48 @@ public class CustomerDao {
         }
         return false;
     }
+    
+    public void UpdateCustomer(String email,String phone, String date, String fullName){
+        Connection con = null;
+        PreparedStatement st = null;
+        try {
+            con = database.getConnection();
+            // Step 2: Create SQL statement
+            String sql = "update Users set full_name=? , phone_number=?, date_of_birth=? where email = ?";
+            st = con.prepareStatement(sql);
+            st.setString(1, fullName);
+            st.setString(2, phone);
+            st.setString(3, date);
+            st.setString(4, email);
+            st.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public String getPassByEmail(String email){
+        Connection con = null;
+        PreparedStatement pr = null;
+         ResultSet re = null;
+         try {
+            // Get a connection from your connection utility
+            con = database.getConnection();
+
+            // SQL query to fetch customer details based on username and password
+            String sql = "select password  from users where email=?";
+            pr = con.prepareStatement(sql);
+            pr.setString(1, email);
+
+            re = pr.executeQuery();
+            if (re.next()) {
+                // Retrieve values by their index in the table (ensure these match the table schema)
+               String pass = re.getString(1);
+               return pass;
+            }
+        } catch (Exception e) {
+            System.out.println("SQL error: " + e.getMessage());
+            e.printStackTrace(); // Print stack trace for debugging
+        }
+        return null;
+    }
 }
