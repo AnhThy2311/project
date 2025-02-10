@@ -1,7 +1,10 @@
 body {
     background-color: #FDF5ED;
 }
-
+a {
+            text-decoration: none;
+            color: inherit;
+        }
 a:hover {
     color: var(--color-red);
 }

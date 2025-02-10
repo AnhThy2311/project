@@ -26,6 +26,9 @@ public class Customer {
         this.image = image;
     }
 
+    public Customer() {
+    }
+
     public String getPhone() {
         return phone;
     }

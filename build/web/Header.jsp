@@ -24,14 +24,14 @@
                     style="--bs-border-color: #f1f1f1"
                     >
                     <div class="d-flex">
-                        <a href="#"
-                           ><img
-                                class="object-fit-contain"
-                                style="width: 190px; height: 60px"
-                                src="${pageContext.request.contextPath}/images/anhthuetro.png" 
-                                alt="Kênh thông tin cho thuê phòng trọ số 1 Việt Nam"
-                                title="Phongtro123.com"
-                                /></a>
+                        <a href="${pageContext.request.contextPath}/">
+                            <img class="object-fit-contain"
+                                 style="width: 190px; height: 60px"
+                                 src="${pageContext.request.contextPath}/images/anhthuetro.png"
+                                 alt="Kênh thông tin cho thuê phòng trọ số 1 Việt Nam"
+                                 title="Phongtro123.com" />
+                        </a>
+
                         <div class="d-none d-md-flex ms-4">
                             <div class="filter__bar pb-2">
                                 <div class="w-100">
@@ -195,7 +195,7 @@
                             <a
                                 class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
                                 title="Cho thuê phòng trọ"
-                                href="#"
+                                href="RentalRoom.jsp"
                                 >Phòng trọ</a
                             >
                         </li>
