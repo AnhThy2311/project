@@ -70,7 +70,7 @@
                             <p class="mb-2">
                                 <a
                                     class="text-decoration-underline"
-                                    href="https://phongtro123.com/quen-mat-khau"
+                                    href="Forgot_Password.jsp"
                                     >Bạn quên mật khẩu?</a
                                 >
                             </p>

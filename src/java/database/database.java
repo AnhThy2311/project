@@ -1,5 +1,5 @@
 
-package lib;
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,9 +8,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class lib {
-     public static String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // This is the driver for SQL Server
-    public static String dbURL = "jdbc:sqlserver://localhost:1433;databaseName=swp201c;user=sa;password=09012003;encrypt=false";
+public class database {
+     
+    public static String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // This is the driver for SQL Server
+    public static String dbURL = "jdbc:sqlserver://localhost:1433;databaseName=swp201c;user=sa;password=123;encrypt=false";
     public static final Connection getConnection() throws ClassNotFoundException{
         Connection con = null;
         try{
@@ -32,7 +33,7 @@ public class lib {
                 System.out.println("Connection is null.");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(lib.class.getName()).log(Level.SEVERE, "Exception in closeConnection", ex);
+            Logger.getLogger(database.class.getName()).log(Level.SEVERE, "Exception in closeConnection", ex);
             System.out.println("Failed to close connection.");
         }
     }

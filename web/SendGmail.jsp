@@ -1,3 +1,8 @@
+<%-- 
+    Document   : SendGmail
+    Created on : Feb 5, 2025, 3:19:02 PM
+    Author     : son
+--%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,7 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Kết quả xác thực tài khoản</h1>
-        <p>${message}</p>
+        <h1>Vui lòng check lại gmail</h1>
+        <a href="Loggin.jsp">
+            <button>Return to Login Page</button>
+        </a>
     </body>
 </html>

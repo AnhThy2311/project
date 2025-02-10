@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    
+    <!-- Welcome File Configuration -->
+
+    <!-- Servlet Mapping -->
+    <servlet>
+        <servlet-name>RoomServlet</servlet-name>
+        <servlet-class>controller.RoomServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RoomServlet</servlet-name>
+        <url-pattern>/</url-pattern> <!-- This maps the root URL to RoomServlet -->
+    </servlet-mapping>
+    
+</web-app>

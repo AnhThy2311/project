@@ -12,7 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import module.Customer;
+import model.Customer;
 import util.Email;
 import util.EncryptionPasword;
 
@@ -74,7 +74,7 @@ public class Register extends HttpServlet {
             request.getRequestDispatcher("Register.jsp").forward(request, response);
         } else {
             cusd.inserintoCustomer(cter);
-            Email.sendEmail(cter.getEmail(), "Xác thực tài khoản tại bookstore.vn", getContent(cter));
+            Email.sendEmail(cter.getEmail(), "Xác thực tài khoản tại QuickRent.vn", getContent(cter));
             response.sendRedirect("Loggin.jsp");
         }
     }
@@ -85,7 +85,7 @@ public class Register extends HttpServlet {
     }// </editor-fold>
 
     public static String getContent(Customer cter) {
-        String link = "http://localhost:8082/DoAnSWP/xacthuc?email=" + cter.getEmail();
+        String link = "http://localhost:8082/DoAnSWP/authenticate?email=" + cter.getEmail();
         String noiDung = "<p>Bạn đã đăng ký thành công. Vui lòng không cung cấp email và mã xác thực cho ai.</p>\n"
                 + "<p>Để kích hoạt tài khoản, vui lòng nhấp vào liên kết sau:</p>\n"
                 + "<a href='" + link + "'>Kích hoạt tài khoản</a>\n"
