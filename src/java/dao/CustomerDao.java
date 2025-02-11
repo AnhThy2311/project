@@ -222,4 +222,30 @@ public class CustomerDao {
         }
         return null;
     }
+    
+    public int getState(String email){
+        Connection con = null;
+        PreparedStatement pr = null;
+         ResultSet re = null;
+         try {
+            // Get a connection from your connection utility
+            con = database.getConnection();
+
+            // SQL query to fetch customer details based on username and password
+            String sql = "Select role_id from Users where email=?";
+            pr = con.prepareStatement(sql);
+            pr.setString(1, email);
+
+            re = pr.executeQuery();
+            if (re.next()) {
+                // Retrieve values by their index in the table (ensure these match the table schema)
+               int  state = re.getInt(1);
+               return state;
+            }
+        } catch (Exception e) {
+            System.out.println("SQL error: " + e.getMessage());
+            e.printStackTrace(); // Print stack trace for debugging
+        }
+        return 0;
+    }
 }

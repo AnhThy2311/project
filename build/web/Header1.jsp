@@ -1,6 +1,11 @@
+<%-- 
+    Document   : Header1
+    Created on : Feb 11, 2025, 2:50:27 AM
+    Author     : son
+--%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.Room" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -300,6 +305,94 @@ if (state != null) {
                 </nav>
             </div>
         </header>
+
+        <div class="container mt-4" template="page_category">
+            <div class="row">
+                <div class="col-md-9 col-lg-8">
+                    <header class="mt-2 mb-3">
+                        <h1 class="fs-4 fw-medium mb-2 lh-sm">Kênh thông tin Phòng trọ số 1 Việt Nam</h1>
+                        <p class="fs-7 m-0">Có 3.490 tin đăng cho thuê</p>
+                    </header>
+
+                    <ul class="list-unstyled">
+                        <% 
+                            // Get rooms from the request
+                            ArrayList<Room> rooms = (ArrayList<Room>) request.getAttribute("rooms");
+                            if (rooms != null && !rooms.isEmpty()) {
+                                for (Room room : rooms) { 
+                        %>
+                        <li class="d-flex bg-white shadow-sm rounded p-3 mt-3">
+                            <figure class="post__thumb__vip2">
+                                <a href="RoomDetails.jsp?roomId=<%= room.getRoomId() %>">
+                                    <img class="lazy_done" src="<%= room.getImage() %>" 
+                                         alt="<%= room.getRoomName() %>" width="150">
+                                </a>
+                            </figure>
+                            <div class="flex-grow-1 ps-3">
+                                <h3 class="fs-6 fw-medium text-uppercase mb-2">
+                                    <a href="RoomDetails.jsp?roomId=<%= room.getRoomId() %>">
+                                        <%= room.getRoomName() %>
+                                    </a>
+                                </h3>
+                                <div class="mb-2">
+                                    <span class="text-price fw-semibold fs-6"><%= room.getPrice() %> triệu/tháng</span>
+                                    <span class="dot mx-2">•</span>
+                                    <span>45 m<sup>2</sup></span>
+                                    <span class="dot mx-2">•</span>
+                                    <a href="#">
+                                        <%= room.getPosition().getNumber_house() %>, 
+                                        <%= room.getPosition().getStreet() %>, 
+                                        <%= room.getPosition().getWard() %>, 
+                                        <%= room.getPosition().getDistrict() %>, 
+                                        <%= room.getPosition().getCity() %>
+                                    </a>
+                                </div>
+                                <p class="fs-8 text-secondary">
+                                    <%= room.getDescription() %>
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex w-50">
+                                        <img class="avatar size-35 me-2" 
+                                             src="${pageContext.request.contextPath}/images/<%= room.getCustomer().getImage() != null ? room.getCustomer().getImage() : "/images/default_user.jpg" %>" 
+                                             alt="<%= room.getCustomer().getFullName() %>" width="35">
+                                        <div>
+                                            <span><%= room.getCustomer().getFullName() %></span>
+                                            <br>
+                                            <small class="text-secondary">SĐT: <%= room.getCustomer().getPhone() %></small>
+                                            <br>
+                                            <small class="text-secondary">Email: <%= room.getCustomer().getEmail() %></small>
+                                        </div>
+                                    </div>
+                                    <div class="w-auto d-flex align-items-center">
+                                        <button class="btn btn-white btn__save d-flex px-2">
+                                            <i class="icon heart size-18"></i> Lưu tin này
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <% 
+                                }
+                            } 
+                        %>
+                           
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div class="bg-white shadow-sm rounded">
+                <div class="row">
+                    <div class="col-md-6"><img class="d-block object-fit-contain mx-auto" src="/images/contact-us-pana-orange.svg" style="max-height: 390px;" alt="Hỗ trợ chủ nhà đăng tin"></div>
+                    <div class="col-md-6 text-center p-5"><i class="icon headset size-30 d-block mx-auto"></i>
+                        <div class="fs-2 mt-2" id="offcanvasSupportLabel">Hỗ trợ chủ nhà đăng tin</div>
+                        <p class="mt-3 lead">Nếu bạn cần hỗ trợ đăng tin, vui lòng liên hệ số điện thoại bên dưới:</p>
+                        <div class="rounded-4 p-4 mb-4 text-center"><a class="btn btn-red btn-lg text-white d-flex justify-content-center rounded-4" target="_blank" rel="nofollow" href="tel:0909316890"><i class="icon telephone-fill white me-2"></i>ĐT: 0909316890 </a><a class="btn btn-primary btn-lg text-white d-flex justify-content-center rounded-4 mt-2" target="_blank" rel="nofollow" href="https://zalo.me/0909316890"><i class="icon chat-text white me-2"></i>Zalo: 0909316890 </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

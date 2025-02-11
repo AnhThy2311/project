@@ -1,11 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.PostRooms" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Header</title>
+        <title>JSP Page</title>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -168,7 +168,7 @@ if (state != null) {
                                justify-content: center;
                                "
                                rel="nofollow"
-                               href="GetPostRooms?email=<%=username%>">
+                               href="#">
                                 <i class="icon posting white me-2"></i>Đăng tin
                             </a>
                             <%
@@ -300,6 +300,52 @@ if (state != null) {
                 </nav>
             </div>
         </header>
+        <%
+ArrayList<PostRooms> list = (ArrayList<PostRooms>) request.getAttribute("list");
+        %>
+        <div class="container mt-4">
+            <h2 class="text-center">Danh Sách Sản Phẩm</h2>
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Location</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (list != null && !list.isEmpty()) { %>
+                    <% for (PostRooms post : list) { %>
+                    <tr>
+                        <td><img src="<%= post.getImage() %>" alt="<%= post.getRoom_name() %>" width="100"></td>
+                        <td><%= post.getRoom_name() %></td>
+                        <td><%= post.getPrice() %> VNĐ</td>
+                        <td>
+                            <%= post.getNumber_house() %>, <%= post.getStreet() %>, 
+                            <%= post.getWard() %>, <%= post.getDistrict() %>, <%= post.getCity() %>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm">Update</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                    <% } %>
+                    <% } else { %>
+                    <tr>
+                        <td colspan="5">Không có bài đăng nào.</td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+
+            <!-- Nút Post Bài -->
+            <div class="text-center mt-3">
+                <a href="CreatePostRooms.jsp" class="btn btn-success">Post Bài</a>
+            </div>
+        </div>
+
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

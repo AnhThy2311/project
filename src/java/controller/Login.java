@@ -49,13 +49,16 @@ public class Login extends HttpServlet {
         Customer c = cd.getCustomer(email, password);
         System.out.println(c);
 //        System.out.println("anh dai dien: " +c.getImage());
+        int state = cd.getState(email);
         if (c != null) {
                     System.out.println("anh dai dien: " +c.getImage());
             HttpSession http = request.getSession();
             http.setAttribute("email", c.getEmail());
             http.setAttribute("userImage", c.getImage());  // Lưu đường dẫn ảnh
-        
-            request.getRequestDispatcher("Header.jsp").forward(request, response);
+             if(state==3){
+                 http.setAttribute("state", state);
+             }
+               response.sendRedirect("RoomServlet");
         } else {
             request.setAttribute("errorMessage", "Email or password is incorrect!");
             request.getRequestDispatcher("Loggin.jsp").forward(request, response);

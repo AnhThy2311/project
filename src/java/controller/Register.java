@@ -65,7 +65,7 @@ public class Register extends HttpServlet {
         String phone = request.getParameter("phone_number");
         System.out.println(phone);
         // mã hóa mật khẩu
-        String image = "default_user.jsp";
+        String image = "";
         passWord = EncryptionPasword.toSHA1(passWord);
         Customer cter = new Customer(email, passWord, phone, fullName, date, image);
         CustomerDao cusd = new CustomerDao();

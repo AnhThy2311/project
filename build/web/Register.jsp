@@ -116,7 +116,7 @@
                                         <a
                                             class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5"
                                             rel="nofollow"
-                                            href="Register.jsp"
+                                            href="Loggin.jsp"
                                             >
                                             <div class="d-flex">
                                                 <span

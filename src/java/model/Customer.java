@@ -1,7 +1,6 @@
 package model;
 
 public class Customer {
-
     public String email;
     public String password;
     public String phone;
@@ -9,6 +8,8 @@ public class Customer {
     public String birthDate;
     public String image;
 
+    
+    
     public Customer(String email, String password, String phone, String fullName, String birthDate, String image) {
         this.email = email;
         this.password = password;
@@ -24,6 +25,9 @@ public class Customer {
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.image = image;
+    }
+
+    public Customer() {
     }
 
     public String getPhone() {
