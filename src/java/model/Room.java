@@ -14,7 +14,7 @@ public class Room {
     private String roomName;
     private String description;
     private double price;
-
+    private String state;
     private Position position;
     private Customer customer;
     private String image;
@@ -30,6 +30,25 @@ public class Room {
         this.position = position;
         this.customer = customer;
         this.image = image;
+    }
+
+    public Room(String roomId, String roomName, String description, double price, String state, Position position, Customer customer, String image) {
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.description = description;
+        this.price = price;
+        this.state = state;
+        this.position = position;
+        this.customer = customer;
+        this.image = image;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getRoomId() {

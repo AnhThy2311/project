@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet(name="xacthuc", urlPatterns={"/xacthuc"})
+@WebServlet(name="authenticate", urlPatterns={"/authenticate"})
 public class authenticate extends HttpServlet {
    
     

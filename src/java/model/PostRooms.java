@@ -9,6 +9,8 @@ package model;
  * @author son
  */
 public class PostRooms {
+
+    public String id;
     public String image;
     public String room_name;
     public float price;
@@ -17,7 +19,7 @@ public class PostRooms {
     public String ward;
     public String district;
     public String city;
-
+    
     public PostRooms(String image, String room_name, float price, String number_house, String street, String ward, String district, String city) {
         this.image = image;
         this.room_name = room_name;
@@ -28,9 +30,27 @@ public class PostRooms {
         this.district = district;
         this.city = city;
     }
-    
 
-    
+    public PostRooms(String image, String room_name, float price, String number_house, String street, String ward, String district, String city, String id) {
+
+        this.image = image;
+        this.room_name = room_name;
+        this.price = price;
+        this.number_house = number_house;
+        this.street = street;
+        this.ward = ward;
+        this.district = district;
+        this.city = city;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getImage() {
         return image;
@@ -39,7 +59,6 @@ public class PostRooms {
     public void setImage(String image) {
         this.image = image;
     }
-
 
     public float getPrice() {
         return price;

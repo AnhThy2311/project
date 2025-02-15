@@ -432,60 +432,79 @@ if (state != null) {
                 </nav>
             </div>
         </header>
-                            
-        <div class="container mt-4">
-            <h2 class="text-center">Thêm Vị Trí</h2>
-            <form action="AddPositionServlet" method="post">
-                <!-- Select for Thành phố -->
-                <div class="form-group">
-                    <label for="city">Thành Phố</label>
-                    <select class="form-control" id="city" name="city" onchange="updateDistricts()" required>
-                        <option value="">Chọn Thành Phố</option>
-                        <option value="Hà Nội">Hà Nội</option>
-                        <option value="TP Hồ Chí Minh">TP Hồ Chí Minh</option>
-                        <option value="Đà Nẵng">Đà Nẵng</option>
-                    </select>
-                </div>
+        <form action="PostRoom" method="POST" enctype="multipart/form-data">
 
-                <!-- Select for Quận -->
-                <div class="form-group">
-                    <label for="district">Quận</label>
-                    <select class="form-control" id="district" name="district" onchange="updateWardAndStreet()" required>
-                        <option value="">Chọn Quận</option>
-                    </select>
-                </div>
+            <div class="container mt-4">
+                <h2 class="text-center">Thêm Vị Trí</h2>
+                <form action="AddPositionServlet" method="post" enctype="multipart/form-data">
+                    <!-- Select for Thành phố -->
+                    <div class="form-group">
+                        <label for="city">Thành Phố</label>
+                        <select class="form-control" id="city" name="city" onchange="updateDistricts()" required>
+                            <option value="">Chọn Thành Phố</option>
+                            <option value="Hà Nội">Hà Nội</option>
+                            <option value="TP Hồ Chí Minh">TP Hồ Chí Minh</option>
+                            <option value="Đà Nẵng">Đà Nẵng</option>
+                        </select>
+                    </div>
 
-                <!-- Select for Phường -->
-                <div class="form-group">
-                    <label for="ward">Phường</label>
-                    <select class="form-control" id="ward" name="ward" required>
-                        <option value="">Chọn Phường</option>
-                    </select>
-                </div>
+                    <!-- Select for Quận -->
+                    <div class="form-group">
+                        <label for="district">Quận</label>
+                        <select class="form-control" id="district" name="district" onchange="updateWardAndStreet()" required>
+                            <option value="">Chọn Quận</option>
+                        </select>
+                    </div>
 
-                <!-- Select for Đường -->
-                <div class="form-group">
-                    <label for="street">Đường</label>
-                    <select class="form-control" id="street" name="street" required>
-                        <option value="">Chọn Đường</option>
-                    </select>
-                </div>
+                    <!-- Select for Phường -->
+                    <div class="form-group">
+                        <label for="ward">Phường</label>
+                        <select class="form-control" id="ward" name="ward" required>
+                            <option value="">Chọn Phường</option>
+                        </select>
+                    </div>
 
-                <!-- Số Nhà -->
-                <div class="form-group">
-                    <label for="houseNumber">Số Nhà</label>
-                    <input type="text" class="form-control" id="houseNumber" name="houseNumber" required>
-                </div>
+                    <!-- Select for Đường -->
+                    <div class="form-group">
+                        <label for="street">Đường</label>
+                        <select class="form-control" id="street" name="street" required>
+                            <option value="">Chọn Đường</option>
+                        </select>
+                    </div>
 
-                <!-- Mô Tả -->
-                <div class="form-group">
-                    <label for="description">Mô Tả</label>
-                    <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-                </div>
+                    <!-- Số Nhà -->
+                    <div class="form-group">
+                        <label for="houseNumber">Số Nhà</label>
+                        <input type="text" class="form-control" id="houseNumber" name="houseNumber" required>
+                    </div>
 
-                <button type="submit" class="btn btn-success">Thêm</button>
-            </form>
-        </div>
+                    <!-- Tên Phòng -->
+                    <div class="form-group">
+                        <label for="room_name">Tên Phòng</label>
+                        <input type="text" class="form-control" id="room_name" name="room_name" required>
+                    </div>
+
+                    <!-- Mô Tả -->
+                    <div class="form-group">
+                        <label for="description">Mô Tả</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+
+                    <!-- Giá -->
+                    <div class="form-group">
+                        <label for="price">Giá</label>
+                        <input type="number" class="form-control" id="price" name="price" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Hình Ảnh</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Thêm</button>
+                </form>
+            </div>
+        </form>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

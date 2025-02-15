@@ -319,7 +319,7 @@ ArrayList<PostRooms> list = (ArrayList<PostRooms>) request.getAttribute("list");
                     <% if (list != null && !list.isEmpty()) { %>
                     <% for (PostRooms post : list) { %>
                     <tr>
-                        <td><img src="<%= post.getImage() %>" alt="<%= post.getRoom_name() %>" width="100"></td>
+                        <td><img src="${pageContext.request.contextPath}/images/<%= post.getImage() %>" alt="<%= post.getRoom_name() %>" width="100"></td>
                         <td><%= post.getRoom_name() %></td>
                         <td><%= post.getPrice() %> VNĐ</td>
                         <td>
@@ -327,8 +327,9 @@ ArrayList<PostRooms> list = (ArrayList<PostRooms>) request.getAttribute("list");
                             <%= post.getWard() %>, <%= post.getDistrict() %>, <%= post.getCity() %>
                         </td>
                         <td>
-                            <button class="btn btn-primary btn-sm">Update</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <a class="btn btn-primary btn-sm" href="UpdatePostRoom?id=<%= post.getId() %>">Update</a>
+
+                            <a href="#" onclick="showmessg(<%=post.getId()%>)" class="btn btn-danger btn-sm ms-2">DELETE</a>
                         </td>
                     </tr>
                     <% } %>
@@ -345,7 +346,14 @@ ArrayList<PostRooms> list = (ArrayList<PostRooms>) request.getAttribute("list");
                 <a href="CreatePostRooms.jsp" class="btn btn-success">Post Bài</a>
             </div>
         </div>
-
+        <script>
+            function showmessg(id) {
+                var option = confirm("Are you sure you want to delete?");
+                if (option == true) {
+                    window.location.href = 'DeletePostRoom?id=' + id;
+                }
+            }
+        </script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

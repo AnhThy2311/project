@@ -324,7 +324,7 @@ if (state != null) {
                         <li class="d-flex bg-white shadow-sm rounded p-3 mt-3">
                             <figure class="post__thumb__vip2">
                                 <a href="RoomDetails.jsp?roomId=<%= room.getRoomId() %>">
-                                    <img class="lazy_done" src="<%= room.getImage() %>" 
+                                    <img class="lazy_done" src="${pageContext.request.contextPath}/images/<%= room.getImage() %>" 
                                          alt="<%= room.getRoomName() %>" width="150">
                                 </a>
                             </figure>

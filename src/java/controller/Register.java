@@ -67,6 +67,7 @@ public class Register extends HttpServlet {
         // mã hóa mật khẩu
         String image = "";
         passWord = EncryptionPasword.toSHA1(passWord);
+        image="default_user.jpg";
         Customer cter = new Customer(email, passWord, phone, fullName, date, image);
         CustomerDao cusd = new CustomerDao();
         if (cusd.exitEmail(email) != null) {
