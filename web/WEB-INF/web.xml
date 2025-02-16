@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    
-    <!-- Welcome File Configuration -->
-
-    <!-- Servlet Mapping -->
+    <!-- Servlet Configuration -->
     <servlet>
         <servlet-name>RoomServlet</servlet-name>
         <servlet-class>controller.RoomServlet</servlet-class>
     </servlet>
+    <!-- Map RoomServlet to the root URL -->
+    <servlet>
+        <servlet-name>RoomDetail</servlet-name>
+        <servlet-class>controller.RoomDetail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RoomServlet</servlet-name>
-        <url-pattern>/</url-pattern> <!-- This maps the root URL to RoomServlet -->
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
-    
+    <!-- ✅ Allow static resources like images, CSS, and JS -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/images/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/css/*</url-pattern>
+        <!-- ✅ Serve CSS files -->
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/js/*</url-pattern>
+        <!-- ✅ Serve JavaScript files (if needed) -->
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoomDetail</servlet-name>
+        <url-pattern>/RoomDetail</url-pattern>
+    </servlet-mapping>
 </web-app>

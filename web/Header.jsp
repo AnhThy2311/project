@@ -14,7 +14,8 @@
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
             />
-        <link href="./css/header.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" />
+
     </head>
     <body>
         <header class="bg-white text-body shadow-sm sticky-top z-1021" id="header">

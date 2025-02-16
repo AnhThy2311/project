@@ -31,65 +31,39 @@
                <div class="row mt-3">
                   <div class="col-md-9 col-lg-8">
                      <div class="post__photos mb-3">
-                        <div id="carousel_Photos" class="carousel photos bg-white shadow-sm slide pointer-event rounded" data-bs-touch="true">
-                           <div class="carousel-inner bg-dark rounded-top">
-                              <div class="carousel-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPhotos" aria-controls="offcanvasPhotos"><img alt="Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh" class="lazy_done" src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/51e2f7bc-e1ae-44cf-b46c-91b0f021d7a0_1739092492.jpg" data-src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/51e2f7bc-e1ae-44cf-b46c-91b0f021d7a0_1739092492.jpg" data-loaded="true"></div>
-                              <div class="carousel-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPhotos" aria-controls="offcanvasPhotos"><img alt="Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh" class="lazy_done" src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/3879967d-f64a-4c1e-87e4-6fb1d0c8b928_1739092492.jpg" data-src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/3879967d-f64a-4c1e-87e4-6fb1d0c8b928_1739092492.jpg" data-loaded="true"></div>
-                              <div class="carousel-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPhotos" aria-controls="offcanvasPhotos"><img alt="Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh" class="lazy_done" src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/da87b3e6-a4c8-49a5-be91-2a461679cba3_1739092493.jpg" data-src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/da87b3e6-a4c8-49a5-be91-2a461679cba3_1739092493.jpg" data-loaded="true"></div>
-                              <div class="carousel-item active" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPhotos" aria-controls="offcanvasPhotos"><img alt="Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh" class="lazy_done" src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/71a80b2c-15e0-4d9d-ae51-6ebe45852614_1739092493.jpg" data-src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/71a80b2c-15e0-4d9d-ae51-6ebe45852614_1739092493.jpg" data-loaded="true"></div>
+                        <div id="carousel_Photos" class="carousel photos bg-white shadow-sm slide pointer-event rounded" data-bs-touch="true"
+                             style="background-color: lightgray; border-top-left-radius: 8px; border-top-right-radius: 8px; height: 300px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                           <div class="carousel-inner bg-dark rounded-top" style="width: 100%; height: 100%">
+                              <div class="carousel-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPhotos" aria-controls="offcanvasPhotos"><img class="d-block mx-auto lazy_done" style="height: 300px" alt="Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh" class="lazy_done" src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/51e2f7bc-e1ae-44cf-b46c-91b0f021d7a0_1739092492.jpg" data-src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/51e2f7bc-e1ae-44cf-b46c-91b0f021d7a0_1739092492.jpg" data-loaded="true"></div>
+                              <div class="carousel-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPhotos" aria-controls="offcanvasPhotos"><img class="d-block mx-auto lazy_done" style="height: 300px" alt="Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh" class="lazy_done" src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/3879967d-f64a-4c1e-87e4-6fb1d0c8b928_1739092492.jpg" data-src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/3879967d-f64a-4c1e-87e4-6fb1d0c8b928_1739092492.jpg" data-loaded="true"></div>
+                              <div class="carousel-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPhotos" aria-controls="offcanvasPhotos"><img class="d-block mx-auto lazy_done" style="height: 300px" alt="Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh" class="lazy_done" src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/da87b3e6-a4c8-49a5-be91-2a461679cba3_1739092493.jpg" data-src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/da87b3e6-a4c8-49a5-be91-2a461679cba3_1739092493.jpg" data-loaded="true"></div>
+                              <div class="carousel-item active" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPhotos" aria-controls="offcanvasPhotos"><img class="d-block mx-auto lazy_done" style="height: 300px" alt="Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh" class="lazy_done" src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/71a80b2c-15e0-4d9d-ae51-6ebe45852614_1739092493.jpg" data-src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/02/09/71a80b2c-15e0-4d9d-ae51-6ebe45852614_1739092493.jpg" data-loaded="true"></div>
                            </div>
                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel_Photos" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Slide trước</span></button><button class="carousel-control-next" type="button" data-bs-target="#carousel_Photos" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Slide tiếp theo</span></button>
                         </div>
                         <div class="bg-white shadow-sm rounded-bottom d-flex justify-content-between border-bottom d-lg-none"><button class="bg-white fs-9 w-100 border-0 p-25 " data-bs-toggle="offcanvas" data-bs-target="#offcanvasPhotos" aria-controls="offcanvasPhotos"><i class="icon camera d-block mb-1 mx-auto"></i><span>4 Ảnh</span></button><button class="bg-white fs-9 w-100 border-0 p-25 disabled opacity-25" data-bs-toggle="offcanvas" data-bs-target="#offcanvasVideo" aria-controls="offcanvasVideo"><i class="icon camera-video size-20 d-block lh-1 mx-auto"></i><span>Video</span></button><button class="bg-white fs-9 w-100 border-0 p-25" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMap" aria-controls="offcanvasMap"><i class="icon map d-block mb-1 mx-auto"></i><span>Bản đồ</span></button><button class="bg-white fs-9 w-100 border-0 p-25" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSharePost" aria-controls="offcanvasSharePost"><i class="icon share d-block mb-1 mx-auto"></i><span>Chia sẻ</span></button><button class="bg-white fs-9 w-100 border-0 p-25" data-bs-toggle="offcanvas" data-bs-target="#offcanvasReportPost" aria-controls="offcanvasReportPost"><i class="icon exclamation-triangle d-block mb-1 mx-auto"></i><span>Báo xấu</span></button></div>
                      </div>
                      <div class="bg-white shadow-sm rounded p-4 mb-3">
-                        <header class="border-bottom pb-4 mb-4" style="--bs-border-color: #f1f1f1;">
-                           <h1 class="fs-5 fw-semibold lh-sm mb-2" style="color:#ff5723"> Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh </h1>
-                           <address class="lh-sm"><i class="icon geo-alt size-12 mt-1 me-2"></i>12/4b Đường Hoàng Hoa Thám, Phường 7, Quận Bình Thạnh, Hồ Chí Minh - </address>
-                           <div class="d-flex justify-content-between">
-                              <div class="d-flex"><span class="text-price fs-5 fw-bold">4 triệu/tháng</span><span class="dot mx-3"></span><span>45 m<sup>2</sup></span><span class="dot mx-3"></span><time title="Chủ Nhật, 16:15 09/02/2025">Cập nhật: 1 ngày trước</time></div>
-                              <div><span>Mã tin: #593916</span></div>
-                           </div>
-                        </header>
-                        <div class="border-bottom pb-3 mb-4" style="--bs-border-color: #f1f1f1;">
-                           <h2 class="fs-5 mb-3">Thông tin mô tả</h2>
-                           <p>Cho thuê căn hộ mini đầy đủ tiện nghi ngay đường hoàng hoa thám quận bình thạnh. Phòng có 1 phòng ngủ,1 phòng khách, 1 nhà bếp,sân phơi,nhà vệ sinh.</p>
-                           <p>Phòng thoáng mát sạch sẽ phù hợp với gia đình ở,sinh viên và khách văn phòng. Phòng đầy đủ tiện nghi như: máy lạnh,tủ lạnh,tue quần áo, quạt,nệm, giường,kệ bếp,bồn rửa chén,máy nước nóng lạnh,…..</p>
-                           <p>Phòng cách mặt tiền hoàng hoa thám 40m. Cách bệnh viện ung bướu 800m. Đi ra đường phạm văn đồng,chợ bà chiểu,bệnh viện gia định, đường vạn kiếp chỉ 3 phút</p>
-                           <p>- diện tích: 45m2</p>
-                           <p>- gia cho thuê: 4triệu/tháng</p>
-                           <p>- địa chỉ: 12/4b hoàng hoa thám,p7,bình thạnh</p>
-                           <p>-liên hệ: 0913.113.234 - 08.35.45.55.65 gặp A Phi</p>
+                        <header class="border-bottom pb-4 mb-4">
+                        <h1 class="fs-5 fw-semibold lh-sm mb-2" style="color:#ff5723">${room.roomName}</h1>
+                        <address class="lh-sm">
+                            <i class="icon geo-alt size-12 mt-1 me-2"></i> ${room.position.positionName}
+                        </address>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <span class="text-price fs-5 fw-bold">${room.price} triệu/tháng</span>
+                                <span class="dot mx-3"></span>
+                                <time>Cập nhật: 1 ngày trước</time>
+                            </div>
+                            <div><span>Mã tin: #${room.roomId}</span></div>
                         </div>
-                        <div class="border-bottom pb-4 mb-4" style="--bs-border-color: #f1f1f1;">
-                           <h2 class="fs-5 mb-3">Đặc điểm tin đăng</h2>
-                           <div class="row">
-                              <div class="col-6">
-                                 <div class="mb-2">
-                                    <div class="dot size-5 me-2"></div>
-                                    Mã tin: <span class="ms-2">593916</span>
-                                 </div>
-                              </div>
-                              <div class="col-6">
-                                 <div class="mb-2">
-                                    <div class="dot size-5 me-2"></div>
-                                    Gói tin: <span class="ms-2" style="color: #ff5723;">Tin VIP 2</span>
-                                 </div>
-                              </div>
-                              <div class="col-6">
-                                 <div>
-                                    <div class="dot size-5 me-2"></div>
-                                    Ngày đăng: <span class="ms-2">Chủ Nhật, 16:15 09/02/2025</span>
-                                 </div>
-                              </div>
-                              <div class="col-6">
-                                 <div>
-                                    <div class="dot size-5 me-2"></div>
-                                    Ngày hết hạn: <span class="ms-2">Thứ 4, 16:15 12/02/2025</span>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+                    </header>
+                    <div class="border-bottom pb-3 mb-4">
+                        <h2 class="fs-5 mb-3">Thông tin mô tả</h2>
+                        <p>${room.description}</p>
+                        <h2 class="fs-5 mb-3">Địa chỉ chi tiết</h2>
+                        <p>${room.position.description}</p>
+                    </div>
 
                         <div class="alert alert-warning mt-4 p-3">
                            <ul class="fs-10">
@@ -103,14 +77,22 @@
                   <div class="col-md-9 col-lg-4">
                      <div class="bg-white shadow-sm rounded p-3 mb-3 d-none d-lg-block">
                         <div class="mb-3">
-                           <img class="avatar size-100 d-block p-1 m-auto" src="https://phongtro123.com/images/default-user.svg" alt="Phi">
+                           <img style = "height: 100px"class="avatar size-100 d-block p-1 m-auto" src="https://phongtro123.com/images/default-user.svg">
                            <div class="mt-3 text-center">
-                              <span class="fs-5 fw-medium">Phi</span>
-                              <div class="d-flex justify-content-center fs-9" author_id="112524"><i class="bg-success rounded-circle d-inline-block me-2 size-5"></i><span>Đang hoạt động</span></div>
-                              <div class="fs-7 mt-1">3 tin đăng <span class="dot"></span>Tham gia từ: 26/11/2021</div>
+                              <span class="fs-5 fw-medium">${room.customer.fullName}</span>
                            </div>
                         </div>
-                        <div><a class="btn btn-green btn-lg text-white d-flex justify-content-center rounded-4" rel="nofollow" href="tel:0913113234"><i class="icon telephone-fill white me-2"></i> 0913113234</a><a class="btn btn-primary btn-lg text-white d-flex justify-content-center mt-2 rounded-4" target="_blank" rel="nofollow" href="https://zalo.me/0913113234"><i class="icon chat-text white me-2"></i> Nhắn Zalo</a></div>
+                            <div class="d-flex gap-2"> 
+                                <a class="btn btn-primary btn-lg text-white d-flex justify-content-center rounded-4 flex-grow-1" 
+                                   target="_blank" rel="nofollow" href="https://zalo.me/0913113234">
+                                    <i class="icon chat-text white me-2"></i> Liên Hệ
+                                </a>
+                                <a class="btn btn-success btn-lg text-white d-flex justify-content-center rounded-4 flex-grow-1" 
+                                   href="#">
+                                    <i class="icon house white me-2"></i> Thuê Trọ
+                                </a>
+                            </div>
+
                         <div class="d-flex justify-content-between mt-3"><button class="btn btn-white btn__save__lg fs-7 d-flex text-nowrap js-btn-save" data-post-id="593916" title="Tin đã lưu"><i class="icon heart me-2"></i><span>Lưu tin</span></button><button class="btn btn-white fs-7 text-nowrap d-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSharePost" aria-controls="offcanvasSharePost"><i class="icon share me-2"></i><span>Chia sẻ</span></button><button class="btn btn-white fs-7 text-nowrap d-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasReportPost" aria-controls="offcanvasReportPost"><i class="icon exclamation-triangle me-2"></i><span>Báo xấu</span></button></div>
                      </div>
                   </div>

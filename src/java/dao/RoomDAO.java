@@ -55,5 +55,49 @@ public class RoomDAO {
         }
         return rooms;
     }
+    public Room getRoomById(int roomId) {
+    String sql = "SELECT r.room_id, r.room_name, r.description, r.price, r.status, r.image, "
+               + "p.position_id, p.position_name, p.description AS position_desc, "
+               + "u.user_id, u.email, u.phone_number, u.full_name, u.date_of_birth, u.image AS user_image "
+               + "FROM Rooms r "
+               + "JOIN Positions p ON r.position_id = p.position_id "
+               + "JOIN Users u ON r.user_id = u.user_id "
+               + "WHERE r.room_id = ?";
+    
+    try (Connection con = database.getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, roomId);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                Position position = new Position(
+                    rs.getInt("position_id"),
+                    rs.getString("position_name"),
+                    rs.getString("position_desc")
+                );
+
+                Customer customer = new Customer();
+                customer.setEmail(rs.getString("email"));
+                customer.setPhone(rs.getString("phone_number"));
+                customer.setFullName(rs.getString("full_name"));
+                customer.setBirthDate(rs.getString("date_of_birth"));
+                customer.setImage(rs.getString("user_image"));
+
+                return new Room(
+                    rs.getInt("room_id"),
+                    rs.getString("room_name"),
+                    rs.getString("description"),
+                    rs.getDouble("price"),
+                    rs.getInt("status"),
+                    position,
+                    customer,
+                    rs.getString("image")
+                );
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
 
 }

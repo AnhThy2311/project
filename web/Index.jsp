@@ -44,14 +44,14 @@
                                 <% for (Room room : rooms) { %>
                                     <li class="d-flex bg-white shadow-sm rounded p-3 mt-3">
                                         <figure class="post__thumb__vip2">
-                                            <a href="RoomDetails.jsp?roomId=<%= room.getRoomId() %>">
+                                            <a href="RoomDetail?roomId=<%= room.getRoomId() %>">
                                                 <img class="lazy_done" src="<%= room.getImage() %>" 
                                                     alt="<%= room.getRoomName() %>" width="150">
                                             </a>
                                         </figure>
                                         <div class="flex-grow-1 ps-3">
                                             <h3 class="fs-6 fw-medium text-uppercase mb-2">
-                                                <a href="RoomDetails.jsp?roomId=<%= room.getRoomId() %>"><%= room.getRoomName() %></a>
+                                                <a href="RoomDetail?roomId=<%= room.getRoomId() %>"><%= room.getRoomName() %></a>
                                             </h3>
                                             <div class="mb-2">
                                                 <span class="text-price fw-semibold fs-6"><%= room.getPrice() %> triệu/tháng</span>
