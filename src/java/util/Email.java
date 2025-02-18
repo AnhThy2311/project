@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package util;
 
 import java.util.Date;
@@ -19,10 +16,8 @@ import jakarta.activation.DataHandler;
 import jakarta.activation.DataSource;
 
 
-/**
- *
- * @author son
- */
+
+
 public class Email {
 //    yugg cmkt nmyv qzvq
 //    email: daoson090103@gmail.com
@@ -35,7 +30,7 @@ public class Email {
 		props.put("mail.smtp.host", "smtp.gmail.com"); // SMTP HOST
 		props.put("mail.smtp.port", "587"); // TLS 587 SSL 465
 		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.starttls.enable", "true"); // kích họat
 
 		// create Authenticator
 		Authenticator auth = new Authenticator() {
@@ -45,7 +40,6 @@ public class Email {
 				return new PasswordAuthentication(from, password);
 			}
 		};
-
 		// Phiên làm việc
 		Session session = Session.getInstance(props, auth);
 

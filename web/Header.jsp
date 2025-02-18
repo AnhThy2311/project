@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -153,21 +155,44 @@
                                     <% } %>
                                 </ul>
                             </div>
-                            <a
-                                class="btn btn-red text-white rounded-4 align-items-center justify-content-center ms-4"
-                                style="
-                                background-color: red;
-                                width: 150px;
-                                height: 40px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                "
-                                rel="nofollow"
-                                href="#"
-                                >
+                            <%
+Integer state = (Integer) session.getAttribute("state");
+if (state != null) {
+                            %>
+                            <a class="btn btn-red text-white rounded-4 align-items-center justify-content-center ms-4"
+                               style="
+                               background-color: red;
+                               width: 150px;
+                               height: 40px;
+                               display: flex;
+                               align-items: center;
+                               justify-content: center;
+                               "
+                               rel="nofollow"
+                               href="GetPostRooms?email=<%=username%>">
                                 <i class="icon posting white me-2"></i>Đăng tin
                             </a>
+                            <%
+                            } else {
+                            %>
+                            <a class="btn btn-blue text-white rounded-4 align-items-center justify-content-center ms-4"
+                               style="
+                               background-color: blue;
+                               width: 150px;
+                               height: 40px;
+                               display: flex;
+                               align-items: center;
+                               justify-content: center;
+                               "
+                               rel="nofollow"
+                               href="#">
+                                <i class="icon upgrade white me-2"></i>Nâng cấp
+                            </a>
+                            <%
+                            }
+                            %>
+
+
                         </div>
                     </div>
                 </div>
@@ -276,7 +301,6 @@
                 </nav>
             </div>
         </header>
-
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

@@ -6,36 +6,66 @@ package model;
 
 /**
  *
- * @author anleq
+ * @author son
  */
 public class Position {
-    private int positionId;
-    private String positionName;
-    private String description;
+    public String number_house;
+    public String street;
+    public String ward;
+    public String district;
+    public String city;
+    public String description;
 
     public Position() {
     }
 
-    public Position(int positionId, String positionName, String description) {
-        this.positionId = positionId;
-        this.positionName = positionName;
+    public Position(String number_house, String street, String ward, String district, String city, String description) {
+        this.number_house = number_house;
+        this.street = street;
+        this.ward = ward;
+        this.district = district;
+        this.city = city;
         this.description = description;
     }
 
-    public int getPositionId() {
-        return positionId;
+    public String getNumber_house() {
+        return number_house;
     }
 
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
+    public void setNumber_house(String number_house) {
+        this.number_house = number_house;
     }
 
-    public String getPositionName() {
-        return positionName;
+    public String getStreet() {
+        return street;
     }
 
-    public void setPositionName(String positionName) {
-        this.positionName = positionName;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getDescription() {
@@ -45,7 +75,10 @@ public class Position {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Position{" + "number_house=" + number_house + ", street=" + street + ", ward=" + ward + ", district=" + district + ", city=" + city + ", description=" + description + '}';
+    }
+
 }
-
-
-

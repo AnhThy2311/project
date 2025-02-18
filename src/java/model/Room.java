@@ -6,15 +6,15 @@ package model;
 
 /**
  *
- * @author anleq
+ * @author son
  */
-
 public class Room {
-    private int roomId;
+
+    private String roomId;
     private String roomName;
     private String description;
     private double price;
-    private int status;
+    private String state;
     private Position position;
     private Customer customer;
     private String image;
@@ -22,25 +22,46 @@ public class Room {
     public Room() {
     }
 
-    public Room(int roomId, String roomName, String description, double price, int status, Position position, Customer customer, String image) {
+    public Room(String roomId, String roomName, String description, double price, Position position, Customer customer, String image) {
         this.roomId = roomId;
         this.roomName = roomName;
         this.description = description;
         this.price = price;
-        this.status = status;
         this.position = position;
         this.customer = customer;
         this.image = image;
     }
 
-    public int getRoomId() {
+    public Room(String roomId, String roomName, String description, double price, String state, Position position, Customer customer, String image) {
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.description = description;
+        this.price = price;
+        this.state = state;
+        this.position = position;
+        this.customer = customer;
+        this.image = image;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
 
+
+
+  
     public String getRoomName() {
         return roomName;
     }
@@ -63,14 +84,6 @@ public class Room {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public Position getPosition() {
@@ -96,6 +109,5 @@ public class Room {
     public void setImage(String image) {
         this.image = image;
     }
+
 }
-
-

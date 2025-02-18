@@ -1,14 +1,15 @@
 package model;
 
 public class Customer {
-
     public String email;
     public String password;
     public String phone;
     public String fullName;
     public String birthDate;
     public String image;
-
+    public int state;
+    
+    
     public Customer(String email, String password, String phone, String fullName, String birthDate, String image) {
         this.email = email;
         this.password = password;
@@ -26,6 +27,14 @@ public class Customer {
         this.image = image;
     }
 
+    public Customer(String email, String phone, String fullName, String birthDate, String image, int state) {
+        this.email = email;
+        this.phone = phone;
+        this.fullName = fullName;
+        this.birthDate = birthDate;
+        this.image = image;
+        this.state = state;
+    }
     public Customer() {
     }
 
@@ -75,6 +84,14 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     @Override
