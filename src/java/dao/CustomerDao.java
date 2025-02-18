@@ -273,4 +273,18 @@ public class CustomerDao {
         }
         return 0;
     }
+    
+    public void updateRoles(String email){
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs= null;
+        try{
+            String sql ="UPDATE users Set role_id =3 WHERE email=?";
+            pr=con.prepareCall(sql);
+            pr.setString(1, email);
+            pr.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
 }

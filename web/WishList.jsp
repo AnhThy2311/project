@@ -1,6 +1,12 @@
-
+<%-- 
+    Document   : Header1
+    Created on : Feb 11, 2025, 2:50:27 AM
+    Author     : son
+--%>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="model.Wishlist" %>
 <%@ page import="model.Room" %>
+<%@ page import="model.Customer" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -313,29 +319,9 @@
                                justify-content: center;
                                "
                                rel="nofollow"
-                               href="#"
-                               data-bs-toggle="modal"
-                               data-bs-target="#upgradeModal">
+                               href="#">
                                 <i class="icon upgrade white me-2"></i>Nâng cấp
                             </a>
-                            <!-- Modal Nâng Cấp -->
-                            <div class="modal fade" id="upgradeModal" tabindex="-1" aria-labelledby="upgradeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="upgradeModalLabel">Nâng cấp tài khoản</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                                        </div>
-                                        <div class="modal-body text-center">
-                                            <p>Nâng cấp tài khoản cần 100k</p>
-                                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ThanhToan100K" 
-                                                 alt="Mã QR" style="width:150px; height:150px; margin-bottom: 15px;">
-                                            <!--<button class="btn btn-success" onclick="confirmUpgrade()">Nâng cấp</button>-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <%
                                 }
                             %>
@@ -490,9 +476,11 @@
                     <ul class="list-unstyled">
                         <% 
                             // Get rooms from the request
-                            ArrayList<Room> rooms = (ArrayList<Room>) request.getAttribute("rooms");
-                            if (rooms != null && !rooms.isEmpty()) {
-                                for (Room room : rooms) { 
+                            ArrayList<Wishlist> wishlists = (ArrayList<Wishlist>) request.getAttribute("list");
+                            if (wishlists != null && !wishlists.isEmpty()) {
+                                for (Wishlist wishlist : wishlists) { 
+                                    Room room = wishlist.getRoom();
+                                    Customer owner = room.getCustomer();
                         %>
                         <li class="d-flex bg-white shadow-sm rounded p-3 mt-3">
                             <figure class="post__thumb__vip2">
@@ -503,7 +491,7 @@
                             </figure>
                             <div class="flex-grow-1 ps-3">
                                 <h3 class="fs-6 fw-medium text-uppercase mb-2">
-                                    <a href="RoomDetail?roomId=<%= room.getRoomId() %>">
+                                    <a href="RoomDetails.jsp?roomId=<%= room.getRoomId() %>">
                                         <%= room.getRoomName() %>
                                     </a>
                                 </h3>
@@ -513,11 +501,20 @@
                                     <span>45 m<sup>2</sup></span>
                                     <span class="dot mx-2">•</span>
                                     <a href="#">
-                                        <%= room.getPosition().getNumber_house() %>, 
-                                        <%= room.getPosition().getStreet() %>, 
-                                        <%= room.getPosition().getWard() %>, 
-                                        <%= room.getPosition().getDistrict() %>, 
-                                        <%= room.getPosition().getCity() %>
+                                        <%
+                                        if (room != null) {
+                                        %>
+                                        <%= room.getPosition().getNumber_house() != null ? room.getPosition().getNumber_house() : "Chưa cập nhật" %>,
+                                        <%= room.getPosition().getStreet() != null ? room.getPosition().getStreet() : "Chưa cập nhật" %>,
+                                        <%= room.getPosition().getWard() != null ? room.getPosition().getWard() : "Chưa cập nhật" %>,
+                                        <%= room.getPosition().getDistrict() != null ? room.getPosition().getDistrict() : "Chưa cập nhật" %>
+                                        <%
+                                            } else {
+                                        %>
+                                        <span>Thông tin vị trí chưa có</span>
+                                        <%
+                                            }
+                                        %>
                                     </a>
                                 </div>
                                 <p class="fs-8 text-secondary">
@@ -526,22 +523,21 @@
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex w-50">
                                         <img class="avatar size-35 me-2" 
-                                             src="${pageContext.request.contextPath}/images/<%= room.getCustomer().getImage() != null ? room.getCustomer().getImage() : "/images/default_user.jpg" %>" 
-                                             alt="<%= room.getCustomer().getFullName() %>" width="35">
+                                             src="${pageContext.request.contextPath}/images/<%= (owner != null && owner.getImage() != null) ? owner.getImage() : "default_user.jpg" %>" 
+                                             alt="<%= (owner != null) ? owner.getFullName() : "Chủ phòng" %>" width="35">
                                         <div>
-                                            <span><%= room.getCustomer().getFullName() %></span>
+                                            <span><%= (owner != null) ? owner.getFullName() : "Không xác định" %></span>
                                             <br>
-                                            <small class="text-secondary">SĐT: <%= room.getCustomer().getPhone() %></small>
+                                            <small class="text-secondary">SĐT: <%= (owner != null && owner.getPhone() != null) ? owner.getPhone() : "N/A" %></small>
                                             <br>
-                                            <small class="text-secondary">Email: <%= room.getCustomer().getEmail() %></
-                                            </small>
+                                            <small class="text-secondary">Email: <%= (owner != null && owner.getEmail() != null) ? owner.getEmail() : "N/A" %></small>
                                         </div>
                                     </div>
                                     <div class="w-auto d-flex align-items-center">
-                                        <form action="SendWishList" method="post">
+                                        <form action="DeleteWishList" method="get">
                                             <input type="hidden" name="roomId" value="<%= room.getRoomId() %>">
-                                            <button type="submit" class="btn btn-white btn__save d-flex px-2">
-                                                <i class="icon heart size-18"></i> Lưu tin này
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item from your wishlist?')">
+                                                Delete
                                             </button>
                                         </form>
                                     </div>
@@ -559,6 +555,7 @@
                             }
                         %>
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -585,74 +582,67 @@
 
         <!-- JavaScript for dynamic dropdowns -->
         <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const citySelect = document.getElementById('city');
-                            const districtSelect = document.getElementById('district');
-                            const wardSelect = document.getElementById('ward');
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            const citySelect = document.getElementById('city');
+                                            const districtSelect = document.getElementById('district');
+                                            const wardSelect = document.getElementById('ward');
 
-                            // Function to load cities
-                            function loadCities() {
-                                fetch('/api/cities') // Replace with your API endpoint
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            data.forEach(city => {
-                                                const option = document.createElement('option');
-                                                option.value = city.id;
-                                                option.textContent = city.name;
-                                                citySelect.appendChild(option);
+                                            // Function to load cities
+                                            function loadCities() {
+                                                fetch('/api/cities') // Replace with your API endpoint
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            data.forEach(city => {
+                                                                const option = document.createElement('option');
+                                                                option.value = city.id;
+                                                                option.textContent = city.name;
+                                                                citySelect.appendChild(option);
+                                                            });
+                                                        });
+                                            }
+
+                                            // Function to load districts based on selected city
+                                            citySelect.addEventListener('change', function () {
+                                                const cityId = this.value;
+                                                districtSelect.innerHTML = '<option value="">Chọn quận</option>';
+                                                wardSelect.innerHTML = '<option value="">Chọn phường</option>';
+
+                                                if (cityId) {
+                                                    fetch(`/api/districts?cityId=${cityId}`) // Replace with your API endpoint
+                                                            .then(response => response.json())
+                                                            .then(data => {
+                                                                data.forEach(district => {
+                                                                    const option = document.createElement('option');
+                                                                    option.value = district.id;
+                                                                    option.textContent = district.name;
+                                                                    districtSelect.appendChild(option);
+                                                                });
+                                                            });
+                                                }
                                             });
+
+                                            // Function to load wards based on selected district
+                                            districtSelect.addEventListener('change', function () {
+                                                const districtId = this.value;
+                                                wardSelect.innerHTML = '<option value="">Chọn phường</option>';
+
+                                                if (districtId) {
+                                                    fetch(`/api/wards?districtId=${districtId}`) // Replace with your API endpoint
+                                                            .then(response => response.json())
+                                                            .then(data => {
+                                                                data.forEach(ward => {
+                                                                    const option = document.createElement('option');
+                                                                    option.value = ward.id;
+                                                                    option.textContent = ward.name;
+                                                                    wardSelect.appendChild(option);
+                                                                });
+                                                            });
+                                                }
+                                            });
+
+                                            // Load cities on page load
+                                            loadCities();
                                         });
-                            }
-
-                            // Function to load districts based on selected city
-                            citySelect.addEventListener('change', function () {
-                                const cityId = this.value;
-                                districtSelect.innerHTML = '<option value="">Chọn quận</option>';
-                                wardSelect.innerHTML = '<option value="">Chọn phường</option>';
-
-                                if (cityId) {
-                                    fetch(`/api/districts?cityId=${cityId}`) // Replace with your API endpoint
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                data.forEach(district => {
-                                                    const option = document.createElement('option');
-                                                    option.value = district.id;
-                                                    option.textContent = district.name;
-                                                    districtSelect.appendChild(option);
-                                                });
-                                            });
-                                }
-                            });
-
-                            // Function to load wards based on selected district
-                            districtSelect.addEventListener('change', function () {
-                                const districtId = this.value;
-                                wardSelect.innerHTML = '<option value="">Chọn phường</option>';
-
-                                if (districtId) {
-                                    fetch(`/api/wards?districtId=${districtId}`) // Replace with your API endpoint
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                data.forEach(ward => {
-                                                    const option = document.createElement('option');
-                                                    option.value = ward.id;
-                                                    option.textContent = ward.name;
-                                                    wardSelect.appendChild(option);
-                                                });
-                                            });
-                                }
-                            });
-
-                            // Load cities on page load
-                            loadCities();
-                        });
-        </script>
-        <script>
-            function confirmUpgrade() {
-                alert('Bạn đã nâng cấp tài khoản thành công!');
-                var modal = bootstrap.Modal.getInstance(document.getElementById('upgradeModal'));
-                modal.hide();
-            }
         </script>
     </body>
 </html>

@@ -1,12 +1,17 @@
+<%-- 
+    Document   : search
+    Created on : Feb 15, 2025, 2:33:44 PM
+    Author     : son
+--%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Room" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Header</title>
+        <title>JSP Page</title>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -30,132 +35,6 @@
             }
         </style>
 
-        <script type="text/javascript">
-            function updateSearchDistricts() {
-                var city = document.getElementById("searchCity").value;
-                var districtSelect = document.getElementById("searchDistrict");
-
-                // Xóa tất cả các option hiện tại trong quận
-                districtSelect.innerHTML = "<option value=''>Chọn Quận</option>";
-
-                // Cập nhật các quận tùy theo thành phố đã chọn
-                if (city === "Hà Nội") {
-                    var districts = ["Ba Đình", "Hoàn Kiếm", "Cầu Giấy", "Thanh Xuân", "Đống Đa", "Tây Hồ", "Long Biên", "Hà Đông"];
-                } else if (city === "TP Hồ Chí Minh") {
-                    var districts = ["Quận 1", "Quận 3", "Quận 5", "Quận 7", "Bình Thạnh", "Tân Bình", "Gò Vấp", "Phú Nhuận", "Thủ Đức"];
-                } else if (city === "Đà Nẵng") {
-                    var districts = ["Hải Châu", "Sơn Trà", "Ngũ Hành Sơn", "Liên Chiểu", "Cẩm Lệ"];
-                } else {
-                    var districts = [];
-                }
-
-                // Thêm các quận vào dropdown quận
-                for (var i = 0; i < districts.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = districts[i];
-                    option.text = districts[i];
-                    districtSelect.appendChild(option);
-                }
-            }
-
-            function updateSearchWardAndStreet() {
-                var district = document.getElementById("searchDistrict").value;
-                var wardSelect = document.getElementById("searchWard");
-                var streetSelect = document.getElementById("searchStreet");
-
-                // Xóa các option hiện tại
-                wardSelect.innerHTML = "<option value=''>Chọn Phường</option>";
-                streetSelect.innerHTML = "<option value=''>Chọn Đường</option>";
-
-                var wards = [];
-                var streets = [];
-
-                // Cập nhật các phường và đường theo quận
-                if (district === "Ba Đình") {
-                    wards = ["Phường Đội Cấn", "Phường Ngọc Hà", "Phường Ba Đình"];
-                    streets = ["Đường Liễu Giai", "Đường Nguyễn Thái Học", "Đường Quán Thánh", "Đường Hoàng Hoa Thám"];
-                } else if (district === "Hoàn Kiếm") {
-                    wards = ["Phường Hàng Bạc", "Phường Cửa Đông", "Phường Hàng Gai"];
-                    streets = ["Đường Lý Thái Tổ", "Đường Đinh Tiên Hoàng", "Đường Phan Chu Trinh"];
-                } else if (district === "Cầu Giấy") {
-                    wards = ["Phường Dịch Vọng Hậu", "Phường Nghĩa Tân", "Phường Quan Hoa"];
-                    streets = ["Đường Cầu Giấy", "Đường Trần Duy Hưng", "Đường Nguyễn Phong Sắc"];
-                } else if (district === "Thanh Xuân") {
-                    wards = ["Phường Hạ Đình", "Phường Thanh Xuân Bắc", "Phường Thanh Xuân Nam"];
-                    streets = ["Đường Nguyễn Trãi", "Đường Khuất Duy Tiến", "Đường Giải Phóng"];
-                } else if (district === "Đống Đa") {
-                    wards = ["Phường Phương Liên", "Phường Trung Tự", "Phường Kim Liên"];
-                    streets = ["Đường Xã Đàn", "Đường Lê Duẩn", "Đường Láng"];
-                } else if (district === "Tây Hồ") {
-                    wards = ["Phường Quảng An", "Phường Nhật Tân", "Phường Thụy Khuê"];
-                    streets = ["Đường Âu Cơ", "Đường Xuân La", "Đường Tô Ngọc Vân"];
-                } else if (district === "Long Biên") {
-                    wards = ["Phường Bồ Đề", "Phường Gia Thụy", "Phường Ngọc Thụy"];
-                    streets = ["Đường Nguyễn Văn Cừ", "Đường Cổ Linh", "Đường Sài Đồng"];
-                } else if (district === "Hà Đông") {
-                    wards = ["Phường Phú Lãm", "Phường Dương Nội", "Phường Văn Quán"];
-                    streets = ["Đường Quang Trung", "Đường Lê Lợi", "Đường Nguyễn Trãi"];
-                } else if (district === "Quận 1") {
-                    wards = ["Phường Bến Nghé", "Phường Cầu Ông Lãnh", "Phường Đa Kao"];
-                    streets = ["Đường Lê Lợi", "Đường Nguyễn Huệ", "Đường Đồng Khởi"];
-                } else if (district === "Quận 3") {
-                    wards = ["Phường Võ Thị Sáu", "Phường Tân Định", "Phường Nguyễn Cư Trinh"];
-                    streets = ["Đường Trường Sa", "Đường Cách Mạng Tháng 8", "Đường Lý Chính Thắng"];
-                } else if (district === "Quận 5") {
-                    wards = ["Phường 1", "Phường 2", "Phường 5"];
-                    streets = ["Đường Nguyễn Trãi", "Đường An Dương Vương", "Đường Châu Văn Liêm"];
-                } else if (district === "Quận 7") {
-                    wards = ["Phường Tân Phong", "Phường Tân Kiểng", "Phường Phú Mỹ"];
-                    streets = ["Đường Nguyễn Thị Thập", "Đường Lê Văn Lương", "Đường Nguyễn Hữu Thọ"];
-                } else if (district === "Bình Thạnh") {
-                    wards = ["Phường 1", "Phường 3", "Phường 5"];
-                    streets = ["Đường Xô Viết Nghệ Tĩnh", "Đường Nguyễn Hữu Cảnh", "Đường Phan Văn Trị"];
-                } else if (district === "Tân Bình") {
-                    wards = ["Phường 1", "Phường 2", "Phường 3"];
-                    streets = ["Đường Hoàng Hoa Thám", "Đường Trường Chinh", "Đường Lý Thường Kiệt"];
-                } else if (district === "Gò Vấp") {
-                    wards = ["Phường 1", "Phường 2", "Phường 3"];
-                    streets = ["Đường Phạm Văn Đồng", "Đường Nguyễn Oanh", "Đường Quang Trung"];
-                } else if (district === "Phú Nhuận") {
-                    wards = ["Phường 1", "Phường 2", "Phường 3"];
-                    streets = ["Đường Phan Đình Giót", "Đường Hoàng Văn Thụ", "Đường Trường Sa"];
-                } else if (district === "Thủ Đức") {
-                    wards = ["Phường Linh Đông", "Phường Bình Thọ", "Phường Hiệp Bình Chánh"];
-                    streets = ["Đường Kha Vạn Cân", "Đường Đặng Văn Bi", "Đường Võ Văn Ngân"];
-                } else if (district === "Hải Châu") {
-                    wards = ["Phường Hòa Cường Bắc", "Phường Hòa Thuận Tây", "Phường Thạch Thang"];
-                    streets = ["Đường Lê Duẩn", "Đường Nguyễn Hữu Thọ", "Đường Hải Phòng"];
-                } else if (district === "Sơn Trà") {
-                    wards = ["Phường An Hải Bắc", "Phường An Hải Tây", "Phường Mân Thái"];
-                    streets = ["Đường Võ Nguyên Giáp", "Đường Nguyễn Tất Thành", "Đường Lê Văn Duyệt"];
-                } else if (district === "Ngũ Hành Sơn") {
-                    wards = ["Phường Mỹ An", "Phường Khuê Mỹ", "Phường Hòa Hải"];
-                    streets = ["Đường Võ Nguyên Giáp", "Đường Trường Sa", "Đường Phan Tôn"];
-                } else if (district === "Liên Chiểu") {
-                    wards = ["Phường Hòa Hiệp Bắc", "Phường Hòa Hiệp Nam", "Phường Thủy Tú"];
-                    streets = ["Đường Nguyễn Lương Bằng", "Đường Cách Mạng Tháng 8", "Đường Bà Triệu"];
-                } else if (district === "Cẩm Lệ") {
-                    wards = ["Phường Hòa Thọ Đông", "Phường Hòa Thọ Tây", "Phường Khuê Trung"];
-                    streets = ["Đường Trường Chinh", "Đường Lê Trọng Tấn", "Đường Hòa Thọ"];
-                }
-
-                // Thêm các phường vào dropdown Phường
-                for (var i = 0; i < wards.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = wards[i];
-                    option.text = wards[i];
-                    wardSelect.appendChild(option);
-                }
-
-                // Thêm các đường vào dropdown Đường
-                for (var i = 0; i < streets.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = streets[i];
-                    option.text = streets[i];
-                    streetSelect.appendChild(option);
-                }
-            }
-        </script>
     </head>
     <body>
         <header class="bg-white text-body shadow-sm sticky-top z-1021" id="header">
@@ -313,29 +192,9 @@
                                justify-content: center;
                                "
                                rel="nofollow"
-                               href="#"
-                               data-bs-toggle="modal"
-                               data-bs-target="#upgradeModal">
+                               href="#">
                                 <i class="icon upgrade white me-2"></i>Nâng cấp
                             </a>
-                            <!-- Modal Nâng Cấp -->
-                            <div class="modal fade" id="upgradeModal" tabindex="-1" aria-labelledby="upgradeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="upgradeModalLabel">Nâng cấp tài khoản</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                                        </div>
-                                        <div class="modal-body text-center">
-                                            <p>Nâng cấp tài khoản cần 100k</p>
-                                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ThanhToan100K" 
-                                                 alt="Mã QR" style="width:150px; height:150px; margin-bottom: 15px;">
-                                            <!--<button class="btn btn-success" onclick="confirmUpgrade()">Nâng cấp</button>-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <%
                                 }
                             %>
@@ -503,7 +362,7 @@
                             </figure>
                             <div class="flex-grow-1 ps-3">
                                 <h3 class="fs-6 fw-medium text-uppercase mb-2">
-                                    <a href="RoomDetail?roomId=<%= room.getRoomId() %>">
+                                    <a href="RoomDetails.jsp?roomId=<%= room.getRoomId() %>">
                                         <%= room.getRoomName() %>
                                     </a>
                                 </h3>
@@ -538,12 +397,9 @@
                                         </div>
                                     </div>
                                     <div class="w-auto d-flex align-items-center">
-                                        <form action="SendWishList" method="post">
-                                            <input type="hidden" name="roomId" value="<%= room.getRoomId() %>">
-                                            <button type="submit" class="btn btn-white btn__save d-flex px-2">
-                                                <i class="icon heart size-18"></i> Lưu tin này
-                                            </button>
-                                        </form>
+                                        <button class="btn btn-white btn__save d-flex px-2">
+                                            <i class="icon heart size-18"></i> Lưu tin này
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -582,77 +438,5 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"
         ></script>
-
-        <!-- JavaScript for dynamic dropdowns -->
-        <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const citySelect = document.getElementById('city');
-                            const districtSelect = document.getElementById('district');
-                            const wardSelect = document.getElementById('ward');
-
-                            // Function to load cities
-                            function loadCities() {
-                                fetch('/api/cities') // Replace with your API endpoint
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            data.forEach(city => {
-                                                const option = document.createElement('option');
-                                                option.value = city.id;
-                                                option.textContent = city.name;
-                                                citySelect.appendChild(option);
-                                            });
-                                        });
-                            }
-
-                            // Function to load districts based on selected city
-                            citySelect.addEventListener('change', function () {
-                                const cityId = this.value;
-                                districtSelect.innerHTML = '<option value="">Chọn quận</option>';
-                                wardSelect.innerHTML = '<option value="">Chọn phường</option>';
-
-                                if (cityId) {
-                                    fetch(`/api/districts?cityId=${cityId}`) // Replace with your API endpoint
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                data.forEach(district => {
-                                                    const option = document.createElement('option');
-                                                    option.value = district.id;
-                                                    option.textContent = district.name;
-                                                    districtSelect.appendChild(option);
-                                                });
-                                            });
-                                }
-                            });
-
-                            // Function to load wards based on selected district
-                            districtSelect.addEventListener('change', function () {
-                                const districtId = this.value;
-                                wardSelect.innerHTML = '<option value="">Chọn phường</option>';
-
-                                if (districtId) {
-                                    fetch(`/api/wards?districtId=${districtId}`) // Replace with your API endpoint
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                data.forEach(ward => {
-                                                    const option = document.createElement('option');
-                                                    option.value = ward.id;
-                                                    option.textContent = ward.name;
-                                                    wardSelect.appendChild(option);
-                                                });
-                                            });
-                                }
-                            });
-
-                            // Load cities on page load
-                            loadCities();
-                        });
-        </script>
-        <script>
-            function confirmUpgrade() {
-                alert('Bạn đã nâng cấp tài khoản thành công!');
-                var modal = bootstrap.Modal.getInstance(document.getElementById('upgradeModal'));
-                modal.hide();
-            }
-        </script>
     </body>
 </html>

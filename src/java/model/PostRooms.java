@@ -9,7 +9,6 @@ package model;
  * @author son
  */
 public class PostRooms {
-
     public String id;
     public String image;
     public String room_name;
@@ -19,6 +18,7 @@ public class PostRooms {
     public String ward;
     public String district;
     public String city;
+    public String status;
     
     public PostRooms(String image, String room_name, float price, String number_house, String street, String ward, String district, String city) {
         this.image = image;
@@ -42,6 +42,27 @@ public class PostRooms {
         this.district = district;
         this.city = city;
         this.id = id;
+    }
+
+    public PostRooms(String id, String image, String room_name, float price, String number_house, String street, String ward, String district, String city, String status) {
+        this.id = id;
+        this.image = image;
+        this.room_name = room_name;
+        this.price = price;
+        this.number_house = number_house;
+        this.street = street;
+        this.ward = ward;
+        this.district = district;
+        this.city = city;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getId() {

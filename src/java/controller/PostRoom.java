@@ -129,7 +129,7 @@ public class PostRoom extends HttpServlet {
         System.out.println("used_id"+user_id);
         prd.insertPosition(houseNumber, street, ward, district, city, description);
         prd.insertRooms(roomName, description, price, position_id, user_id, fileNameWithExtension);
-        response.sendRedirect("GetPostRooms");
+        response.sendRedirect("GetPendingapproval");
     }
 
     /**

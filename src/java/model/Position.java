@@ -9,7 +9,6 @@ package model;
  * @author son
  */
 public class Position {
-
     public String number_house;
     public String street;
     public String ward;

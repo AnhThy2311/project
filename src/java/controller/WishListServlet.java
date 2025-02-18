@@ -4,8 +4,7 @@
  */
 package controller;
 
-import dao.RoomDao;
-import jakarta.servlet.RequestDispatcher;
+import dao.WishListDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,25 +12,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import model.Room;
+import model.Wishlist;
 
 /**
  *
  * @author son
  */
-@WebServlet(name = "RoomServlet", urlPatterns = {"/RoomServlet"})
-public class RoomServlet extends HttpServlet {
+@WebServlet(name = "WishListServlet", urlPatterns = {"/WishListServlet"})
+public class WishListServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -40,43 +31,35 @@ public class RoomServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RoomServlet</title>");
+            out.println("<title>Servlet WishListServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RoomServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet WishListServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
-
-   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoomDao roomDao = new RoomDao();
-        ArrayList<Room> rooms = roomDao.getAllRooms(); // Fetch rooms from database
-        System.out.println(rooms);
-        if (rooms != null && !rooms.isEmpty()) {
-            // Setting the rooms attribute in the request
-            request.setAttribute("rooms", rooms);
-        } else {
-            // Handling the case where there are no rooms
-            request.setAttribute("rooms", null);
-        }
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
 
-        // Forwarding request to the JSP page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Header1.jsp");
-        dispatcher.forward(request, response);
+        WishListDAO wld = new WishListDAO();
+        String id = wld.getUserIdByEmail(email);
+        System.out.println("id la:"+id);
+        ArrayList<Wishlist> list = wld.getWishlist(id);
+        System.out.println("list:"+list);
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("WishList.jsp").forward(request, response);
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       
     }
 
-   
     @Override
     public String getServletInfo() {
         return "Short description";

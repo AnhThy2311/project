@@ -4,8 +4,7 @@
  */
 package controller;
 
-import dao.RoomDao;
-import jakarta.servlet.RequestDispatcher;
+import dao.AdminDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +13,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import model.Room;
+import model.Customer;
 
 /**
  *
  * @author son
  */
-@WebServlet(name = "RoomServlet", urlPatterns = {"/RoomServlet"})
-public class RoomServlet extends HttpServlet {
+@WebServlet(name = "AdminServlet", urlPatterns = {"/AdminServlet"})
+public class AdminServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,43 +39,38 @@ public class RoomServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RoomServlet</title>");
+            out.println("<title>Servlet AdminServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RoomServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
-   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoomDao roomDao = new RoomDao();
-        ArrayList<Room> rooms = roomDao.getAllRooms(); // Fetch rooms from database
-        System.out.println(rooms);
-        if (rooms != null && !rooms.isEmpty()) {
-            // Setting the rooms attribute in the request
-            request.setAttribute("rooms", rooms);
-        } else {
-            // Handling the case where there are no rooms
-            request.setAttribute("rooms", null);
-        }
 
-        // Forwarding request to the JSP page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Header1.jsp");
-        dispatcher.forward(request, response);
+        // lấy toàn bộ user lên 
+        AdminDao ad = new AdminDao();
+        ArrayList<Customer> list = ad.getAllUser();
+        request.setAttribute("list", list);
+        System.out.println("list :" + list);
+        request.getRequestDispatcher("getAllUser.jsp").forward(request, response);
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-   
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
