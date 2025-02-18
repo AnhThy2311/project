@@ -1,14 +1,16 @@
-<%-- 
-    Document   : RoomDetails
-    Created on : Feb 10, 2025, 7:48:57 PM
-    Author     : anleq
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="model.Room" %>
 <%@ page import="model.Position" %>
 <%@ page import="model.Customer" %>
+<%@ page import="model.Feedback" %>
+<%@ page import="java.time.Duration" %>
+<%@ page import="java.time.LocalDateTime" %>
+
+<%
+    List<Feedback> feedbacks = (List<Feedback>) request.getAttribute("feedbacks");
+    Room room = (Room) request.getAttribute("room");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,17 +23,18 @@
             />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        //
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        //
+        <!-- In the head section -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+        <!-- At the end of the body section -->
         <title>Room Detail</title>
     </head>
     <body>
         <%@ include file="./Header.jsp" %>
-        <%
-       Room room = (Room) request.getAttribute("room");
-        %>
         <main>
             <div class="container mt-4">
                 <div class="row mt-3">
@@ -87,10 +90,12 @@
                                     <li>Mọi thông tin liên quan đến tin đăng này chỉ mang tính chất tham khảo. Nếu bạn thấy rằng tin đăng này không đúng hoặc có dấu hiệu lừa đảo, <span class="text-link text-decoration-underline" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasReportPost" aria-controls="offcanvasReportPost">hãy phản ánh với chúng tôi.</span></li>
                                 </ul>
                             </div>
+                            
+                            
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-4">
-                        <div class="bg-white shadow-sm rounded p-3 mb-3 d-none d-lg-block">
+                        <div class="bg-white shadow-sm rounded p-3 mb-3 d-none d-lg-block" style="height:300px">
                             <div class="mb-3">
                                 <img style = "height: 100px"class="avatar size-100 d-block p-1 m-auto" src="https://phongtro123.com/images/default-user.svg">
                                 <div class="mt-3 text-center">
@@ -135,6 +140,64 @@
                         </div>
                     </div>
                 </div>
+                <div class="bg-white shadow-sm rounded p-3 mb-3">
+                    <h2 class="fs-5 mb-3">Đánh giá khách thuê</h2>
+                    <!-- Feedback Input Section -->
+                    <div class="mb-4">
+                        <textarea class="form-control" 
+                                  style="min-height: 100px; resize: vertical;" 
+                                  placeholder="Write your feedback here..."></textarea>
+                        <button class="btn btn-primary mt-2">Submit Feedback</button>
+                    </div>
+
+                    <!-- Feedback Cards -->
+                    <div class="feedback-cards">
+                        <% if (feedbacks != null && !feedbacks.isEmpty()) { 
+                            for (Feedback fb : feedbacks) { 
+                                Customer customer = fb.getCustomer();
+                                LocalDateTime creationDate = fb.getCreationDate();
+                                LocalDateTime now = LocalDateTime.now();
+                                long minutesAgo = Duration.between(creationDate, now).toMinutes();
+                        %>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-1 text-center">
+                                            <img style="height: 70px" class="avatar size-100 d-block p-1 m-auto" src="https://phongtro123.com/images/default-user.svg">
+                                        </div>
+                                        <div class="col-11">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <div>
+                                                    <span class="fw-bold"><%= customer.getFullName() %></span>
+                                                    <span class="text-muted ms-2">• Posted <%= minutesAgo %> minutes ago</span>
+                                                </div>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa-solid fa-ellipsis"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                        <li><a class="dropdown-item" href="#">Report</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="feedback-content">
+                                                <p class="mb-0"><%= fb.getContent() %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% 
+                            } 
+                        } else { 
+                        %>
+                            <p class="text-muted">No feedback available.</p>
+                        <% } %>
+                    </div>
+                </div>
+
             </div>
             <div class="fixed-bottom bg-white d-lg-none border-top shadow-lg p-2 px-3">
                 <div class="mb-1 fs-5 fw-medium"><span>4 triệu/tháng</span><span class="dot"></span><span>45 m<sup>2</sup></span></div>
@@ -280,5 +343,6 @@
                 });
             });
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
