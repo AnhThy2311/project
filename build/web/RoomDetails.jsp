@@ -1,4 +1,3 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="model.Room" %>
@@ -14,9 +13,12 @@
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous"
             />
-        <!-- Bootstrap 5 CDN -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        //
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        //
         <title>Room Detail</title>
     </head>
     <body>
@@ -91,20 +93,39 @@
                             </div>
                             <div class="d-flex gap-2">
                                 <a class="btn btn-primary text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
-                                   target="_blank" rel="nofollow" href="https://zalo.me/0913113234">
+                                   target="_blank" rel="nofollow" href="https://zalo.me/0913113234"
+                                   onclick="return checkLogin(event)">
                                     <i class="icon chat-text white me-2"></i> Liên Hệ
                                 </a>
                                 <a class="btn btn-success text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
-                                   href="#">
+                                   href="#"
+                                   onclick="return checkLogin(event)">
                                     <i class="icon house white me-2"></i> Thuê Trọ
                                 </a>
                                 <a class="btn btn-warning text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
-                                   href="#">
+                                   href="#" 
+                                   onclick="openDatePickerModal(event)">
                                     <i class="icon calendar white me-2"></i> Đặt Lịch
                                 </a>
                             </div>
+                            <div class="d-flex justify-content-between mt-3">
+                                <button class="btn btn-white btn__save__lg fs-7 d-flex text-nowrap js-btn-save" 
+                                        data-post-id="593916" title="Tin đã lưu" onclick="return checkLogin(event)">
+                                    <i class="icon heart me-2"></i><span>Lưu tin</span>
+                                </button>
 
-                            <div class="d-flex justify-content-between mt-3"><button class="btn btn-white btn__save__lg fs-7 d-flex text-nowrap js-btn-save" data-post-id="593916" title="Tin đã lưu"><i class="icon heart me-2"></i><span>Lưu tin</span></button><button class="btn btn-white fs-7 text-nowrap d-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSharePost" aria-controls="offcanvasSharePost"><i class="icon share me-2"></i><span>Chia sẻ</span></button><button class="btn btn-white fs-7 text-nowrap d-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasReportPost" aria-controls="offcanvasReportPost"><i class="icon exclamation-triangle me-2"></i><span>Báo xấu</span></button></div>
+                                <button class="btn btn-white fs-7 text-nowrap d-flex" 
+                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasSharePost" 
+                                        aria-controls="offcanvasSharePost" onclick="return checkLogin(event)">
+                                    <i class="icon share me-2"></i><span>Chia sẻ</span>
+                                </button>
+
+                                <button class="btn btn-white fs-7 text-nowrap d-flex" 
+                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasReportPost" 
+                                        aria-controls="offcanvasReportPost" onclick="return checkLogin(event)">
+                                    <i class="icon exclamation-triangle me-2"></i><span>Báo xấu</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -192,5 +213,66 @@
                 </div>
             </div>
         </main>
+        <!-- Modal để hiển thị lịch -->
+        <form>
+            <div id="datePickerModal" class="modal fade" tabindex="-1" aria-labelledby="datePickerModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="datePickerModalLabel">Chọn ngày đặt lịch</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" id="datePickerInput" class="form-control" placeholder="Chọn ngày">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-primary" id="confirmDate">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <script>
+            function checkLogin(event) {
+                var username = '<%= username %>';
+                if (!username || username === 'null') {
+                    event.preventDefault(); // Ngăn chặn điều hướng mặc định
+                    window.location.href = 'Loggin.jsp'; // Chuyển hướng đến trang đăng nhập
+                    return false;
+                }
+                return true;
+            }
+        </script>
+        <script>
+            // Mở modal khi click vào nút "Đặt Lịch"
+            function openDatePickerModal(event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+                var modal = new bootstrap.Modal(document.getElementById('datePickerModal'));
+                modal.show();
+            }
+
+            // Khởi tạo Flatpickr
+            document.addEventListener("DOMContentLoaded", function () {
+                flatpickr("#datePickerInput", {
+                    dateFormat: "Y-m-d", // Định dạng ngày tháng
+                    minDate: "today", // Chỉ cho phép chọn ngày từ hôm nay trở đi
+                    locale: "vi", // Ngôn ngữ tiếng Việt (nếu cần)
+                });
+
+                // Xử lý sự kiện khi người dùng xác nhận ngày
+                document.getElementById('confirmDate').addEventListener('click', function () {
+                    var selectedDate = document.getElementById('datePickerInput').value;
+                    if (selectedDate) {
+//                        alert("Bạn đã chọn ngày: " + selectedDate);
+                        alert("Bạn đã đặt lịch thành công vui lòng chờ xác nhận ");
+                        // Gửi dữ liệu ngày đã chọn lên server hoặc xử lý tiếp
+                    } else {
+                        alert("Vui lòng chọn ngày!");
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

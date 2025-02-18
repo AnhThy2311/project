@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/model/Position.java</file>
-            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/controller/GetPendingapproval.java</file>
+            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/controller/RoomDetail.java</file>
             <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/web/RoomDetails.jsp</file>
-            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/controller/SendWishList.java</file>
-            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/dao/PostRoomsDao.java</file>
             <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/model/Customer.java</file>
             <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/web/GetPendingapproval.jsp</file>
             <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/model/PostRooms.java</file>
+            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/web/CRUDpostroom.jsp</file>
         </group>
     </open-files>
 </project-private>
