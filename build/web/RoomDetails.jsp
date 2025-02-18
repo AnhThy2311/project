@@ -82,14 +82,19 @@
                               <span class="fs-5 fw-medium">${room.customer.fullName}</span>
                            </div>
                         </div>
-                            <div class="d-flex gap-2"> 
-                                <a class="btn btn-primary btn-lg text-white d-flex justify-content-center rounded-4 flex-grow-1" 
+                           
+                            <div class="d-flex gap-2">
+                                <a class="btn btn-primary text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
                                    target="_blank" rel="nofollow" href="https://zalo.me/0913113234">
                                     <i class="icon chat-text white me-2"></i> Liên Hệ
                                 </a>
-                                <a class="btn btn-success btn-lg text-white d-flex justify-content-center rounded-4 flex-grow-1" 
+                                <a class="btn btn-success text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
                                    href="#">
                                     <i class="icon house white me-2"></i> Thuê Trọ
+                                </a>
+                                <a class="btn btn-warning text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
+                                   href="#">
+                                    <i class="icon calendar white me-2"></i> Đặt Lịch
                                 </a>
                             </div>
 
