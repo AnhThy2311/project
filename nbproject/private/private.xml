@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/controller/RoomDetail.java</file>
             <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/web/RoomDetails.jsp</file>
-            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/model/Customer.java</file>
-            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/web/GetPendingapproval.jsp</file>
-            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/model/PostRooms.java</file>
+            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/controller/EditProfile.java</file>
+            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/controller/Chatbox.java</file>
+            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/dao/ChatBoxDao.java</file>
+            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/controller/DeletePostRoom.java</file>
+            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/src/java/controller/SendMessageServlet.java</file>
+            <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/web/ChatBox.jsp</file>
             <file>file:/D:/FPT-university/chuyên%20ngành%204/javawedd/code/DoAnSWP/web/CRUDpostroom.jsp</file>
         </group>
     </open-files>

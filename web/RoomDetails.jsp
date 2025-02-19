@@ -45,6 +45,7 @@
                         </div>
                         <div class="bg-white shadow-sm rounded p-4 mb-3">
                             <header class="border-bottom pb-4 mb-4">
+                                <input type="hidden" id="roomId" name="roomId" value="<%= room.getRoomId() %>">
                                 <h1 class="fs-5 fw-semibold lh-sm mb-2" style="color:#ff5723">Tên phòng: <%= room.getRoomName() %></h1>
                                 <address class="lh-sm">
                                     <i class="icon geo-alt size-12 mt-1 me-2"></i>
@@ -93,7 +94,7 @@
                             </div>
                             <div class="d-flex gap-2">
                                 <a class="btn btn-primary text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
-                                   target="_blank" rel="nofollow" href="https://zalo.me/0913113234"
+                                   target="_blank" rel="nofollow" href="Chatbox?roomid=<%=room.getRoomId()%>"
                                    onclick="return checkLogin(event)">
                                     <i class="icon chat-text white me-2"></i> Liên Hệ
                                 </a>

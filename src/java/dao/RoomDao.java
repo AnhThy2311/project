@@ -186,5 +186,25 @@ public class RoomDao {
         }
         return null;
     }
-
+// lấy owner bằng cách dựa vào roomid
+    public String getOwnerId(String roomid){
+        Connection con =null;
+        PreparedStatement pr = null;
+        ResultSet rs= null;
+        try{
+            String sql = "select u.user_id from Users as u , Rooms as r where u.user_id=r.user_id and r.room_id=?";
+            con=database.getConnection();
+            pr=con.prepareCall(sql);
+            pr.setString(1, roomid);
+            rs=pr.executeQuery();
+           if(rs.next()){
+               String idOwner =rs.getString(1);
+               return idOwner;
+           }
+        }catch(Exception e ){
+            System.out.println(e);
+        }
+        return null;
+    }
+    
 }
