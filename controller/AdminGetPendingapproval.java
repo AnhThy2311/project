@@ -5,7 +5,7 @@
 
 package controller;
 
-import dao.CustomerDao;
+import dao.AdminDao;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,22 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Customer;
+import java.util.ArrayList;
+import model.AdminPending;
 
-/**
- *
- * @author son
- */
-@WebServlet(name="UpdateProfile", urlPatterns={"/UpdateProfile"})
-public class UpdateProfile extends HttpServlet {
+
+@WebServlet(name="AdminGetPendingapproval", urlPatterns={"/AdminGetPendingapproval"})
+public class AdminGetPendingapproval extends HttpServlet {
    
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,10 +30,10 @@ public class UpdateProfile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateProfile</title>");  
+            out.println("<title>Servlet AdminGetPendingapproval</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateProfile at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AdminGetPendingapproval at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -51,27 +43,25 @@ public class UpdateProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String email = request.getParameter("email");
-        CustomerDao cd= new CustomerDao();
-        Customer c= cd.exitEmail(email);
-        request.setAttribute("customer", c);
-        request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
+        AdminDao ad = new AdminDao();
+        ArrayList<AdminPending> list = ad.getAdminGetPendingapp();
+        request.setAttribute("list", list);
+        System.out.println("list là: "+list);
+         request.getRequestDispatcher("AdminGetPendingapproval.jsp").forward(request, response);
+        
     } 
 
-   
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
+   
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

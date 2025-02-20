@@ -5,8 +5,6 @@
 
 package controller;
 
-import dao.CustomerDao;
-import javax.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,14 +12,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Customer;
 
 /**
  *
  * @author son
  */
-@WebServlet(name="UpdateProfile", urlPatterns={"/UpdateProfile"})
-public class UpdateProfile extends HttpServlet {
+@WebServlet(name="UpgradeServlet", urlPatterns={"/UpgradeServlet"})
+public class UpgradeServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,27 +35,36 @@ public class UpdateProfile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateProfile</title>");  
+            out.println("<title>Servlet UpgradeServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateProfile at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpgradeServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     } 
 
-  
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /** 
+     * Handles the HTTP <code>GET</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String email = request.getParameter("email");
-        CustomerDao cd= new CustomerDao();
-        Customer c= cd.exitEmail(email);
-        request.setAttribute("customer", c);
-        request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
-   
+    /** 
+     * Handles the HTTP <code>POST</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
