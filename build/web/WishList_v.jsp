@@ -45,7 +45,7 @@
         <% if (wishlist == null || wishlist.isEmpty()) { %>
             <div class="alert alert-info" role="alert">
                 No items found in your wishlist.
-            </div>
+            </div> 
         <% } else { %>
             <table class="table table-bordered wishlist-table">
                 <thead class="table-dark">
@@ -83,7 +83,7 @@
                             <td><%= customer.getFullName() %></td>
                             <td><%= customer.getEmail() %></td>
                             <td>
-                                <form action="WishList" method="post">
+                                <form action="WishList?COMMAND=DELETE_WISHLIST" method="post">
                                     <input type="hidden" name="roomId" value="<%= room.getRoomId() %>">
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item from your wishlist?')">
                                         Delete

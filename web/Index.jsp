@@ -44,7 +44,7 @@
                                 <% for (Room room : rooms) { %>
                                     <li class="d-flex bg-white shadow-sm rounded p-3 mt-3">
                                         <figure class="post__thumb__vip2">
-                                            <a href="RoomDetails.jsp?roomId=<%= room.getRoomId() %>">
+                                            <a href="Roomdetails?roomId=<%= room.getRoomId() %>">
                                                 <img class="lazy_done" src="<%= room.getImage() %>" 
                                                     alt="<%= room.getRoomName() %>" width="150">
                                             </a>

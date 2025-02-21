@@ -48,6 +48,14 @@
         <servlet-name>WishList</servlet-name>
         <servlet-class>controller.WishList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RoomDetail</servlet-name>
+        <servlet-class>controller.RoomDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RoomAppointmentServlet</servlet-name>
+        <servlet-class>controller.RoomAppointmentServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -95,5 +103,13 @@
     <servlet-mapping>
         <servlet-name>WishList</servlet-name>
         <url-pattern>/WishList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoomDetail</servlet-name>
+        <url-pattern>/RoomDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoomAppointmentServlet</servlet-name>
+        <url-pattern>/RoomAppointmentServlet</url-pattern>
     </servlet-mapping>
 </web-app>

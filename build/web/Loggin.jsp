@@ -99,7 +99,7 @@
                             >
                             của chúng tôi
                         </p>
-                        <p class="fs-10 m-0">Bản quyền © 20242024 - 2025</p>
+                        <p class="fs-10 m-0">Bản quyền © 20242024 - 2025</p>.
                     </div>
                 </div>
             </div>
