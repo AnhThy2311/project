@@ -65,9 +65,9 @@ public class RoomAppointmentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
         int customerId = appointmentdao.getUserIdByEmail(email);
-        int roomId = appointmentdao.getRoomIdByCustomerId(customerId);
-        int appointmentId = appointmentdao.getAppointmentId(customerId, roomId);
-        List<RoomAppointment> list_Appointment =appointmentdao.viewRoomAppointment(appointmentId); // Fetch rooms from database
+//        int roomId = appointmentdao.getRoomIdByCustomerId(customerId);
+//        int appointmentId = appointmentdao.getAppointmentId(customerId, roomId);
+        List<RoomAppointment> list_Appointment =appointmentdao.viewRoomAppointment_v(customerId); // Fetch rooms from database
         if (list_Appointment != null && !list_Appointment.isEmpty()) {
             request.setAttribute("list_appointment", list_Appointment);
         } else {
