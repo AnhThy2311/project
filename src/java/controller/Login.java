@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.Set;
 import model.Customer;
 import util.EncryptionPasword;
 
@@ -28,11 +30,14 @@ public class Login extends HttpServlet {
 //        System.out.println("anh dai dien: " +c.getImage());
         int state = cd.getState(email);
         if (c != null) {
-                    
-            System.out.println("anh dai dien: " +c.getImage());
+            int userRole = cd.getRoleByEmail(email);
+            System.out.println("anh dai dien: " + c.getImage());
             HttpSession http = request.getSession();
             http.setAttribute("email", c.getEmail());
-            http.setAttribute("userImage", c.getImage());  // Lưu đường dẫn ảnh
+            http.setAttribute("userImage", c.getImage());
+            http.setAttribute("userName", c.getFullName());
+            http.setAttribute("role", userRole);
+            // Lưu đường dẫn ảnh
              if(state==3){
                  http.setAttribute("state", state);
              }

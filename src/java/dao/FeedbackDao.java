@@ -21,36 +21,73 @@ import model.Room;
  */
 public class FeedbackDao {
     
-    public boolean checkUserBooking(int userId, int roomId) {
+    public boolean addFeedback(String userEmail, int roomId, String content, int rating) {
         Connection con = null;
         PreparedStatement st = null;
-        ResultSet rs = null;
-        boolean hasBooked = false;
-        
+        boolean isAdded = false;
+
         try {
             con = database.getConnection();
-            String sql = "SELECT COUNT(*) as count FROM Booking WHERE user_id = ? AND room_id = ?";
-            st = con.prepareStatement(sql);
-            st.setInt(1, userId);
-            st.setInt(2, roomId);
-            
-            rs = st.executeQuery();
+
+            // Get user_id based on email
+            String getUserIdSQL = "SELECT user_id FROM Users WHERE email = ?";
+            st = con.prepareStatement(getUserIdSQL);
+            st.setString(1, userEmail);
+            ResultSet rs = st.executeQuery();
+
             if (rs.next()) {
-                hasBooked = rs.getInt("count") > 0;
+                int userId = rs.getInt("user_id");
+
+                // Insert feedback into the database
+                String insertSQL = "INSERT INTO Feedback (user_id, room_id, content, rating, creation_date) VALUES (?, ?, ?, ?, GETDATE())";
+                st = con.prepareStatement(insertSQL);
+                st.setInt(1, userId);
+                st.setInt(2, roomId);
+                st.setString(3, content);
+                st.setInt(4, rating);
+
+                isAdded = st.executeUpdate() > 0;
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if (rs != null) rs.close();
                 if (st != null) st.close();
                 if (con != null) database.getClose(con);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return hasBooked;
+        return isAdded;
     }
+
+    public boolean deleteFeedback(int feedbackId) {
+        Connection con = null;
+        PreparedStatement st = null;
+        boolean isDeleted = false;
+
+        try {
+            con = database.getConnection();
+            String deleteSQL = "DELETE FROM Feedback WHERE feedback_id = ?";
+            st = con.prepareStatement(deleteSQL);
+            st.setInt(1, feedbackId);
+
+            isDeleted = st.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+                if (con != null) database.getClose(con);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return isDeleted;
+    }
+
     
     public boolean checkUserEmailBooking(String userEmail, int bookingId) {
         Connection con = null;

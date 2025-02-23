@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Feedback;
 import model.Room;
@@ -30,14 +31,26 @@ public class RoomDetail extends HttpServlet {
         String roomIdParam = request.getParameter("roomId");
         RoomDao rd = new RoomDao();
         FeedbackDao fd = new FeedbackDao();
+        HttpSession session = request.getSession();
+
+        // Retrieve the email from the session
+        String userEmail = (String) session.getAttribute("email");
+
         if (roomIdParam != null) {
             try {
                 int roomId = Integer.parseInt(roomIdParam);
                 Room room = rd.getRoomById(roomId);
                 List<Feedback> fbList = fd.getAllFeedback(roomId);
+
+                // Ensure user is logged in before checking feedback permissions
+                boolean canFeedback = (userEmail != null) ? fd.checkUserEmailBooking(userEmail, roomId) : false;
+
                 if (room != null) {
                     request.setAttribute("room", room);
                     request.setAttribute("feedbacks", fbList);
+                    request.setAttribute("canFeedback", canFeedback);
+                    request.setAttribute("userEmail", userEmail);  // Store email in request attribute
+
                     RequestDispatcher dispatcher = request.getRequestDispatcher("RoomDetails.jsp");
                     dispatcher.forward(request, response);
                 } else {
@@ -51,3 +64,4 @@ public class RoomDetail extends HttpServlet {
         }
     }
 }
+

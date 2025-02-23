@@ -10,6 +10,14 @@
         <servlet-name>RoomDetail</servlet-name>
         <servlet-class>controller.RoomDetail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddFeedbackServlet</servlet-name>
+        <servlet-class>controller.AddFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteFeedbackServlet</servlet-name>
+        <servlet-class>controller.DeleteFeedbackServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RoomServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -32,5 +40,13 @@
     <servlet-mapping>
         <servlet-name>RoomDetail</servlet-name>
         <url-pattern>/RoomDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddFeedbackServlet</servlet-name>
+        <url-pattern>/AddFeedbackServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteFeedbackServlet</servlet-name>
+        <url-pattern>/DeleteFeedbackServlet</url-pattern>
     </servlet-mapping>
 </web-app>

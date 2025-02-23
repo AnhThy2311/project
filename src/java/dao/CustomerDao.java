@@ -9,6 +9,36 @@ import model.Customer;
 
 public class CustomerDao {
 
+    public int getRoleByEmail(String email) {
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        int roleId = -1; // Default value if no role is found
+
+        try {
+            con = database.getConnection();
+            String sql = "SELECT role_id FROM Users WHERE email = ?";
+            st = con.prepareStatement(sql);
+            st.setString(1, email);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                roleId = rs.getInt("role_id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (st != null) st.close();
+                if (con != null) database.getClose(con);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return roleId;
+    }
     public void inserintoCustomer(Customer cter) {
 //        String email,String hoten,String password
         Connection con = null;

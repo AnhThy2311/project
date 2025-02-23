@@ -9,7 +9,9 @@
 
 <%
     List<Feedback> feedbacks = (List<Feedback>) request.getAttribute("feedbacks");
-    Room room = (Room) request.getAttribute("room");
+    Room room = (Room) request.getAttribute("room");      
+    String currentUserEmail = (String) session.getAttribute("email");
+    int userRole = (int) session.getAttribute("role");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,6 +31,7 @@
         <!-- In the head section -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <!-- At the end of the body section -->
         <title>Room Detail</title>
@@ -143,21 +146,57 @@
                 <div class="bg-white shadow-sm rounded p-3 mb-3">
                     <h2 class="fs-5 mb-3">Đánh giá khách thuê</h2>
                     <!-- Feedback Input Section -->
-                    <div class="mb-4">
-                        <textarea class="form-control" 
-                                  style="min-height: 100px; resize: vertical;" 
-                                  placeholder="Write your feedback here..."></textarea>
-                        <button class="btn btn-primary mt-2">Submit Feedback</button>
+
+                     <div class="mb-4">
+                        <% if ((Boolean) request.getAttribute("canFeedback")) { %>
+                            <!-- Show textarea and submit button if user can provide feedback -->
+                            <textarea id="feedbackContent" 
+                                    class="form-control" 
+                                    style="min-height: 100px; resize: vertical;" 
+                                    placeholder="Write your feedback here..."></textarea>
+                            <button id="submitFeedback" class="btn btn-primary mt-2">Submit Feedback</button>
+                            <div id="feedbackMessage" class="mt-2" style="display: none;"></div>
+                        <% } else { %>
+                            <!-- Show message if user cannot provide feedback -->
+                            <label class="text-danger fw-bold">You can only provide feedback if you booked this room.</label>
+                            <a class="btn btn-success text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
+                                href="#" onclick="return checkLogin(event)">
+                                 <i class="icon house white me-2"></i> Thuê Trọ
+                             </a>
+                        <% } %>
                     </div>
 
+                    
                     <!-- Feedback Cards -->
                     <div class="feedback-cards">
-                        <% if (feedbacks != null && !feedbacks.isEmpty()) { 
-                            for (Feedback fb : feedbacks) { 
-                                Customer customer = fb.getCustomer();
-                                LocalDateTime creationDate = fb.getCreationDate();
-                                LocalDateTime now = LocalDateTime.now();
-                                long minutesAgo = Duration.between(creationDate, now).toMinutes();
+                        <% 
+                            if (feedbacks != null && !feedbacks.isEmpty()) { 
+                                for (Feedback fb : feedbacks) { 
+                                    Customer customer = fb.getCustomer();
+                                    LocalDateTime creationDate = fb.getCreationDate();
+                                    LocalDateTime now = LocalDateTime.now();
+
+                                    long secondsAgo = Duration.between(creationDate, now).getSeconds();
+                                    long minutesAgo = secondsAgo / 60;
+                                    long hoursAgo = minutesAgo / 60;
+                                    long daysAgo = hoursAgo / 24;
+                                    long monthsAgo = daysAgo / 30;
+                                    long yearsAgo = daysAgo / 365;
+
+                                    String timeAgo;
+                                    if (secondsAgo < 60) {
+                                        timeAgo = "few seconds ago";
+                                    } else if (minutesAgo < 60) {
+                                        timeAgo = minutesAgo + " minutes ago";
+                                    } else if (hoursAgo < 24) {
+                                        timeAgo = hoursAgo + " hours ago";
+                                    } else if (daysAgo < 30) {
+                                        timeAgo = daysAgo + " days ago";
+                                    } else if (monthsAgo < 12) {
+                                        timeAgo = monthsAgo + " months ago";
+                                    } else {
+                                        timeAgo = yearsAgo + " years ago";
+                                    }
                         %>
                             <div class="card mb-3">
                                 <div class="card-body">
@@ -169,16 +208,19 @@
                                             <div class="d-flex justify-content-between align-items-center mb-2">
                                                 <div>
                                                     <span class="fw-bold"><%= customer.getFullName() %></span>
-                                                    <span class="text-muted ms-2">• Posted <%= minutesAgo %> minutes ago</span>
+                                                    <span class="text-muted ms-2">• Posted <%= timeAgo %></span>
                                                 </div>
                                                 <div class="dropdown">
                                                     <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fa-solid fa-ellipsis"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                        <li><a class="dropdown-item" href="#">Delete</a></li>
-                                                        <li><a class="dropdown-item" href="#">Report</a></li>
+                                                        <% if ((currentUserEmail != null && currentUserEmail.equals(customer.getEmail())) || userRole == 1) { %>
+                                                            <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                            <li><a class="dropdown-item delete-feedback-btn" href="#" data-id="<%= fb.getFeedbackId() %>">Delete</a></li>
+                                                        <% } else { %>
+                                                            <li><a class="dropdown-item" href="#">Report</a></li>
+                                                        <% } %>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -343,6 +385,73 @@
                 });
             });
         </script>
+        <script>
+            $(document).ready(function () {
+                $("#submitFeedback").click(function () {
+                    var content = $("#feedbackContent").val().trim();
+                    var roomId = <%= room.getRoomId() %>;
+                    var userEmail = "<%= currentUserEmail %>";
+
+                    if (content === "") {
+                        alert("Feedback cannot be empty!");
+                        return;
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "AddFeedbackServlet",
+                        data: {
+                            userEmail: userEmail,
+                            roomId: roomId,
+                            content: content,
+                            rating: 5
+                        },
+                        success: function (response) {
+                            if (response.trim() === "success") {
+                                alert("Feedback submitted successfully!");
+                                location.reload();
+                            } else {
+                                alert("Failed to submit feedback. Please try again.");
+                            }
+                        },
+                        error: function () {
+                            alert("Error occurred while submitting feedback.");
+                        }
+                    });
+                });
+            });
+            $(document).ready(function () {
+                // Handle feedback deletion
+                $(".delete-feedback-btn").click(function (e) {
+                    e.preventDefault();
+                    var feedbackId = $(this).data("id");
+
+                    if (confirm("Are you sure you want to delete this feedback?")) {
+                        $.ajax({
+                            type: "POST",
+                            url: "DeleteFeedbackServlet",
+                            data: { feedbackId: feedbackId },
+                            success: function (response) {
+                                if (response.trim() === "success") {
+                                    alert("Feedback deleted successfully!");
+                                    location.reload();
+                                } else {
+                                    alert("Failed to delete feedback. Please try again.");
+                                }
+                            },
+                            error: function () {
+                                alert("Error occurred while deleting feedback.");
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     </body>
 </html>
