@@ -104,7 +104,7 @@
                                 <div>
                                     <form action="RoomAppointmentServlet?COMMAND=CREATE_APPOINTMENT" method="post">
                                         <input type="hidden" name="roomId" value="<%= room.getRoomId() %>">
-                                        <input type="hidden" name="status" value="<%= room.getStatus() %>">
+                                        <input type="hidden" name="status" value="1">
 
                                         <div class="form-group">
                                             <label for="viewDate">Chọn ngày hẹn:</label>
