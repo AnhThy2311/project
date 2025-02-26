@@ -51,10 +51,10 @@ public class ForgotPasswordServlet extends HttpServlet {
 
         // Create the email message with HTML formatting
         String message = "<h1>Reset Your Password</h1>"
-                       + "<p><b>Is this you or somebody trying to change your password?</b></p>"
-                       + "<p>If it's you, then click the link below to change your account password or ignore!</p>"
-                       + "<p><a href=\"" + resetLink + "\">Reset your password</a></p>";
-
+                       + "<p><b>Đây là mail đổi mật khẩu tại website Quickrent.com. Vui lòng không cung cấp email hoặc thông tin cho ai.</b></p>"
+                       + "<p>Để đặt lại mật khẩu, vui lòng nhấp vào liên kết sau:</p>"
+                       + "<p><a href=\"" + resetLink + "\">Đổi mật khẩu</a></p>"
+                       + "<p>Đây là email tự động, vui lòng không phản hồi email này.</p>";
         EmailUtil.sendEmail(email, "Reset Your Password", message);
 
         // Redirect to notification page

@@ -28,7 +28,8 @@
         <div class="notification-container">
             <h2>Notification</h2>
             <p>An email has been sent to: <strong>${email}</strong></p>
-            <a href="change-password.jsp?email=${email}">Click here to change your password</a>
+            <p>Please return to login page to login after you changed yours account's password</p>
+            <a href="index.html">Return to login page</a>
         </div>
     </body>
 </html>
