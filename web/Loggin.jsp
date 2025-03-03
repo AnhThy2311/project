@@ -66,6 +66,12 @@
                                     >
                                     Đăng nhập
                                 </button>
+                                <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/QuickRent/LoginGoogle&response_type=code&client_id=514572896918-n9g3192o5clrd9v4s708ffjp819vlok6.apps.googleusercontent.com&access_type=offline&prompt=consent">                                    
+                                    <button type="button" name="wp-submit-login" class="btn btn-red btn-lg rounded-4" style="margin-top: 10px; color: white; background-color: red; width: 100%">
+                                        Đăng nhập với Google
+                                    </button>
+                                </a>
+
                             </div>
                             <p class="mb-2">
                                 <a
