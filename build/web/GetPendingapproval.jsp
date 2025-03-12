@@ -149,26 +149,27 @@
                         Danh Sách Đăng tin
                     </button>
                     <button class="bg-green-500 text-white px-4 py-2 rounded mx-2 hover:bg-green-600 transition duration-200">
-                       Danh Sách Chờ Bài Đăng
+                        Danh Sách Chờ Bài Đăng
                     </button>
-                    
+
                 </div>
                 <h1 class="text-4xl font-bold mb-8 text-center text-blue-600">Property List</h1>
                 <div class="overflow-x-auto shadow-lg rounded-lg bg-white p-6">
                     <table class="min-w-full bg-white border border-gray-300">
                         <thead class="bg-blue-500 text-white">
                             <tr>
-                                <th class="py-3 px-4 border-b">Id</th>
-                                <th class="py-3 px-4 border-b">Image</th>
-                                <th class="py-3 px-4 border-b">Room Name</th>
-                                <th class="py-3 px-4 border-b">Price</th>
-                                <th class="py-3 px-4 border-b">Number House</th>
-                                <th class="py-3 px-4 border-b">Street</th>
-                                <th class="py-3 px-4 border-b">Ward</th>
-                                <th class="py-3 px-4 border-b">District</th>
-                                <th class="py-3 px-4 border-b">City</th>
-                                <th class="py-3 px-4 border-b">Status</th>
-                                <th class="py-3 px-4 border-b">Cancel</th>
+                                <th class="py-3 px-4 border-b">ID</th>
+                                <th class="py-3 px-4 border-b">Hình ảnh</th>
+                                <th class="py-3 px-4 border-b">Tên phòng</th>
+                                <th class="py-3 px-4 border-b">Giá</th>
+                                <th class="py-3 px-4 border-b">Số nhà</th>
+                                <th class="py-3 px-4 border-b">Đường</th>
+                                <th class="py-3 px-4 border-b">Phường/Xã</th>
+                                <th class="py-3 px-4 border-b">Quận/Huyện</th>
+                                <th class="py-3 px-4 border-b">Thành phố</th>
+                                <th class="py-3 px-4 border-b">Trạng thái</th>
+                                <th class="py-3 px-4 border-b">Hủy</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -200,8 +201,10 @@
                                         }
                                     %>
                                 </td>
+                                <% if(property != null && !property.getStatus().equals("2")){ %>
+
                                 <td class="py-3 px-4 border-b text-center">
-                                    <form method="post" action="cancelProperty">
+                                    <form method="post" action="cancelPendingApproval">
                                         <input type="hidden" name="id" value="<%= property.getId() %>">
                                         <button type="submit" 
                                                 class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 transition duration-200"
@@ -210,6 +213,7 @@
                                         </button>
                                     </form>
                                 </td>
+                                <% } %>
                             </tr>
                             <% } %>
                         </tbody>

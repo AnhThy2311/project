@@ -178,8 +178,8 @@ public class CustomerDao {
         }
         return false;
     }
-    
-    public void UpdateCustomer(String email,String phone, String date, String fullName){
+
+    public void UpdateCustomer(String email, String phone, String date, String fullName) {
         Connection con = null;
         PreparedStatement st = null;
         try {
@@ -196,12 +196,12 @@ public class CustomerDao {
             e.printStackTrace();
         }
     }
-    
-    public String getPassByEmail(String email){
+
+    public String getPassByEmail(String email) {
         Connection con = null;
         PreparedStatement pr = null;
-         ResultSet re = null;
-         try {
+        ResultSet re = null;
+        try {
             // Get a connection from your connection utility
             con = database.getConnection();
 
@@ -213,8 +213,8 @@ public class CustomerDao {
             re = pr.executeQuery();
             if (re.next()) {
                 // Retrieve values by their index in the table (ensure these match the table schema)
-               String pass = re.getString(1);
-               return pass;
+                String pass = re.getString(1);
+                return pass;
             }
         } catch (Exception e) {
             System.out.println("SQL error: " + e.getMessage());
@@ -222,12 +222,12 @@ public class CustomerDao {
         }
         return null;
     }
-    
-    public int getState(String email){
+
+    public int getState(String email) {
         Connection con = null;
         PreparedStatement pr = null;
-         ResultSet re = null;
-         try {
+        ResultSet re = null;
+        try {
             // Get a connection from your connection utility
             con = database.getConnection();
 
@@ -239,8 +239,8 @@ public class CustomerDao {
             re = pr.executeQuery();
             if (re.next()) {
                 // Retrieve values by their index in the table (ensure these match the table schema)
-               int  state = re.getInt(1);
-               return state;
+                int state = re.getInt(1);
+                return state;
             }
         } catch (Exception e) {
             System.out.println("SQL error: " + e.getMessage());
@@ -248,11 +248,12 @@ public class CustomerDao {
         }
         return 0;
     }
-    public int getUserId(String email){
-         Connection con = null;
+
+    public int getUserId(String email) {
+        Connection con = null;
         PreparedStatement pr = null;
-         ResultSet re = null;
-         try {
+        ResultSet re = null;
+        try {
             // Get a connection from your connection utility
             con = database.getConnection();
 
@@ -264,8 +265,8 @@ public class CustomerDao {
             re = pr.executeQuery();
             if (re.next()) {
                 // Retrieve values by their index in the table (ensure these match the table schema)
-               int  state = re.getInt(1);
-               return state;
+                int state = re.getInt(1);
+                return state;
             }
         } catch (Exception e) {
             System.out.println("SQL error: " + e.getMessage());
@@ -273,11 +274,12 @@ public class CustomerDao {
         }
         return 0;
     }
-     public String getUserIdByEmail(String email){
-         Connection con = null;
+
+    public String getUserIdByEmail(String email) {
+        Connection con = null;
         PreparedStatement pr = null;
-         ResultSet re = null;
-         try {
+        ResultSet re = null;
+        try {
             // Get a connection from your connection utility
             con = database.getConnection();
 
@@ -289,7 +291,7 @@ public class CustomerDao {
             re = pr.executeQuery();
             if (re.next()) {
                 // Retrieve values by their index in the table (ensure these match the table schema)
-              return  re.getString(1);
+                return re.getString(1);
             }
         } catch (Exception e) {
             System.out.println("SQL error: " + e.getMessage());
@@ -297,25 +299,27 @@ public class CustomerDao {
         }
         return null;
     }
-    public void updateRoles(String email){
+
+    public void updateRoles(String email) {
         Connection con = null;
         PreparedStatement pr = null;
-        ResultSet rs= null;
-        try{
-            con=database.getConnection();
-            String sql ="UPDATE users Set role_id =3 WHERE email=?";
-            pr=con.prepareStatement(sql);
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            String sql = "UPDATE users Set role_id =3 WHERE email=?";
+            pr = con.prepareStatement(sql);
             pr.setString(1, email);
             pr.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public int getEntityState(String email){
-          Connection con = null;
+
+    public int getEntityState(String email) {
+        Connection con = null;
         PreparedStatement pr = null;
-         ResultSet re = null;
-         try {
+        ResultSet re = null;
+        try {
             // Get a connection from your connection utility
             con = database.getConnection();
 
@@ -327,13 +331,49 @@ public class CustomerDao {
             re = pr.executeQuery();
             if (re.next()) {
                 // Retrieve values by their index in the table (ensure these match the table schema)
-               int  state = re.getInt(1);
-               return state;
+                int state = re.getInt(1);
+                return state;
             }
         } catch (Exception e) {
             System.out.println("SQL error: " + e.getMessage());
             e.printStackTrace(); // Print stack trace for debugging
         }
         return 0;
+    }
+
+    public int getCountCCCD(String email) {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet re = null;
+        try {
+            String sql = "select  count(*) from Users as u , Information as i where u.user_id = i.user_id and u.email=?";
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, email);
+            re = pr.executeQuery();
+            if (re.next()) {
+                return re.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public void AccountUpdate(String user_id, float price) {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet re = null;
+        try {
+            String sql = "INSERT INTO account_upgrade (user_id, price)\n"
+                    + "VALUES (?,?)";
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, user_id);
+            pr.setFloat(2, price);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

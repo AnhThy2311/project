@@ -56,29 +56,34 @@ public class RoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoomDao roomDao = new RoomDao();
-        ArrayList<Room> rooms = roomDao.getAllRooms(); // Fetch rooms from database
-        System.out.println(rooms);
-        if (rooms != null && !rooms.isEmpty()) {
-            // Setting the rooms attribute in the request
-            request.setAttribute("rooms", rooms);
-        } else {
-            // Handling the case where there are no rooms
-            request.setAttribute("rooms", null);
+        try {
+            RoomDao roomDao = new RoomDao();
+            ArrayList<Room> rooms = roomDao.getAllRooms();
+            System.out.println("room la: " + rooms);
+            System.out.println(rooms);
+            if (rooms != null && !rooms.isEmpty()) {
+                request.setAttribute("rooms", rooms);
+            } else {
+                request.setAttribute("rooms", null);
+            }
+
+            HttpSession session = request.getSession();
+            String email = (String) session.getAttribute("email");
+            System.out.println("email: " + email);
+            CustomerDao cud = new CustomerDao();
+            String sendID = cud.getUserIdByEmail(email);
+            System.out.println(sendID);
+            ChatBoxDao cbd = new ChatBoxDao();
+            ArrayList<ChatBox> listreceicer = cbd.getSender(sendID);
+            System.out.println(listreceicer);
+            session.setAttribute("list", listreceicer);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("GetAllRoom.jsp");
+            dispatcher.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra stack trace để kiểm tra
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi: " + e.getMessage());
         }
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
-        CustomerDao cud = new CustomerDao();
-        String sendID = cud.getUserIdByEmail(email);
-        System.out.println(sendID);
-        ChatBoxDao cbd = new ChatBoxDao();
-//        ArrayList<String> listreceicer = cbd.getReceiverID(sendID);
-        ArrayList<ChatBox> listreceicer = cbd.getSender(sendID);
-        System.out.println(listreceicer);
-        session.setAttribute("list", listreceicer);
-        // Forwarding request to the JSP page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("GetAllRoom.jsp");
-        dispatcher.forward(request, response);
     }
 
     @Override

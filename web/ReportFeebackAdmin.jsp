@@ -150,17 +150,18 @@
 
         <div class="bg-gray-200 flex items-center justify-center min-h-screen">
             <div class="container mx-auto p-4 bg-white shadow-lg rounded-lg">
-                <h1 class="text-2xl font-bold mb-4 text-center">Report Comment</h1>
+                <h1 class="text-2xl font-bold mb-4 text-center">Báo cáo bình luận</h1>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-300 rounded-lg">
                         <thead class="bg-blue-600 text-white">
                             <tr>
-                                <th class="py-3 px-4 border-b">Feedback ID</th>
+                                <th class="py-3 px-4 border-b">Mã phản hồi</th>
                                 <th class="py-3 px-4 border-b">Email</th>
-                                <th class="py-3 px-4 border-b">Full Name</th>
-                                <th class="py-3 px-4 border-b">Room Name</th>
-                                <th class="py-3 px-4 border-b">Content</th>
-                                <th class="py-3 px-4 border-b">Action</th>
+                                <th class="py-3 px-4 border-b">Họ và tên</th>
+                                <th class="py-3 px-4 border-b">Tên phòng</th>
+                                <th class="py-3 px-4 border-b">Nội dung</th>
+                                <th class="py-3 px-4 border-b">Hành động</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -175,11 +176,11 @@
                                 <td class="py-3 px-4 border-b flex space-x-2">
                                     <form action="AcceptFeedbackServlet" method="get" style="display:inline;">
                                         <input type="hidden" name="feedbackId" value="<%= fb.getFeedbackId() %>">
-                                        <button type="submit" class="bg-green-500 text-white px-4 py-1 rounded">Accept</button>
+                                        <button type="submit" class="bg-green-500 text-white px-4 py-1 rounded">Đòng ý</button>
                                     </form>
                                     <form action="AcceptFeedbackServlet" method="post" style="display:inline;">
                                         <input type="hidden" name="feedbackId" value="<%= fb.getFeedbackId() %>">
-                                        <button type="submit" class="bg-red-500 text-white px-4 py-1 rounded">Cancel</button>
+                                        <button type="submit" class="bg-red-500 text-white px-4 py-1 rounded">hủy</button>
                                     </form>
                                 </td>
                             </tr>

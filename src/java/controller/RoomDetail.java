@@ -1,5 +1,7 @@
 package controller;
 
+import dao.BookingRoomDao;
+import dao.CustomerDao;
 import dao.FeedbackDao;
 import dao.RoomDao;
 import jakarta.servlet.RequestDispatcher;
@@ -15,10 +17,7 @@ import java.util.ArrayList;
 import model.Feedback;
 import model.Room;
 
-/**
- *
- * @author son
- */
+
 @WebServlet(name = "RoomDetail", urlPatterns = {"/RoomDetail"})
 public class RoomDetail extends HttpServlet {
 
@@ -46,11 +45,16 @@ public class RoomDetail extends HttpServlet {
         RoomDao rd = new RoomDao();
         FeedbackDao fd = new FeedbackDao();
         HttpSession session = request.getSession();
-
+        CustomerDao cd = new CustomerDao();
         // Retrieve the email from the session
         String userEmail = (String) session.getAttribute("email");
+        BookingRoomDao brd = new BookingRoomDao();
         if (roomIdParam != null) {
             try {
+                int count_checkBooking = brd.CheckBooking(roomIdParam);
+                request.setAttribute("count_checkBooking", count_checkBooking);
+                int count = cd.getCountCCCD(userEmail);
+                request.setAttribute("countCCCD", count);
                 int roomId = Integer.parseInt(roomIdParam);
                 Room room = rd.getRoomById(roomId);
                 System.out.println("room: " + room);

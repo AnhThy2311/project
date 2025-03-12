@@ -38,7 +38,7 @@
                                 />
                         </a>
                         <a class="nav-link active" href="/" style="padding-left: 20px"
-                           >Home</a
+                           >Trang chủ</a
                         >
 
                         <!-- Thanh tìm kiếm -->
@@ -91,17 +91,17 @@
             </div>
         </header>
         <div class="register-container">
-            <h2 class="text-center text-danger">Register</h2>
+            <h2 class="text-center text-danger">Đăng ký</h2>
             <form class="js-register-form clearfix" action="InsertCustomer" method="POST">
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="inputFullName" name="fullname" required minlength="3">
-                    <label for="inputFullName">FullName</label>
+                    <label for="inputFullName">Họ và Tên</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="inputPhone" name="phone_number" required>
-                    <label for="inputPhone">Phone Number</label>
+                    <label for="inputPhone">Số điện thoại</label>
                     <p id="phone-error" class="text-danger text-small"></p>
                 </div>
 
@@ -115,32 +115,46 @@
 
                 <div class="form-floating mb-3">
                     <input type="date" class="form-control" id="inputDob" name="date_of_birth" required>
-                    <label for="inputDob">Date of birth</label>
+                    <label for="inputDob">Ngày sinh</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input type="password" class="form-control" id="password" name="password" required minlength="6">
-                    <label for="password">Password</label>
+                    <label for="password">Mật khẩu</label>
                     <p id="password-error" class="text-danger text-small"></p>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input type="password" class="form-control" id="Confirmpassword" name="Confirmpassword" required minlength="6">
-                    <label for="Confirmpassword">Re-enter password</label>
+                    <label for="Confirmpassword">Nhập lại mật khẩu</label>
                     <p id="confirm-password-error" class="text-danger text-small"></p>
                 </div>
 
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-red">Create account</button>
+                    <button type="submit" class="btn btn-red">Đăng ký</button>
                 </div>
             </form>
 
-            <p class="text-center mt-3">
-                By registering, you agree to
-                <a href="/quy-dinh-su-dung" class="text-decoration-underline">terms of Use</a> & 
-                <a href="/chinh-sach-bao-mat" class="text-decoration-underline">privacy policy</a>.
+            <p class="fs-10 mt-4 pt-4">
+                Bằng cách đăng nhập hoặc tạo tài khoản, bạn đồng ý với
+                <a
+                    class="text-decoration-underline"
+                    target="_blank"
+                    rel="nofollow"
+                    href="/quy-dinh-su-dung"
+                    >Điều khoản sử dụng</a
+                >
+                bằng
+                <a
+                    class="text-decoration-underline"
+                    target="_blank"
+                    rel="nofollow"
+                    href="/chinh-sach-bao-mat"
+                    >chính sách bảo mật</a
+                >
+                của chúng tôi
             </p>
-            <p class="text-center text-muted small">© 2015 - 2025 QuickRent.com</p>
+            <p class="fs-10 m-0">Copyright © 20242024 - 2025</p>
         </div>
     </div>
 </div>

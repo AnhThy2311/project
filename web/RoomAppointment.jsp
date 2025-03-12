@@ -160,15 +160,15 @@
         </header>
         <div class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 flex items-center justify-center min-h-screen">
             <div class="container mx-auto p-4 bg-white shadow-lg rounded-lg">
-                <h1 class="text-4xl font-bold text-center mb-8 text-gray-800" id="appointmentsTitle">Room Appointments</h1>
+                <h1 class="text-4xl font-bold text-center mb-8 text-gray-800" id="appointmentsTitle">Lịch Hẹn Xem Phòng</h1>
                 <div class="overflow-x-auto">
                     <div class="grid grid-cols-6 bg-blue-500 text-white font-bold text-left p-3">
-                        <div name="appointmentIdHeader">Appointment ID</div>
-                        <div name="viewDateHeader">View Date</div>
-                        <div name="statusHeader">Status</div>
-                        <div name="roomNameHeader">Room Name</div>
-                        <div name="customerNameHeader">Customer Name</div>
-                        <div name="actionHeader">Action</div>
+                        <div name="appointmentIdHeader">ID Lịch hẹn</div>
+                        <div name="viewDateHeader">Ngày Xem</div>
+                        <div name="statusHeader">Trạng Thái</div>
+                        <div name="roomNameHeader">Phòng </div>
+                        <div name="customerNameHeader">Tên Người Xem</div>
+                        <div name="actionHeader">Hành Động</div>
                     </div>
                     <div class="divide-y divide-gray-200">
                         <% ArrayList<RoomAppointment> list_appointment = (ArrayList<RoomAppointment>) request.getAttribute("list_appointment");
@@ -190,16 +190,18 @@
                             } %>
                             <div name="viewDate" id="date<%= appointment.getAppointmentId() %>"><%= formattedDate %></div>
                             <div name="status" id="status<%= appointment.getAppointmentId() %>" class="<%= appointment.getStatus() == 1 ? "text-green-600 font-medium" : appointment.getStatus() == 2 ? "text-yellow-600 font-medium" : "text-red-600 font-medium" %>">
-                                <%= appointment.getStatus() == 1 ? "Confirmed" : appointment.getStatus() == 0 ? "Waiting" : "Cancel" %>
+                                <%= appointment.getStatus() == 1 ? "đã xác nhận" : appointment.getStatus() == 0 ? "đang chờ" : "hủy" %>
                             </div>
                             <div name="roomName" id="room<%= appointment.getAppointmentId() %>"><%= appointment.getRoom().getRoomName() %></div>
                             <div name="customerName" id="customer<%= appointment.getAppointmentId() %>"><%= appointment.getRoom().getCustomer().getFullName() %></div>
+                            <% if( appointment.getStatus() != 1){ %>
                             <div>
                                 <form action="RoomAppointmentServlet?COMMAND=DELETE_APPOINTMENT" method="post">
                                     <input type="hidden" name="roomId" value="<%= appointment.getRoom().getRoomId() %>">
-                                    <button name="deleteButton" id="delete<%= appointment.getAppointmentId() %>" type="submit" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition duration-300">Delete</button>
+                                    <button name="deleteButton" id="delete<%= appointment.getAppointmentId() %>" type="submit" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition duration-300">xóa</button>
                                 </form>
                             </div>
+                                <% } %>
                         </div>
                         <% } } else { %>
                         <p class="text-center text-muted">No appointments found.</p>

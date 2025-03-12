@@ -1,4 +1,3 @@
-
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Room" %>
 <%@ page import="model.ChatBox" %>
@@ -283,6 +282,8 @@
                                         String userImage = (sessionUser != null && sessionUser.getAttribute("userImage") != null) 
                                             ? (String) sessionUser.getAttribute("userImage") 
                                             : "default_user.jpg"; // Mặc định nếu không có ảnh
+                                        
+ Integer state = (Integer) session.getAttribute("state");
         %>
 
         <header class="navbar-custom sticky-top">
@@ -294,38 +295,13 @@
                             <img
                                 src="https://static.muonnha.com.vn/images/logo.png?w=384&p=100"
                                 alt="Muôn Nhà"
-                                width="160"
+                                width="100"
                                 height="46"
                                 />
                         </a>
                         <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
-                           >Home</a
+                           >Trang chủ</a
                         >
-
-                        <!-- Thanh tìm kiếm -->
-                        <div class="d-none d-md-flex ms-3">
-                            <div class="filter__bar pb-2">
-                                <div class="w-100">
-                                    <div class="d-flex position-relative bg-white">
-                                        <!-- Nút tìm theo khu vực -->
-                                        <div
-                                            data-bs-toggle="offcanvas"
-                                            data-bs-target="#offcanvasLocation"
-                                            aria-controls="offcanvasLocation"
-                                            class="btn__search d-flex align-items-center"
-                                            >
-                                            <span class="material-icons me-2">location_on</span>
-                                            <span
-                                                class="fw-normal flex-grow-1 line-clamp-1 text-body"
-                                                >
-                                                Search by area
-                                            </span>
-                                        </div>
-                                        <!-- Nút bộ lọc -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Các nút đăng ký, đăng nhập, đăng tin -->
@@ -365,13 +341,13 @@
                                 %>
                                 <!-- Không có tin nhắn -->
                                 <li class="dropdown-item text-center py-2">
-                                    <span class="text-muted">No new messages</span>
+                                    <span class="text-muted">không có tin nhắn</span>
                                 </li>
                                 <% } %>
 
                                 <!-- Xem tất cả tin nhắn -->
                                 <li class="dropdown-item text-center py-2">
-                                    <a href="messages.jsp" class="text-primary fw-semibold">View all messages</a>
+                                    <a href="messages.jsp" class="text-primary fw-semibold">tất cả tin nhắn</a>
                                 </li>
                             </ul>
                         </div>
@@ -385,6 +361,29 @@
                             <i class="bi bi-heart"></i>
                         </a>
                         <% } %>
+                        <% if (username != null) { %>
+                        <a href="ListContractCustomer">
+                            <button class="btn btn-outline-secondary me-2">DS hợp đồng thuê</button>
+                        </a>
+
+                        <% } %>
+                        <% if (state != null && state == 3) { %>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle me-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                Quản lý hợp đồng
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li>
+                                    <a class="dropdown-item" href="OwnerListContractCustomer">DS hợp đồng cho thuê</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="OwnerBookingRoom">DS cho thuê</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <% } %>
+
+
 
                         <% 
      if (username != null) { 
@@ -394,26 +393,24 @@
                              alt="Ảnh đại diện tài khoản" width="33" height="33" />
                         <span class="me-2"><%= username %></span>
                         <a href="WalletServlet">
-                            <button class="btn btn-outline-secondary me-2">wallet</button>
+                            <button class="btn btn-outline-secondary me-2">ví</button>
                         </a>
                         <a href="RoomAppointmentServlet">
-                            <button class="btn btn-outline-secondary me-2">Room View Schedule</button>
+                            <button class="btn btn-outline-secondary me-2">Lịch Xem Phòng</button>
                         </a>
                         <a href="ChangePassword.jsp">
-                            <button class="btn btn-outline-secondary me-2">Change Password</button>
+                            <button class="btn btn-outline-secondary me-2">Đổi mật khẩu</button>
                         </a>
                         <a href="Profile">
-                            <button class="btn btn-outline-secondary me-2">Profile</button>
+                            <button class="btn btn-outline-secondary me-2">Thông tin</button>
                         </a>
                         <a href="Logout.jsp">
-                            <button class="btn btn-outline-secondary me-2">Logout</button>
+                            <button class="btn btn-outline-secondary me-2">Đăng xuất</button>
                         </a>
                         <%
-    Integer state = (Integer) session.getAttribute("state");
-
         if (state == 3) {
                         %>
-                        <a  href="OwnerRoomAppointment" class="btn btn-outline-danger me-2">Xem Lịch Đặt Phòng</a>
+                        <a  href="OwnerRoomAppointment" class="btn btn-outline-danger me-2"> Lịch Đặt Xem Phòng</a>
                         <a  href="GetPostRooms?email=<%=username%>" class="btn btn-outline-danger me-2">Đăng tin</a>
 
                         <%
@@ -442,11 +439,11 @@
                 <div class="search-box">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Room</a>
+                            <a class="nav-link active" href="#">Phòng Trọ</a>
                         </li>
                     </ul>
                     <div class="search-bar">
-                        <h3 class="form-select">Find a Room</h3>
+                        <h3 class="form-select">Tìm Kiếm Phòng Trọ</h3>
                     </div>
                     <div class="filter-options">
                         <form
@@ -463,7 +460,7 @@
                                     onchange="updateSearchDistricts()"
                                     required
                                     >
-                                    <option value="">Select City</option>
+                                    <option value="">Chọn Thành Phố</option>
                                     <option value="Hà Nội">Hà Nội</option>
                                     <option value="TP Hồ Chí Minh">TP Hồ Chí Minh</option>
                                     <option value="Đà Nẵng">Đà Nẵng</option>
@@ -478,7 +475,7 @@
                                     onchange="updateSearchWardAndStreet()"
                                     required
                                     >
-                                    <option value="">Select District</option>
+                                    <option value="">Chọn Huyện</option>
                                 </select>
                             </div>
 
@@ -489,7 +486,7 @@
                                     name="ward"
                                     required
                                     >
-                                    <option value="">Select Ward</option>
+                                    <option value="">Chọn Phường</option>
                                 </select>
                             </div>
 
@@ -500,12 +497,12 @@
                                     name="street"
                                     required
                                     >
-                                    <option value="">Select Street</option>
+                                    <option value="">Chọn Đường</option>
                                 </select>
                             </div>
 
                             <div class="col-auto">
-                                <button class="btn btn-primary">🔍 Find</button>
+                                <button class="btn btn-primary">🔍 Tìm Kiếm</button>
                             </div>
                         </form>
                     </div>

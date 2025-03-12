@@ -14,10 +14,7 @@ import database.database;
 import model.Customer;
 import model.Position;
 
-/**
- *
- * @author son
- */
+
 public class RoomDao {
 
     public ArrayList<Room> getAllRooms() {
@@ -208,5 +205,7 @@ public class RoomDao {
         }
         return null;
     }
-
+    
+ 
+   
 }

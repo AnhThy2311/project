@@ -48,7 +48,7 @@
                                 />
                         </a>
                         <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
-                           >Home</a
+                           >Trang Chủ</a
                         >
 
                         <!-- Thanh tìm kiếm -->
@@ -72,16 +72,6 @@
                                         </div>
 
                                         <!-- Nút bộ lọc -->
-                                        <button
-                                            type="button"
-                                            data-bs-toggle="offcanvas"
-                                            data-bs-target="#offcanvasAdvance"
-                                            aria-controls="offcanvasAdvance"
-                                            class="btn btn__funnel ms-2"
-                                            >
-                                            <i class="bi-funnel me-1"></i>
-                                            <span>Bộ lọc</span>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +104,7 @@
                             <button class="btn btn-outline-secondary me-2">Thông tin</button>
                         </a>
                         <a href="Logout.jsp">
-                            <button class="btn btn-outline-secondary me-2">Logout</button>
+                            <button class="btn btn-outline-secondary me-2">Đăng xuất</button>
                         </a>
                         <%
     Integer state = (Integer) session.getAttribute("state");
@@ -146,12 +136,12 @@
         <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
             <div class="bg-white shadow-lg rounded-lg w-full max-w-md p-6">
                 <div class="bg-blue-600 text-white text-center py-4 rounded-t-lg">
-                    <h4 class="text-2xl font-bold">Change Password</h4>
+                    <h4 class="text-2xl font-bold">Đổi mật khẩu</h4>
                 </div>
                 <div class="mt-6">
                     <form action="ChangePassword" method="post" class="space-y-6">
                         <div>
-                            <label class="block text-gray-700 font-medium">Old Password:</label>
+                            <label class="block text-gray-700 font-medium">Mật Khẩu Cũ</label>
                             <input type="password" name="oldPassword" class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
                         <% String errorMessage = (String) request.getAttribute("errorMessage"); 
@@ -160,12 +150,12 @@
                         <% } %>
 
                         <div>
-                            <label class="block text-gray-700 font-medium">New Password:</label>
+                            <label class="block text-gray-700 font-medium">Mật Khẩu Mới</label>
                             <input type="password" name="newPassword" class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
 
                         <div>
-                            <label class="block text-gray-700 font-medium">Confirm New Password:</label>
+                            <label class="block text-gray-700 font-medium">Nhập Lại Mật Khẩu Mới</label>
                             <input type="password" name="confirmPassword" class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
                         <% String errorMessage1 = (String) request.getAttribute("errorMessage1"); 

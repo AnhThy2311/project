@@ -160,16 +160,17 @@
 
             <!-- Bảng danh sách phòng -->
             <div class="bg-white shadow-lg rounded-lg p-6">
-                <h1 class="text-center text-3xl font-bold mb-6 text-blue-600">Room list</h1>
+                <h1 class="text-center text-3xl font-bold mb-6 text-blue-600">Danh Sách bài đăng</h1>
                 <div class="overflow-x-auto">
                     <table class="w-full bg-white border border-gray-300 shadow-md rounded-lg">
                         <thead class="bg-blue-600 text-white">
                             <tr>
-                                <th class="w-1/6 py-3 px-4">Image</th>
-                                <th class="w-1/6 py-3 px-4">Room</th>
-                                <th class="w-1/6 py-3 px-4">Price</th>
-                                <th class="w-1/3 py-3 px-4">Address</th>
-                                <th class="w-1/6 py-3 px-4">Action</th>
+                                <th class="w-1/6 py-3 px-4">Hình ảnh</th>
+                                <th class="w-1/6 py-3 px-4">Phòng</th>
+                                <th class="w-1/6 py-3 px-4">Giá</th>
+                                <th class="w-1/3 py-3 px-4">Địa chỉ</th>
+                                <th class="w-1/6 py-3 px-4">Hành động</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -193,11 +194,11 @@
                                     <div class="flex justify-center space-x-2">
                                         <a href="UpdatePostRoom?id=<%= post.getId() %>" 
                                            class="bg-blue-500 text-white px-4 py-1 rounded shadow-md hover:bg-blue-700 transition">
-                                            Update
+                                            Chỉnh sửa
                                         </a>
                                         <a href="#" onclick="showmessg(<%=post.getId()%>)" 
                                            class="bg-red-500 text-white px-4 py-1 rounded shadow-md hover:bg-red-700 transition">
-                                            Delete
+                                            xóa
                                         </a>
                                     </div>
                                 </td>

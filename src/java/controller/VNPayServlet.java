@@ -56,7 +56,6 @@ public class VNPayServlet extends HttpServlet {
             pay.addRequestData("vnp_TxnRef", txnRef);
 
             String paymentUrl = pay.createRequestUrl(vnp_PayUrl, hashSecret);
-
             response.sendRedirect(paymentUrl);
 
         } catch (Exception e) {

@@ -63,7 +63,6 @@ public class Profile extends HttpServlet {
          request.setAttribute("information", information);
         // Store Information in the session
         session.setAttribute("information", information);
-
         request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
 

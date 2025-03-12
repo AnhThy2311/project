@@ -68,7 +68,7 @@ public class FeedbackDao {
             con = database.getConnection();
             String sql = "SELECT COUNT(*) as count FROM Booking b "
                     + "JOIN Users u ON b.user_id = u.user_id "
-                    + "WHERE u.email = ? AND b.room_id = ?";
+                    + "WHERE u.email = ? AND b.room_id = ? and b.status=1";
 
             st = con.prepareStatement(sql);
             st.setString(1, userEmail);

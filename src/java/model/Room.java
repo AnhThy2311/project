@@ -59,9 +59,6 @@ public class Room {
         this.roomId = roomId;
     }
 
-
-
-  
     public String getRoomName() {
         return roomName;
     }

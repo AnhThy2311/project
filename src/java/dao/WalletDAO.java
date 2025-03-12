@@ -25,7 +25,7 @@ public class WalletDAO {
 
         try (Connection conn = database.getConnection()) {
             if (conn == null) {
-                System.out.println("❌ Connection is null!");
+                System.out.println(" Connection is null!");
                 return false;
             }
 
@@ -108,7 +108,7 @@ public class WalletDAO {
         return -1;
     }
     public void updatePrice(float price,String userID){
-        String sql = "	update Wallet set balance=? where user_id=?";
+        String sql = "update Wallet set balance=? where user_id=?";
         Connection con = null;
         PreparedStatement pr = null;
         ResultSet re= null;
@@ -122,4 +122,5 @@ public class WalletDAO {
             System.out.println(e);
         }
     }
+   
 }

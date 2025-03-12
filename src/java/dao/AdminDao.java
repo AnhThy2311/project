@@ -1,12 +1,17 @@
 package dao;
+
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import database.database;
+import model.Account_upgrade;
 import model.AdminPending;
+import model.BookingRoom;
+import model.Contract;
 import model.Customer;
+import model.Room;
 
 public class AdminDao {
 
@@ -120,5 +125,84 @@ public class AdminDao {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public void CancelPost(String positionId) {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            String sql = "update Rooms set status=0 where position_id=?";
+            pr = con.prepareStatement(sql);
+            pr.setString(1, positionId);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public ArrayList<Customer> getAccount_upgrade() {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select a.user_id,u.email , u.full_name, a.created_at, a.price from account_upgrade as a , Users as u where a.user_id = u.user_id";
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            rs = pr.executeQuery();
+            ArrayList<Customer> list = new ArrayList<>();
+            while (rs.next()) {
+                Customer c = new Customer();
+                Account_upgrade acc = new Account_upgrade();
+                acc.setUser_id(rs.getString(1));
+                c.setEmail(rs.getString(2));
+                c.setFullName(rs.getString(3));
+                acc.setCreate_date(rs.getString(4));
+                acc.setPrice(rs.getFloat(5));
+                c.setAccount_upgrade(acc);
+                list.add(c);
+            }
+            return list;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public ArrayList<BookingRoom> getmanager_financial() {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select u.email , u.full_name, r.room_name ,b.start_date,b.months,b.end_date, c.room_price, c.admin_fee from Contract as c , Users as u , Booking as b , Rooms as r \n"
+                    + "where c.status=1 and c.tenant_id =u.user_id and c.booking_id=b.booking_id and r.room_id =b.room_id";
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            rs = pr.executeQuery();
+            ArrayList<BookingRoom> list = new ArrayList<>();
+            while (rs.next()) {
+                BookingRoom b = new BookingRoom();
+                Contract c = new Contract();
+                Customer customer = new Customer();
+                Room r = new Room();
+                customer.setEmail(rs.getString(1));
+                customer.setFullName(rs.getString(2));
+                r.setRoomName(rs.getString(3));
+                b.setDate(rs.getString(4));
+                b.setMonth(rs.getString(5));
+                b.setEnd_date(rs.getString(6));
+                c.setRoom_price(rs.getFloat(7));
+                c.setAdmin_price(rs.getFloat(8));
+                b.setCustomer(customer);
+                b.setC(c);
+                b.setRoom(r);
+                list.add(b);
+            }
+            return list;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }

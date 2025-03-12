@@ -84,7 +84,7 @@ import model.RoomAppointment;
         System.out.println("viewDAte: "+viewDate);
         appointmentdao.createAppointment(customerId, roomId, viewDate);
         String appointmentId = appointmentdao.getAppointmentId(customerId, roomId);
-        ArrayList<RoomAppointment> list_Appointment = appointmentdao.viewRoomAppointment(appointmentId); // Fetch rooms from database
+        ArrayList<RoomAppointment> list_Appointment = appointmentdao.viewRoomAppointment(appointmentId); 
         if (list_Appointment != null && !list_Appointment.isEmpty()) {
             request.setAttribute("list_appointment", list_Appointment);
         } else {

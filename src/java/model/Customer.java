@@ -8,7 +8,7 @@ public class Customer {
     public String birthDate;
     public String image;
     public int state;
-    
+    public Account_upgrade account_upgrade;
     
     public Customer(String email, String password, String phone, String fullName, String birthDate, String image) {
         this.email = email;
@@ -36,6 +36,14 @@ public class Customer {
         this.state = state;
     }
     public Customer() {
+    }
+
+    public Account_upgrade getAccount_upgrade() {
+        return account_upgrade;
+    }
+
+    public void setAccount_upgrade(Account_upgrade account_upgrade) {
+        this.account_upgrade = account_upgrade;
     }
 
     public String getPhone() {

@@ -144,6 +144,7 @@
                 </div>
             </div>
         </header>
+                        <% int count_checkBooking = (int) request.getAttribute("count_checkBooking") ;%>
         <main>
             <div class="container mt-4">
                 <div class="row mt-3">
@@ -191,7 +192,7 @@
                                     </tr>
                                     <tr>
                                         <th class="table-secondary">Giá thuê</th>
-                                        <td class="fw-bold text-danger"><%= room.getPrice() %> triệu/tháng</td>
+                                        <td class="fw-bold text-danger"><%= room.getPrice() %> VND/tháng</td>
                                     </tr>
 
                                     <tr>
@@ -232,16 +233,21 @@
                                    onclick="return checkLogin(event)">
                                     <i class="icon chat-text white me-2"></i> Liên Hệ
                                 </a>
+                                   <% if(count_checkBooking==0) {%>
                                 <a class="btn btn-success text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
-                                   href="#"
+                                   href="Contract.jsp?roomid=<%=room.getRoomId()%>"
                                    onclick="return checkLogin(event)">
                                     <i class="icon house white me-2"></i> Thuê Trọ
                                 </a>
+
                                 <a class="btn btn-warning text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
                                    href="#" 
                                    onclick="openDatePickerModal(event)">
                                     <i class="icon calendar white me-2"></i> Đặt Lịch
                                 </a>
+                                   <% }else if(count_checkBooking>0){%>
+                                   phòng trọ đã được thuê
+                                    <% } %>
                             </div>
                             <div class="d-flex justify-content-between mt-3">
                                 <button class="btn btn-white btn__save__lg fs-7 d-flex text-nowrap js-btn-save" 
@@ -279,9 +285,9 @@
                                           name="content" 
                                           class="form-control" 
                                           style="min-height: 100px; resize: vertical;" 
-                                          placeholder="Write your feedback here..."></textarea>
+                                          placeholder="Viết bình luận ở đây..."></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-2">Submit Feedback</button>
+                            <button type="submit" class="btn btn-primary mt-2">gửi</button>
                         </form>
 
                         <div id="feedbackMessage" class="mt-2" style="display: none;"></div>
@@ -349,18 +355,18 @@
                                                         <form action="DeleteFeedBack" method="get" onsubmit="return confirm('Bạn có chắc muốn xóa không?')">
                                                             <input type="hidden" name="roomid" value="<%=room.getRoomId() %>">
                                                             <input type="hidden" name="feedback" value="<%=fb.getFeedbackId() %>">
-                                                            <button type="submit" class="dropdown-item delete-feedback-btn">Delete</button>
+                                                            <button type="submit" class="dropdown-item delete-feedback-btn">xóa</button>
                                                         </form>
                                                     </li>
                                                     <% } else if(userRole == 1 || userRole == 2|userRole == 3) { %>
                                                     <form action="DeleteFeedBack" method="post" onsubmit="return confirm('Bạn có chắc muốn report không?')">
                                                         <input type="hidden" name="roomid" value="<%=room.getRoomId() %>">
                                                         <input type="hidden" name="feedback" value="<%=fb.getFeedbackId() %>">
-                                                        <button type="submit" class="dropdown-item delete-feedback-btn">Report</button>
+                                                        <button type="submit" class="dropdown-item delete-feedback-btn">Báo cáo phàn hồi</button>
                                                     </form>
                                                     <% } else{%>
                                                     <li>You must login</li>
-                                                    <% } %>
+                                                        <% } %>
                                                 </ul>
                                             </div>
                                         </div>
@@ -395,6 +401,7 @@
                 </div>
             </div>
         </main>
+                    
         <!-- Modal để hiển thị lịch -->
         <form action="RoomAppointmentServlet?COMMAND=CREATE_APPOINTMENT" method="post">
             <input type="hidden" name="roomId" value="<%= room.getRoomId() %>">
@@ -526,6 +533,17 @@
                     }
                 });
             });
+        </script>
+        <script>
+            function checkLogin(event) {
+                var count = ${countCCCD};
+                if (count === 0) {
+                    event.preventDefault(); // Ngăn chặn chuyển trang
+                    alert("Yêu cầu bạn cập nhật thông tin CCCD trước khi thuê trọ!");
+                    return false; // Trả về false để không tiếp tục sự kiện
+                }
+                return true;
+            }
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/your_code.js" crossorigin="anonymous"></script>

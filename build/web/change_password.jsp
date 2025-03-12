@@ -150,7 +150,7 @@
         </header>
         <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-green-400 to-blue-500">
             <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-                <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Reset Password</h2>
+                <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Đặt lại mật khẩu</h2>
                 <form action="ResertPassword" method="post" onsubmit="return validatePassword()">
                     <div class="mb-4">
                         <label for="email" class="block text-gray-700 mb-2">Email</label>
@@ -158,17 +158,17 @@
                                class="w-full px-4 py-2 border rounded-lg bg-gray-100">
                     </div>
                     <div class="mb-4">
-                        <label for="newPassword" class="block text-gray-700 mb-2">New Password</label>
-                        <input type="password" name="newPassword" id="newPassword" placeholder="Enter new password" required
+                        <label for="newPassword" class="block text-gray-700 mb-2">Mật khẩu mới</label>
+                        <input type="password" name="newPassword" id="newPassword" placeholder="Nhập mật khẩu mới" required
                                class="w-full px-4 py-2 border rounded-lg">
                     </div>
                     <div class="mb-6">
-                        <label for="confirmPassword" class="block text-gray-700 mb-2">Confirm New Password</label>
-                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm new password" required
+                        <label for="confirmPassword" class="block text-gray-700 mb-2">Nhập lại mật khẩu mới</label>
+                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Nhập lại mật khẩu mới" required
                                class="w-full px-4 py-2 border rounded-lg">
                     </div>
                     <button type="submit" class="w-full bg-blue-700 text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200">
-                        Change Password
+                        Đôir mật khẩu 
                     </button>
                 </form>
             </div>

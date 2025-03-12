@@ -116,8 +116,8 @@
                 <input type="hidden" name="roomId" value="<%= request.getAttribute("roomId") %>">
                 <input type="hidden" name="senderId" value="<%= sendId %>">
                 <input type="hidden" name="receiverId" value="<%= request.getAttribute("reveivedId") %>">
-                <input type="text" name="message" class="flex-1 p-1 rounded-lg border border-gray-400 text-sm" placeholder="Type a message..." required>
-                <button type="submit" class="bg-blue-500 text-white p-1 rounded-lg ml-2 text-sm">Send</button>
+                <input type="text" name="message" class="flex-1 p-1 rounded-lg border border-gray-400 text-sm" placeholder="Nhập tin nhắn..." required>
+                <button type="submit" class="bg-blue-500 text-white p-1 rounded-lg ml-2 text-sm">Gửi</button>
             </form>
         </div>
     </div>

@@ -38,7 +38,7 @@
                                 />
                         </a>
                         <a class="nav-link active" href="/" style="padding-left: 20px"
-                           >Home</a
+                           >Trang Chủ</a
                         >
                         <!-- Thanh tìm kiếm -->
                         <div class="d-none d-md-flex ms-3">
@@ -56,7 +56,7 @@
                                             <span
                                                 class="fw-normal flex-grow-1 line-clamp-1 text-body"
                                                 >
-                                                Search by area
+                                                Tìm theo khu vực
                                             </span>
                                         </div>
 
@@ -69,7 +69,7 @@
                                             class="btn btn__funnel ms-2"
                                             >
                                             <i class="bi-funnel me-1"></i>
-                                            <span>Filter</span>
+                                            <span>Bộ lọc</span>
                                         </button>
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@
         </header>
         <div class="login-container">
             <form class="js-login-form clearfix" action="Login" method="POST">
-                <h3 class="text-center mb-4">Login</h3>
+                <h3 class="text-center mb-4">Đăng nhập</h3>
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="inputPhoneEmailLogin" placeholder="Số điện thoại" 
@@ -101,7 +101,7 @@
                 <div class="form-floating mb-4">
                     <input type="password" class="form-control" id="password" placeholder="password" 
                            name="password" required />
-                    <label for="password">Password</label>
+                    <label for="password">Mật Khẩu</label>
                 </div>
 
                 <% if (request.getAttribute("errorMessage") != null) { %>
@@ -112,32 +112,32 @@
                 <% } %>
                 <div class="d-grid mb-3">
                     <button type="submit" name="wp-submit-login" class="btn btn-red btn-lg">
-                        Login
+                        Đăng nhập
                     </button>
                 </div>
 
                 <p class="text-center">
-                    <a class="text-decoration-underline" href="Forgot_Password.jsp">Forgot password?</a>
+                    <a class="text-decoration-underline" href="Forgot_Password.jsp">Quên Mật Khẩu?</a>
                 </p>
             </form>
             <p class="fs-10 mt-4 pt-4">
-               By logging in or creating an account, you agree to the
+              Bằng cách đăng nhập hoặc tạo tài khoản, bạn đồng ý với
                 <a
                     class="text-decoration-underline"
                     target="_blank"
                     rel="nofollow"
                     href="/quy-dinh-su-dung"
-                    >Terms of Use</a
+                    >Điều khoản sử dụng</a
                 >
-                as
+               bằng
                 <a
                     class="text-decoration-underline"
                     target="_blank"
                     rel="nofollow"
                     href="/chinh-sach-bao-mat"
-                    >privacy policy</a
+                    >chính sách bảo mật</a
                 >
-                our
+                của chúng tôi
             </p>
             <p class="fs-10 m-0">Copyright © 20242024 - 2025</p>
         </div>

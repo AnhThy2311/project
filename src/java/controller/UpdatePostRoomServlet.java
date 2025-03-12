@@ -87,7 +87,7 @@ public class UpdatePostRoomServlet extends HttpServlet {
 
             // Cập nhật thông tin phòng trong database
             PostRoomsDao prd = new PostRoomsDao();
-            prd.updatePostRoom(room_name, price1, fileNameWithExtension, id);
+                prd.updatePostRoom(room_name, price1, fileNameWithExtension, id);
             response.sendRedirect("RoomServlet");
         } catch (IOException | ServletException ex) {
             ex.printStackTrace();  // In lỗi ra console để debug

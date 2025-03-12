@@ -59,14 +59,7 @@ public class PostRoom extends HttpServlet {
        
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -98,6 +91,7 @@ public class PostRoom extends HttpServlet {
         String district = request.getParameter("district");
         String ward = request.getParameter("ward");
         String street = request.getParameter("street");
+        String descriptionlocation= request.getParameter("descriptionlocation");
         String houseNumber = request.getParameter("houseNumber");
         String roomName = request.getParameter("room_name");
         String description = request.getParameter("description");
@@ -127,7 +121,7 @@ public class PostRoom extends HttpServlet {
         CustomerDao cd= new CustomerDao();
         int user_id= cd.getUserId(email);
         System.out.println("used_id"+user_id);
-        prd.insertPosition(houseNumber, street, ward, district, city, description);
+        prd.insertPosition(houseNumber, street, ward, district, city, descriptionlocation);
         prd.insertRooms(roomName, description, price, position_id, user_id, fileNameWithExtension);
         response.sendRedirect("GetPendingapproval");
     }

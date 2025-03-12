@@ -56,7 +56,7 @@ public class Login extends HttpServlet {
                 System.out.println("anh dai dien: " + c.getImage());
                 HttpSession http = request.getSession();
                 http.setAttribute("email", c.getEmail());
-                http.setAttribute("userImage", c.getImage());  // Lưu đường dẫn ảnh
+                http.setAttribute("userImage", c.getImage());  
                 http.setAttribute("state", state);
                 if (state == 3) {
                     response.sendRedirect("RoomServlet");
@@ -66,12 +66,12 @@ public class Login extends HttpServlet {
                     response.sendRedirect("RoomServlet");
                 }
             } else {
-                request.setAttribute("errorMessage1", "Your account is locked!");
+                request.setAttribute("errorMessage1", "Tài khoản cửa bạn đã bị khóa!");
                 request.getRequestDispatcher("Loggin.jsp").forward(request, response);
             }
 
         } else {
-            request.setAttribute("errorMessage", "Email or password is incorrect!");
+            request.setAttribute("errorMessage", "Email hoặc mật khẩu bị sai!");
             request.getRequestDispatcher("Loggin.jsp").forward(request, response);
         }
     }

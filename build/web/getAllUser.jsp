@@ -152,17 +152,17 @@
             </div>
         </header>
         <div class="container mt-4">
-            <h1 class="mb-4 text-center" style="font-size: 200%">Admin List</h1>
+            <h1 class="mb-4 text-center" style="font-size: 200%">Danh Sách người dùng</h1>
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">
                     <tr>
                         <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Full Name</th>
-                        <th>Date of Birth</th>
-                        <th>Image</th>
-                        <th>Action</th>
-                        <th>State</th>
+                        <th>Số điện thoại</th>
+                        <th>Họ và tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Hình ảnh</th>
+                        <th>Hành động</th>
+                        <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -202,14 +202,12 @@
                         </td>
                         <td>
                             <% if (admin.getState() == 1) { %>
-                            <!-- Nếu admin đang mở khóa (Unlock), chỉ hiển thị nút Block -->
                             <form action="UnanBlockServlet" method="get" style="display:inline;">
                                 <input type="hidden" name="email" value="<%= admin.getEmail() %>">
                                 <input type="hidden" name="action" value="block">
                                 <button type="submit" class="btn btn-danger btn-sm">Block</button>
                             </form>
                             <% } else { %>
-                            <!-- Nếu admin đang bị khóa (Block), chỉ hiển thị nút Unlock -->
                             <form action="UnanBlockServlet" method="post" style="display:inline;">
                                 <input type="hidden" name="email" value="<%= admin.getEmail() %>">
                                 <input type="hidden" name="action" value="unlock">

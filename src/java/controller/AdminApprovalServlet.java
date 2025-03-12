@@ -63,7 +63,11 @@ public class AdminApprovalServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        AdminDao ad = new AdminDao();
+        String postionId = request.getParameter("positionId");
+        System.out.println("positionID là : "+postionId);
+          ad.CancelPost(postionId);
+        response.sendRedirect("AdminGetPendingapproval");
     }
 
     /** 

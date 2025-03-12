@@ -153,12 +153,13 @@
                 <table class="min-w-full bg-white border border-gray-200 shadow-lg">
                     <thead class="bg-gray-200">
                         <tr>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Image</th>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Room Name</th>
+                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Hình ảnh</th>
+                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Tên phòng</th>
                             <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Email</th>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Full Name</th>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Number</th>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Action</th>
+                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Họ và tên</th>
+                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Số lượng</th>
+                            <th class="py-2 px-4 border-b border-gray-300 text-left text-gray-700">Hành động</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -178,11 +179,11 @@
                             <td class="py-2 px-4 border-b border-gray-300">
                                 <form action="AcceptRoom" method="post" style="display:inline;">
                                     <input type="hidden" name="roomId" value="<%= r.getRoomId() %>">
-                                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Accept</button>
+                                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Đồng ý</button>
                                 </form>
                                 <form action="CancelRoom" method="post" style="display:inline;">
                                     <input type="hidden" name="roomId" value="<%= r.getRoomId() %>">
-                                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Cancel</button>
+                                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">hủy</button>
                                 </form>
                             </td>
                         </tr>

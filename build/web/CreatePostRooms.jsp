@@ -436,7 +436,11 @@
                             <option value="">Chọn Đường</option>
                         </select>
                     </div>
-
+                     <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">Mô tả chi tiết vị trí</label>
+                        <input type="text" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               id="descriptionlocation" name="descriptionlocation" required>
+                    </div>
                     <!-- Số Nhà -->
                     <div class="mb-6">
                         <label class="block text-gray-700 font-semibold mb-2">Số Nhà</label>

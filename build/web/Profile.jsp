@@ -53,7 +53,7 @@
                                 />
                         </a>
                         <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
-                           >Home</a
+                           >Trang Chủ</a
                         >
 
                         <!-- Thanh tìm kiếm -->
@@ -154,20 +154,20 @@
         <div class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 flex items-center justify-center min-h-screen">
             <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-6xl">
                 <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">
-                    User Profile
+                    Thông Tin Người Dùng
                 </h1>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                     <div class="flex flex-col items-center">
                         <img alt="User avatar showing a person working on a laptop" class="rounded-full w-40 h-40 object-cover shadow-md mb-6" height="150" src="${pageContext.request.contextPath}/images/<%= (customer.getImage() != null) ? customer.getImage() : "default_user.jpg" %>" width="150"/>
                         <a href="upload.jsp" class="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition duration-300">
-                            Edit Avatar
+                            Thay Đổi Avatar
                         </a>
                     </div>
                     <form action="EditProfile" method="post" class="needs-validation" novalidate>
                         <div class="bg-gray-50 p-6 rounded-lg shadow-inner w-full">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-lg font-bold mb-2">FULL NAME:</label>
+                                    <label class="block text-lg font-bold mb-2">Họ và Tên</label>
                                     <input type="text" class="form-control w-full" id="fullName" name="name" value="<%= customer.getFullName() %>" required oninvalid="this.setCustomValidity('Please fill out this field.')" oninput="setCustomValidity('')"/>
                                 </div>
                                 <div>
@@ -175,11 +175,11 @@
                                     <input type="email" class="form-control w-full" id="email" name="email" value="<%= customer.getEmail() %>" readonly="readonly"/>
                                 </div>
                                 <div>
-                                    <label class="block text-lg font-bold mb-2">Phone Number:</label>
+                                    <label class="block text-lg font-bold mb-2">Số Điện Thoại:</label>
                                     <input type="text" class="form-control w-full" id="phone" name="phone" value="<%= customer.getPhone() %>" required oninvalid="this.setCustomValidity('Please fill out this field.')" oninput="setCustomValidity('')"/>
                                 </div>
                                 <div>
-                                    <label class="block text-lg font-bold mb-2">Date of Birth:</label>
+                                    <label class="block text-lg font-bold mb-2">Ngày Sinh:</label>
                                     <input type="date" class="form-control w-full" id="dob" name="dob" value="<%
                                         String birthDateString = customer.getBirthDate();
                                         if (birthDateString != null) {
@@ -199,23 +199,47 @@
                                 </div>
                                 <div>
                                     <label class="block text-lg font-bold mb-2">CCCD:</label>
-                                    <input type="text" class="form-control w-full" value="<%= (information != null && information.getCCCD() != null) ? information.getCCCD() : "" %>" name="cccd" required oninvalid="this.setCustomValidity('Please fill out this field.')" oninput="setCustomValidity('')"/>
+                                    <input type="text" class="form-control w-full" 
+                                           value="<%= (information != null && information.getCCCD() != null) ? information.getCCCD() : "" %>" 
+                                           name="cccd" 
+                                           required 
+                                           oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                                           oninput="setCustomValidity('')" 
+                                           <%= (information != null && information.getCCCD() != null) ? "readonly" : "" %> />
                                 </div>
                                 <div>
-                                    <label class="block text-lg font-bold mb-2">Issue Date:</label>
-                                    <input type="date" class="form-control w-full" value="<%= (information != null && information.getIssueDate() != null) ? information.getIssueDate() : "" %>" name="date" required oninvalid="this.setCustomValidity('Please fill out this field.')" oninput="setCustomValidity('')"/>
+                                    <label class="block text-lg font-bold mb-2">Ngày Cấp:</label>
+                                    <input type="date" class="form-control w-full" 
+                                           value="<%= (information != null && information.getIssueDate() != null) ? information.getIssueDate() : "" %>" 
+                                           name="date" 
+                                           required 
+                                           oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                                           oninput="setCustomValidity('')" 
+                                           <%= (information != null && information.getIssueDate() != null) ? "readonly" : "" %> />
                                 </div>
                                 <div>
-                                    <label class="block text-lg font-bold mb-2">Place of Issue:</label>
-                                    <input type="text" class="form-control w-full" value="<%= (information != null && information.getPlaceOfIssue() != null) ? information.getPlaceOfIssue() : "" %>" name="placeOfIssue" required oninvalid="this.setCustomValidity('Please fill out this field.')" oninput="setCustomValidity('')"/>
+                                    <label class="block text-lg font-bold mb-2">Nơi Cấp: </label>
+                                    <input type="text" class="form-control w-full" 
+                                           value="<%= (information != null && information.getPlaceOfIssue() != null) ? information.getPlaceOfIssue() : "" %>" 
+                                           name="placeOfIssue" 
+                                           required 
+                                           oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                                           oninput="setCustomValidity('')" 
+                                           <%= (information != null && information.getPlaceOfIssue() != null) ? "readonly" : "" %> />
                                 </div>
                                 <div>
-                                    <label class="block text-lg font-bold mb-2">Permanent Address:</label>
-                                    <input type="text" class="form-control w-full" value="<%= (information != null && information.getPermanentAddress() != null) ? information.getPermanentAddress() : "" %>" name="permanentAddress" required oninvalid="this.setCustomValidity('Please fill out this field.')" oninput="setCustomValidity('')"/>
+                                    <label class="block text-lg font-bold mb-2">Địa chỉ thường trú</label>
+                                    <input type="text" class="form-control w-full" 
+                                           value="<%= (information != null && information.getPermanentAddress() != null) ? information.getPermanentAddress() : "" %>" 
+                                           name="permanentAddress" 
+                                           required 
+                                           oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                                           oninput="setCustomValidity('')" 
+                                           <%= (information != null && information.getPermanentAddress() != null) ? "readonly" : "" %> />
                                 </div>
                             </div>
                             <div class="mt-6 text-center">
-                                <button type="submit" class="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Edit Profile</button>
+                                <button type="submit" class="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Thay đổi thông tin</button>
                             </div>
                         </div>
                     </form>

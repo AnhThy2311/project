@@ -145,18 +145,18 @@
 
         <div class="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600">
             <div class="bg-white shadow-lg rounded-lg p-6 text-center w-full max-w-sm">
-                <h2 class="text-2xl font-bold mb-4">Forgot Password</h2>
-                <p class="text-gray-600 mb-6">Enter your email to reset your password</p>
+                <h2 class="text-2xl font-bold mb-4">Quên mật khẩu</h2>
+                <p class="text-gray-600 mb-6">Nhập email của bạn để đặt lại mật khẩu</p>
                 <form action="Forgot_password" method="post">
                     <div class="mb-4">
                         <input type="email" name="email" id="email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Nhập email của bạn" required>
                     </div>
                     <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300">
-                       Submit request
+                       Gửi
                     </button>
                 </form>
                 <p class="mt-4">
-                    <a href="Loggin.jsp" class="text-blue-600 hover:underline">Back to login</a>
+                    <a href="Loggin.jsp" class="text-blue-600 hover:underline">Quay lại đăng nhập</a>
                 </p>
             </div>
         </div>

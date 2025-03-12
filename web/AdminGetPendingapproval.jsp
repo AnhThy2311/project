@@ -150,21 +150,22 @@
             </div>
         </header>
         <div class="container mt-4">
-            <h2 class="mb-4 text-primary text-center" style="font-size: 200%">Room Listings</h2>
+            <h2 class="mb-4 text-primary text-center" style="font-size: 200%">Danh sách phê duyệt bài đăng</h2>
             <table class="table table-bordered table-striped table-hover">
                 <thead class="table-dark">
                     <tr>
                         <th>Email</th>
-                        <th>Full Name</th>
-                        <th>Image</th>
-                        <th>Room Name</th>
-                        <th>Price</th>
-                        <th>Number House</th>
-                        <th>Street</th>
-                        <th>Ward</th>
-                        <th>District</th>
-                        <th>City</th>
-                        <th>Actions</th>
+                        <th>Họ và tên</th>
+                        <th>Hình ảnh</th>
+                        <th>Tên phòng</th>
+                        <th>Giá</th>
+                        <th>Số nhà</th>
+                        <th>Đường</th>
+                        <th>Phường/Xã</th>
+                        <th>Quận/Huyện</th>
+                        <th>Thành phố</th>
+                        <th>Hành động</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -192,11 +193,11 @@
                             <div class="d-flex gap-2">
                                 <form action="AdminApprovalServlet" method="get">
                                     <input type="hidden" name="positionId" value="<%= room.getPositionId() %>">
-                                    <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">Accept</button>
+                                    <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">Đồng ý</button>
                                 </form>
                                 <form action="AdminApprovalServlet" method="post">
                                     <input type="hidden" name="positionId" value="<%= room.positionId %>">
-                                    <button type="submit" name="action" value="cancel" class="btn btn-danger btn-sm">Cancel</button>
+                                    <button type="submit" name="action" value="cancel" class="btn btn-danger btn-sm">Hủy</button>
                                 </form>
                             </div>
                         </td>
