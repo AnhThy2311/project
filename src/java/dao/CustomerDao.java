@@ -34,6 +34,37 @@ public class CustomerDao {
             e.printStackTrace();
         }
     }
+ public void inserintoCustomer1(Customer cter) {
+//        String email,String hoten,String password
+       Connection con = null;
+        PreparedStatement st = null;
+        try {
+            con = database.getConnection();
+            String sql = "INSERT INTO Users (email, password, role_id, phone_number, full_name, date_of_birth, entity_state, image) VALUES (?,?,?,?,?,?,?,?)";
+            int trangthai = 1;
+            int role = 2;
+            st = con.prepareStatement(sql);
+            st.setString(1, cter.getEmail());
+            st.setString(2, cter.getPassword() != null ? cter.getPassword() : "default_google_password");
+            st.setInt(3, role);
+            st.setString(4, cter.getPhone());
+            st.setString(5, cter.getFullName());
+            st.setString(6, cter.getBirthDate());
+            st.setInt(7, trangthai);
+            st.setString(8, cter.getImage());
+            st.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 
     public void updateState(String email) {
         Connection con = null;
@@ -92,7 +123,7 @@ public class CustomerDao {
             con = database.getConnection();
 
             // SQL query to fetch customer details based on username and password
-            String sql = "SELECT  email, password, phone_number, full_name, date_of_birth,image FROM Users where email=?";
+            String sql = "SELECT  email, password, phone_number, full_name, date_of_birth,image FROM Users where email=? and entity_state=1";
             pr = con.prepareStatement(sql);
             pr.setString(1, email);
 
@@ -112,6 +143,40 @@ public class CustomerDao {
             e.printStackTrace(); // Print stack trace for debugging
         }
         return null;
+    }
+
+    public Customer exitEmail1(String email) {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet re = null;
+        try {
+            con = database.getConnection();
+            String sql = "SELECT email, password, phone_number, full_name, date_of_birth, image FROM Users WHERE email=?";
+            pr = con.prepareStatement(sql);
+            pr.setString(1, email);
+            re = pr.executeQuery();
+            if (re.next()) {
+                return new Customer(re.getString(1), re.getString(2), re.getString(3), re.getString(4), re.getString(5), re.getString(6));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (re != null) {
+                    re.close();
+                }
+                if (pr != null) {
+                    pr.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+
     }
 
     public void ChangePasswword(String passwword, String email) {

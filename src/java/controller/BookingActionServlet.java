@@ -8,6 +8,7 @@ package controller;
 import dao.BookingRoomDao;
 import dao.ContractDao;
 import dao.CustomerDao;
+import dao.NotificationDao;
 import dao.WalletDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -56,6 +57,8 @@ public class BookingActionServlet extends HttpServlet {
         String email_owner = (String) session.getAttribute("email");
         CustomerDao cd= new CustomerDao();
         String user_id= cd.getUserIdByEmail(email_owner);
+        NotificationDao nfd = new NotificationDao();
+        nfd.AcceptRentRoom(user_id);
         WalletDAO wd = new WalletDAO();
         float price_user= wd.getPrice(user_id);
         float total_price = total*70/100 +price_user;
@@ -74,8 +77,11 @@ public class BookingActionServlet extends HttpServlet {
         ContractDao ctrd = new ContractDao();
         float total = Float.parseFloat(request.getParameter("totalPrice"));
         String email_customer= request.getParameter("email_customer");
+       
         CustomerDao cd = new CustomerDao();
         String cusromer_id = cd.getUserIdByEmail(email_customer);
+         NotificationDao nfd = new NotificationDao();
+        nfd.cacelRentRoom(cusromer_id);
         WalletDAO wd = new WalletDAO();
         float price_customer= wd.getPrice(cusromer_id);
         System.out.println("toal_price:"+(price_customer+total));

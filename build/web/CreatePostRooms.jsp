@@ -436,7 +436,7 @@
                             <option value="">Chọn Đường</option>
                         </select>
                     </div>
-                     <div class="mb-6">
+                    <div class="mb-6">
                         <label class="block text-gray-700 font-semibold mb-2">Mô tả chi tiết vị trí</label>
                         <input type="text" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                id="descriptionlocation" name="descriptionlocation" required>
@@ -461,16 +461,37 @@
                     </div>
                     <!-- Giá -->
                     <div class="mb-6">
-                        <label class="block text-gray-700 font-semibold mb-2">Giá</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Giá Phòng</label>
                         <input type="number" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                id="price" name="price" required>
                     </div>
-                    <!-- Hình Ảnh -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">Giá Điện</label>
+                        <input type="number" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               id="price_el" name="price_el" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">Giá Nước</label>
+                        <input type="number" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               id="price_water" name="price_water" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">Diện tích</label>
+                        <input type="number" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               id="area" name="area" required>
+                    </div>
                     <div class="mb-6">
                         <label class="block text-gray-700 font-semibold mb-2">Hình Ảnh</label>
-                        <input type="file" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                               id="image" name="image" accept="image/*" required>
+                        <input 
+                            type="file" 
+                            class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            id="images" 
+                            name="image" 
+                            accept="image/*" 
+                            multiple required>
                     </div>
+
+
                     <div class="text-center">
                         <button type="submit" class="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-3 rounded-lg hover:from-green-500 hover:to-green-700 transition duration-300">Thêm</button>
                     </div>
@@ -484,67 +505,67 @@
             crossorigin="anonymous"
         ></script>
         <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const citySelect = document.getElementById("city");
-                            const districtSelect = document.getElementById("district");
-                            const wardSelect = document.getElementById("ward");
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        const citySelect = document.getElementById("city");
+                                        const districtSelect = document.getElementById("district");
+                                        const wardSelect = document.getElementById("ward");
 
-                            // Function to load cities
-                            function loadCities() {
-                                fetch("/api/cities") // Replace with your API endpoint
-                                        .then((response) => response.json())
-                                        .then((data) => {
-                                            data.forEach((city) => {
-                                                const option = document.createElement("option");
-                                                option.value = city.id;
-                                                option.textContent = city.name;
-                                                citySelect.appendChild(option);
-                                            });
+                                        // Function to load cities
+                                        function loadCities() {
+                                            fetch("/api/cities") // Replace with your API endpoint
+                                                    .then((response) => response.json())
+                                                    .then((data) => {
+                                                        data.forEach((city) => {
+                                                            const option = document.createElement("option");
+                                                            option.value = city.id;
+                                                            option.textContent = city.name;
+                                                            citySelect.appendChild(option);
+                                                        });
+                                                    });
+                                        }
+
+                                        // Function to load districts based on selected city
+                                        citySelect.addEventListener("change", function () {
+                                            const cityId = this.value;
+                                            districtSelect.innerHTML = '<option value="">Chọn quận</option>';
+                                            wardSelect.innerHTML = '<option value="">Chọn phường</option>';
+
+                                            if (cityId) {
+                                                fetch(`/api/districts?cityId=${cityId}`) // Replace with your API endpoint
+                                                        .then((response) => response.json())
+                                                        .then((data) => {
+                                                            data.forEach((district) => {
+                                                                const option = document.createElement("option");
+                                                                option.value = district.id;
+                                                                option.textContent = district.name;
+                                                                districtSelect.appendChild(option);
+                                                            });
+                                                        });
+                                            }
                                         });
-                            }
 
-                            // Function to load districts based on selected city
-                            citySelect.addEventListener("change", function () {
-                                const cityId = this.value;
-                                districtSelect.innerHTML = '<option value="">Chọn quận</option>';
-                                wardSelect.innerHTML = '<option value="">Chọn phường</option>';
+                                        // Function to load wards based on selected district
+                                        districtSelect.addEventListener("change", function () {
+                                            const districtId = this.value;
+                                            wardSelect.innerHTML = '<option value="">Chọn phường</option>';
 
-                                if (cityId) {
-                                    fetch(`/api/districts?cityId=${cityId}`) // Replace with your API endpoint
-                                            .then((response) => response.json())
-                                            .then((data) => {
-                                                data.forEach((district) => {
-                                                    const option = document.createElement("option");
-                                                    option.value = district.id;
-                                                    option.textContent = district.name;
-                                                    districtSelect.appendChild(option);
-                                                });
-                                            });
-                                }
-                            });
+                                            if (districtId) {
+                                                fetch(`/api/wards?districtId=${districtId}`) // Replace with your API endpoint
+                                                        .then((response) => response.json())
+                                                        .then((data) => {
+                                                            data.forEach((ward) => {
+                                                                const option = document.createElement("option");
+                                                                option.value = ward.id;
+                                                                option.textContent = ward.name;
+                                                                wardSelect.appendChild(option);
+                                                            });
+                                                        });
+                                            }
+                                        });
 
-                            // Function to load wards based on selected district
-                            districtSelect.addEventListener("change", function () {
-                                const districtId = this.value;
-                                wardSelect.innerHTML = '<option value="">Chọn phường</option>';
-
-                                if (districtId) {
-                                    fetch(`/api/wards?districtId=${districtId}`) // Replace with your API endpoint
-                                            .then((response) => response.json())
-                                            .then((data) => {
-                                                data.forEach((ward) => {
-                                                    const option = document.createElement("option");
-                                                    option.value = ward.id;
-                                                    option.textContent = ward.name;
-                                                    wardSelect.appendChild(option);
-                                                });
-                                            });
-                                }
-                            });
-
-                            // Load cities on page load
-                            loadCities();
-                        });
+                                        // Load cities on page load
+                                        loadCities();
+                                    });
         </script>
     </body>
 </html>

@@ -238,9 +238,12 @@
                                            <%= (information != null && information.getPermanentAddress() != null) ? "readonly" : "" %> />
                                 </div>
                             </div>
+                            <%   Integer state = (Integer) session.getAttribute("state");
+                               if (state != null && state != 1) { %>
                             <div class="mt-6 text-center">
                                 <button type="submit" class="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Thay đổi thông tin</button>
                             </div>
+                            <% } %>
                         </div>
                     </form>
                 </div>

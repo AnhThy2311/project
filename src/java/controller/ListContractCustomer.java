@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import dao.BookingRoomDao;
@@ -52,7 +48,24 @@ public class ListContractCustomer extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        BookingRoomDao bd = new BookingRoomDao();
+        HttpSession session = request.getSession();
+
+        // Lấy email từ session
+        String email = (String) session.getAttribute("email");
+        ArrayList<BookingRoom> list = bd.getNameRoombyEmail(email);
+        request.setAttribute("list", list);
+
+        // Kiểm tra tham số submitted và booking_id
+        String submitted = request.getParameter("submitted");
+        String booking_id = request.getParameter("booking_id");
+
+        if (submitted != null && submitted.equals("true") && booking_id != null) {
+            bd.CancelBookingRoom(booking_id);
+            System.out.println("Đã hủy booking với ID: " + booking_id);
+        }
+
+        request.getRequestDispatcher("ListContractCustomer.jsp").forward(request, response);
     }
 
     @Override

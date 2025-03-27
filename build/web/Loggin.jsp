@@ -81,9 +81,10 @@
                         <button class="btn btn-outline-secondary me-2">
                             <i class="bi-heart"></i>
                         </button>
-                        <button class="btn btn-outline-secondary me-2">Đăng ký</button>
-                        <button class="btn btn-outline-secondary me-2">Đăng nhập</button>
-                        <button class="btn btn-outline-danger me-2">Đăng tin</button>
+                        <a href="Register.jsp" class="btn btn-outline-secondary me-2">Đăng ký</a>
+                        <a href="Loggin.jsp" class="btn btn-outline-secondary me-2">Đăng nhập</a>
+                        <a href="#" class="btn btn-outline-danger me-2">Đăng tin</a>
+
                     </div>
                 </div>
             </div>
@@ -115,13 +116,17 @@
                         Đăng nhập
                     </button>
                 </div>
-
+                <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8082/DoAnSWP1/LoginGoogle&response_type=code&client_id=923439477552-i1fobkajsmvf1lqq2lr6lf0cdqblboau.apps.googleusercontent.com&access_type=offline&prompt=consent">                                    
+                    <button type="button" name="wp-submit-login" class="btn btn-red btn-lg rounded-4" style="margin-top: 10px; color: white; background-color: red; width: 100%">
+                        Đăng nhập với Google
+                    </button>
+                </a>
                 <p class="text-center">
                     <a class="text-decoration-underline" href="Forgot_Password.jsp">Quên Mật Khẩu?</a>
                 </p>
             </form>
             <p class="fs-10 mt-4 pt-4">
-              Bằng cách đăng nhập hoặc tạo tài khoản, bạn đồng ý với
+                Bằng cách đăng nhập hoặc tạo tài khoản, bạn đồng ý với
                 <a
                     class="text-decoration-underline"
                     target="_blank"
@@ -129,7 +134,7 @@
                     href="/quy-dinh-su-dung"
                     >Điều khoản sử dụng</a
                 >
-               bằng
+                bằng
                 <a
                     class="text-decoration-underline"
                     target="_blank"

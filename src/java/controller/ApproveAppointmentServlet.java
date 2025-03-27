@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dao.CustomerDao;
+import dao.NotificationDao;
 import dao.RoomAppointmentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,7 +60,12 @@ public class ApproveAppointmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String appointmentId = request.getParameter("appointmentId");
+        String appointmentId = request.getParameter("appointmentId");
+        String email = request.getParameter("email");
+        CustomerDao csd = new CustomerDao();
+        String recived_id = csd.getUserIdByEmail(email);
+        NotificationDao nfd = new NotificationDao();
+        nfd.CancelBookingRoom(recived_id);
         System.out.println("app:" + appointmentId);
         RoomAppointmentDAO rad = new RoomAppointmentDAO();
         rad.updatedeleteStatusApp(appointmentId);
@@ -68,9 +75,14 @@ public class ApproveAppointmentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String appointmentId = request.getParameter("appointmentId");
+        String appointmentId = request.getParameter("appointmentId");
         System.out.println("app:" + appointmentId);
         RoomAppointmentDAO rad = new RoomAppointmentDAO();
+        String email = request.getParameter("email");
+        CustomerDao csd = new CustomerDao();
+        String recived_id = csd.getUserIdByEmail(email);
+        NotificationDao nfd = new NotificationDao();
+        nfd.InsertIntoNotificationBooRoom(recived_id);
         rad.updateStatusApp(appointmentId);
         response.sendRedirect("OwnerRoomAppointment");
     }

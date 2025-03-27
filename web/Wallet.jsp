@@ -167,34 +167,113 @@
         <div class="bg-gradient-to-r from-blue-500 to-purple-600 min-h-screen flex items-center justify-center font-roboto">
             <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full h-auto">
                 <div class="text-center mb-6">
-                    <h1 class="text-3xl font-bold text-gray-800">
-                        Ví Tiền Của Bạn
-                    </h1>
-                    <p class="text-gray-600 mt-2">
-                        Số dư hiện tại của bạn là:
-                    </p>
+                    <h1 class="text-3xl font-bold text-gray-800">Ví Tiền Của Bạn</h1>
+                    <p class="text-gray-600 mt-2">Số dư hiện tại của bạn là:</p>
                     <p class="text-4xl font-bold text-green-500 mt-2">
                         <%= String.format("%,.3f", balance).replace(".", "@").replace(",", ".").replace("@", ",") %> VND
                     </p>
                 </div>
                 <div class="flex justify-center mb-6">
-                    <img alt="A decorative image of a wallet with money and credit cards" class="rounded-lg shadow-md" height="200" src="https://storage.googleapis.com/a1aa/image/wxpcw-dc6aYs1OoI5rOPEDfb4KtRUYOZfqUQObpOku4.jpg" width="300"/>
+                    <img alt="A decorative image of a wallet with money and credit cards" class="rounded-lg shadow-md" height="200" 
+                         src="https://storage.googleapis.com/a1aa/image/wxpcw-dc6aYs1OoI5rOPEDfb4KtRUYOZfqUQObpOku4.jpg" width="300"/>
                 </div>
                 <div>
-                    <a href="deposit.jsp?id=<%=request.getAttribute("id") %>" class="w-full bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600 transition duration-300 text-center block">
-                        <i class="fas fa-wallet mr-2"></i>
-                        Nạp Tiền
+                    <a href="deposit.jsp?id=<%=request.getAttribute("id") %>" 
+                       class="w-full bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600 transition duration-300 text-center block">
+                        <i class="fas fa-wallet mr-2"></i> Nạp Tiền
                     </a>
                 </div>
                 <br/>
                 <div class="mb-4">
-                    <a href="TransactionServlet" class="w-full bg-green-500 text-white py-2 rounded-lg shadow hover:bg-green-600 transition duration-300 text-center block mb-4">
-                        <i class="fas fa-history mr-2"></i>
-                        Lịch Sử Giao Dịch
+                    <a href="TransactionServlet" 
+                       class="w-full bg-green-500 text-white py-2 rounded-lg shadow hover:bg-green-600 transition duration-300 text-center block mb-4">
+                        <i class="fas fa-history mr-2"></i> Lịch Sử Giao Dịch
+                    </a>
+                </div>
+                <div class="mb-4">
+                    <button onclick="openModal()" 
+                            class="w-full bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600 transition duration-300 text-center block">
+                        <i class="fas fa-wallet mr-2"></i> Rút tiền
+                    </button>
+                </div>
+                <div class="mb-4">
+                    <a href="WithdrawalsRut" 
+                       class="w-full bg-green-500 text-white py-2 rounded-lg shadow hover:bg-green-600 transition duration-300 text-center block mb-4">
+                        <i class="fas fa-history mr-2"></i> Lịch sử rút tiền
                     </a>
                 </div>
             </div>
         </div>
+
+        <!-- Modal Rút Tiền -->
+        <div id="withdrawModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Rút Tiền</h2>
+                <form id="withdrawForm" action="withdrawForm" method="GET">
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Số tài khoản</label>
+                        <input type="text" name="accountNumber" required 
+                               class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Ngân hàng</label>
+                        <input type="text" name="bankName" required 
+                               class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Tên người nhận</label>
+                        <input type="text" name="recipientName" required 
+                               class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Số tiền muốn rút</label>
+                        <input type="number" id="withdrawAmount" name="amount" required min="1000" step="1000"
+                               class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" onclick="closeModal()" 
+                                class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+                            Đóng
+                        </button>
+                        <button type="submit" 
+                                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                            Xác nhận
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- JavaScript để mở/đóng modal & kiểm tra số dư -->
+        <script>
+            let balance = <%= balance %>;
+
+            function openModal() {
+                document.getElementById("withdrawModal").classList.remove("hidden");
+            }
+
+            function closeModal() {
+                document.getElementById("withdrawModal").classList.add("hidden");
+            }
+
+            document.getElementById("withdrawForm").addEventListener("submit", function (event) {
+                let withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
+
+                if (withdrawAmount > balance) {
+                    alert("Số tiền bạn cần rút lớn hơn số tiền bạn có.");
+                    event.preventDefault(); // Ngăn form gửi đi
+                    return;
+                }
+
+                let confirmWithdraw = confirm("Bạn đã xác nhận mọi thông tin chính xác chưa?");
+                if (!confirmWithdraw) {
+                    event.preventDefault(); // Ngăn form gửi đi nếu chọn "Hủy"
+                }
+            });
+
+        </script>
+
+
 
     </body>
 </html>

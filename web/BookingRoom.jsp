@@ -34,9 +34,11 @@
                                 <label class="block text-gray-700 text-lg" for="date">
                                     Ngày thuê:
                                 </label>
-                                <input class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg p-3"
-                                       id="date" type="date" name="date" required/>
+                                <input 
+                                    class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg p-3"
+                                    id="date" type="date" name="date" required />
                             </div>
+
 
                             <div class="mb-6">
                                 <label class="block text-gray-700 text-lg" for="duration">
@@ -45,13 +47,20 @@
                                 <input class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg p-3"
                                        id="duration" type="number" name="month" oninput="calculateTotal()" required/>
                             </div>
-
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-lg mb-2">
+                                    Hình thức thanh toán:
+                                </label>
+                                <label class="block text-gray-700 text-lg mb-4">
+                                    Thanh toán tháng đầu tiên
+                                </label>
+                            </div>
                             <div class="mb-6">
                                 <label class="block text-gray-700 text-lg" for="total">
-                                    Tổng tiền:
+                                    Số tiền cần thanh toán 
                                 </label>
                                 <input class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg p-3"
-                                       id="total" type="text" name="totalPrice" readonly/>
+                                       id="total" type="text"  value="<%=r.getPrice() %>"name="totalPrice" readonly/>
                             </div>
                             <%
     String error = (String) session.getAttribute("error11");
@@ -64,8 +73,6 @@
                                 session.removeAttribute("error11"); // Xóa session sau khi hiển thị
                                 }
                             %>
-
-
                             <button class="w-full bg-blue-500 text-white py-4 rounded-lg hover:bg-blue-600 text-xl transition duration-300"
                                     type="submit">
                                 Xác nhận Thuê
@@ -77,41 +84,13 @@
         </form>
 
         <script>
-            function calculateTotal() {
-                const duration = document.getElementById("duration").value; // Thời hạn thuê
-                const priceText = document.getElementById("price").innerText; // Lấy giá thuê mỗi tháng
-                const priceNumber = priceText.match(/[\d,.]+/)[0]; // Cắt đúng số tiền
-
-                const price = parseFloat(priceNumber.replace(/,/g, "")); // Chuyển "1,000,000.0" -> 1000000.0
-
-                if (!isNaN(price) && !isNaN(duration) && duration > 0) {
-                    const total = duration * price;
-
-                    document.getElementById("total").value = total.toLocaleString("en-US", {
-                        minimumFractionDigits: 1,
-                        maximumFractionDigits: 1
-                    }) + " VND"; // 2,000,000.0
-                } else {
-                    document.getElementById("total").value = "0.0 VND";
-                }
-            }
-
-
-
-
-
-
-
-
-            // Set min và max cho input date
             const today = new Date();
-            const todayFormatted = today.toISOString().split("T")[0];
-            const tenDaysLater = new Date();
-            tenDaysLater.setDate(today.getDate() + 10);
-            const maxDate = tenDaysLater.toISOString().split("T")[0];
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 9);
 
-            document.getElementById("date").setAttribute("min", todayFormatted);
-            document.getElementById("date").setAttribute("max", maxDate);
+            const dateInput = document.getElementById('date');
+            dateInput.min = today.toISOString().split('T')[0];
+            dateInput.max = tomorrow.toISOString().split('T')[0];
         </script>
     </body>
 </html>

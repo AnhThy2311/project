@@ -1,6 +1,11 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 public class BookingRoom {
+
     public String booking_id;
     public String user_id;
     public String room_id;
@@ -16,12 +21,30 @@ public class BookingRoom {
     public Information inf;
     public Position p;
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     public BookingRoom(String user_id, String room_id, String date, String month, String status) {
         this.user_id = user_id;
         this.room_id = room_id;
         this.date = date;
         this.month = month;
         this.status = status;
+    }
+
+    public BookingRoom(String date, String end_date) {
+        this.date = date;
+        this.end_date = end_date;
+    }
+
+    public long getDaysLeft() {
+        try {
+            LocalDate today = LocalDate.now();
+            LocalDate endDate = LocalDate.parse(end_date, formatter);
+            return ChronoUnit.DAYS.between(today, endDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; // Trả về -1 nếu có lỗi
+        }
     }
 
     public BookingRoom() {
@@ -38,6 +61,7 @@ public class BookingRoom {
     public Contract getC() {
         return c;
     }
+
     public Information getInf() {
         return inf;
     }

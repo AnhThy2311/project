@@ -1,4 +1,3 @@
-
 package dao;
 
 import database.database;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import model.Customer;
 import model.PostRooms;
 import org.apache.el.util.ConcurrentCache;
-
 
 public class PostRoomsDao {
 
@@ -78,7 +76,7 @@ public class PostRoomsDao {
                 String district = re.getString(7);
                 String city = re.getString(8);
                 String id = re.getString(9);
-                String status= re.getString(10);
+                String status = re.getString(10);
                 PostRooms prs = new PostRooms(id, image, room_name, price, number_house, street, ward, district, city, status);
                 list.add(prs);
             }
@@ -133,7 +131,7 @@ public class PostRoomsDao {
         }
     }
 
-    public void insertRooms(String room_name, String description, float price, int position_id, int user_id, String image) {
+    public void insertRooms(String room_name, String description, float price, int position_id, int user_id, String image, float electricity_fee, float water_fee, float area) {
         Connection con = null;
         PreparedStatement pr = null;
         ResultSet re = null;
@@ -141,7 +139,7 @@ public class PostRoomsDao {
         int requestion_id = 1;
         try {
             con = database.getConnection();
-            String sql = "INSERT INTO Rooms VALUES (?,?, ?, ?, ?, ?, ?,?)";
+            String sql = "INSERT INTO Rooms VALUES (?,?, ?, ?, ?, ?, ?,?,?,?,?)";
             pr = con.prepareStatement(sql);
             pr.setString(1, room_name);
             pr.setString(2, description);
@@ -151,6 +149,9 @@ public class PostRoomsDao {
             pr.setInt(6, user_id);
             pr.setInt(7, requestion_id);
             pr.setString(8, image);
+            pr.setFloat(9, electricity_fee);
+            pr.setFloat(10, water_fee);
+            pr.setFloat(11, area);
             pr.executeUpdate();
         } catch (Exception e) {
             System.out.println("SQL error: " + e.getMessage());
@@ -161,7 +162,7 @@ public class PostRoomsDao {
     public void deleteRoom(String id) {
         Connection con = null;
         PreparedStatement pr = null;
-        String sql = "DELETE FROM Rooms WHERE position_id=?";
+        String sql = "update Rooms set status =0 where position_id=?";
         try {
             con = database.getConnection();
             pr = con.prepareStatement(sql);
@@ -177,7 +178,8 @@ public class PostRoomsDao {
             e.printStackTrace();
         }
     }
-public void deleteWishList(String room_id) {
+
+    public void deleteWishList(String room_id) {
         Connection con = null;
         PreparedStatement pr = null;
         String sql = "DELETE wishlist_room WHERE room_id=?";
@@ -216,8 +218,9 @@ public void deleteWishList(String room_id) {
             e.printStackTrace();
         }
     }
-    public  String getByRoomIdByPositionID(String positionId){
-         Connection con = null;
+
+    public String getByRoomIdByPositionID(String positionId) {
+        Connection con = null;
         PreparedStatement pr = null;
         ResultSet re = null;
         try {
@@ -236,6 +239,7 @@ public void deleteWishList(String room_id) {
         }
         return null;
     }
+
     public PostRooms getPostRoomByid(String id, String email) {
         Connection con = null;
         PreparedStatement pr = null;
@@ -286,6 +290,41 @@ public void deleteWishList(String room_id) {
             pr.setFloat(2, price);
             pr.setString(3, image);
             pr.setString(4, id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public String getImageRoom(String id_room) {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select image from Rooms where room_id =?";
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, id_room);
+            rs = pr.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public void insertIntoImage(String image_url, String roomid) {
+        String sql = "INSERT INTO Images (image_url, room_id) VALUES (?, ?)";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, image_url);
+            pr.setString(2, roomid);
             pr.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);

@@ -4,6 +4,7 @@ package controller;
 import dao.BookingRoomDao;
 import dao.ContractDao;
 import dao.CustomerDao;
+import dao.NotificationDao;
 import dao.RoomDao;
 import dao.WalletDAO;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Notification;
 
 
 @WebServlet(name = "ConfirmBooking", urlPatterns = {"/ConfirmBooking"})
@@ -44,9 +46,12 @@ public class ConfirmBooking extends HttpServlet {
         String ownerId = rd.getOwnerId(id);
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
+        System.out.println("email: "+email);
         CustomerDao csd = new CustomerDao();
         String customerId = csd.getUserIdByEmail(email);
-
+        NotificationDao ncd = new NotificationDao();
+        ncd.ThongBaoChoThuePhong(customerId);
+        System.out.println("customerID:"+customerId);
         WalletDAO wd = new WalletDAO();
         float balance = wd.getPrice(customerId);
 
@@ -71,12 +76,15 @@ public class ConfirmBooking extends HttpServlet {
             response.sendRedirect("BookingRoom?roomid="+id);
             return; // Dừng không cho đặt phòng
         }
+        System.out.println("id là : "+id);
         wd.updatePrice(balance-total,customerId);
         BookingRoomDao bd = new BookingRoomDao();
         bd.InsertIntoBookingRoom(customerId, id, date, month);
         String booking_id = bd.getBookingId(id);
         float admin_price = total * 30 / 100; //        .insertIntoContract(ownerId, customerId, ownerId, 0, 0);
         ctrd.insertIntoContract(booking_id, customerId, ownerId, total, admin_price);
+        NotificationDao ntd = new NotificationDao();
+        ntd.InsertIntoNotificationRentRoom(ownerId);
         response.sendRedirect("RoomServlet");
     }
 

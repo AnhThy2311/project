@@ -162,7 +162,7 @@
 
         <div class="bg-gradient-to-r from-blue-100 to-blue-300 flex items-center justify-center min-h-screen">
             <div class="container mx-auto bg-white shadow-lg rounded-lg p-6">
-                <h1 class="text-center text-2xl font-bold mb-4 text-gray-800">Danh Sách Khách Hàng Đặt Phòng</h1>
+                <h1 class="text-center text-2xl font-bold mb-4 text-gray-800">Danh Sách Khách Hàng Đặt Xem Phòng</h1>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-200">
                         <thead>
@@ -204,10 +204,12 @@
                                     <% if (ra.getStatus() == 0) { %>
                                     <form action="ApproveAppointmentServlet" method="post" style="display:inline;">
                                         <input type="hidden" name="appointmentId" value="<%= ra.getAppointmentId() %>">
+                                         <input type="hidden" name="email" value="<%= customer.getEmail() %>">
                                         <button name="approve" type="submit" class="bg-green-500 text-white px-2 py-1 rounded">Chấp Nhận</button>
                                     </form>
                                     <form action="ApproveAppointmentServlet" method="get" style="display:inline;">
                                         <input type="hidden" name="appointmentId" value="<%= ra.getAppointmentId() %>">
+                                         <input type="hidden" name="email" value="<%= customer.getEmail() %>">
                                         <button name="reject" type="submit" class="bg-red-500 text-white px-2 py-1 rounded">Hủy</button>
                                     </form>
                                     <% } %>

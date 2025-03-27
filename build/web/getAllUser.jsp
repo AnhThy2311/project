@@ -58,7 +58,7 @@
                                 height="46"
                                 />
                         </a>
-                        <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
+                        <a class="nav-link active" href="Admin.jsp" style="padding-left: 20px"
                            >Home</a
                         >
 
@@ -175,7 +175,8 @@
                             for (Customer admin : list) { 
                     %>
                     <tr>
-                        <td><%= admin.getEmail() %></td>
+                        <td><a href="Profile"><%= admin.getEmail() %></a></td>
+
                         <td><%= admin.getPhone() %></td>
                         <td><%= admin.getFullName() %></td>
                         <td>

@@ -83,8 +83,8 @@
                         <button class="btn btn-outline-secondary me-2">
                             <i class="bi-heart"></i>
                         </button>
-                        <button class="btn btn-outline-secondary me-2">Đăng ký</button>
-                        <button class="btn btn-outline-secondary me-2">Đăng nhập</button>
+                        <a href="Register.jsp" class="btn btn-outline-secondary me-2">Đăng ký</a>
+                        <a href="Loggin.jsp" class="btn btn-outline-secondary me-2">Đăng nhập</a>
                         <button class="btn btn-outline-danger me-2">Đăng tin</button>
                     </div>
                 </div>

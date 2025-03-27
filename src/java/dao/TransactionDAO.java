@@ -11,18 +11,18 @@ import model.Transaction;
 
 
 public class TransactionDAO {
-    public boolean createTransaction(int userId, double amount, int status) {
-        String sql = "INSERT INTO Transactions (user_id, amount, status, created_at) VALUES (?, ?, ?, GETDATE())";
-        try (Connection conn = database.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, userId);
-            ps.setDouble(2, amount);
-            ps.setInt(3, status);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        public boolean createTransaction(int userId, double amount, int status) {
+            String sql = "INSERT INTO Transactions (user_id, amount, status, created_at) VALUES (?, ?, ?, GETDATE())";
+            try (Connection conn = database.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                ps.setDouble(2, amount);
+                ps.setInt(3, status);
+                return ps.executeUpdate() > 0;
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return false;
         }
-        return false;
-    }
 
     public List<Transaction> getTransactionsByUser(int userId) {
         List<Transaction> transactions = new ArrayList<>();

@@ -4,10 +4,6 @@
  */
 package model;
 
-/**
- *
- * @author son
- */
 public class Room {
 
     private String roomId;
@@ -18,6 +14,9 @@ public class Room {
     private Position position;
     private Customer customer;
     private String image;
+    private double electricity_price;
+    private double water_price;
+    private double area;
 
     public Room() {
     }
@@ -30,6 +29,44 @@ public class Room {
         this.position = position;
         this.customer = customer;
         this.image = image;
+    }
+
+    public Room(String roomId, String roomName, String description, double price, String state, Position position, Customer customer, String image, double electricity_price, double water_price, double area) {
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.description = description;
+        this.price = price;
+        this.state = state;
+        this.position = position;
+        this.customer = customer;
+        this.image = image;
+        this.electricity_price = electricity_price;
+        this.water_price = water_price;
+        this.area = area;
+    }
+
+    public double getElectricity_price() {
+        return electricity_price;
+    }
+
+    public void setElectricity_price(double electricity_price) {
+        this.electricity_price = electricity_price;
+    }
+
+    public double getWater_price() {
+        return water_price;
+    }
+
+    public void setWater_price(double water_price) {
+        this.water_price = water_price;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
     }
 
     public Room(String roomId, String roomName, String description, double price, String state, Position position, Customer customer, String image) {

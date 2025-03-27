@@ -103,7 +103,7 @@ public class ReportFeedbackDAo {
         PreparedStatement pr = null;
         ResultSet re = null;
         try{
-            String sql = "select r.image, r.room_name, u.email, u.full_name, u.phone_number from Rooms as r , Users as u where u.user_id=r.user_id and r.request_id=3";
+            String sql = "select r.image, r.room_name, u.email, u.full_name, u.phone_number, r.room_id from Rooms as r , Users as u where u.user_id=r.user_id and r.request_id=3";
             con=database.getConnection();
             pr=con.prepareStatement(sql);
             re=pr.executeQuery();
@@ -117,6 +117,7 @@ public class ReportFeedbackDAo {
                 r.setCustomer(c);
                 r.setImage(re.getString("image"));
                 r.setRoomName(re.getString("room_name"));
+                r.setRoomId(re.getString("room_id"));
                 list.add(r);
             }
             return list;

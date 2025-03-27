@@ -39,13 +39,13 @@ public class OwnerChat extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
         CustomerDao cud = new CustomerDao();
-        String sendID = cud.getUserIdByEmail(email);
+        String sendID = cud.getUserIdByEmail(email); // id của người nhận 
         System.out.println(sendID);
 //        String receiveID = request.getParameter("receiver_id");
-        String receiveID = request.getParameter("receiverId");
+        String receiveID = request.getParameter("receiverId"); // id của người gửi
         ChatBoxDao cbd = new ChatBoxDao();
         ArrayList<ChatBox> list;
         try {

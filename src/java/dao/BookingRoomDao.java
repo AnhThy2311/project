@@ -62,7 +62,7 @@ public class BookingRoomDao {
     }
 
     public String getBookingId(String roomID) {
-        String sql = "select  booking_id from Booking where room_id = ?";
+        String sql = "select  MAX(booking_id) from Booking where room_id = ?";
         Connection con = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -145,13 +145,13 @@ public class BookingRoomDao {
 
     public ArrayList<BookingRoom> getNameRoombyEmail(String email) {
         ArrayList<BookingRoom> listName = new ArrayList<>();
-        String sql = "SELECT r.room_name, r.room_id, b.booking_id\n"
+        String sql = "SELECT r.room_name, r.room_id, b.booking_id, b.start_date , b.months, b.end_date, b.status, r.price\n"
                 + "FROM Contract AS c\n"
                 + "JOIN Booking AS b ON c.booking_id = b.booking_id\n"
                 + "JOIN Rooms AS r ON b.room_id = r.room_id\n"
                 + "JOIN Users AS u ON u.user_id = b.user_id \n"
                 + "WHERE u.email = ?\n"
-                + "AND b.status = 1;";
+                + "AND (b.status = 1 or b.status =3 or b.status=4);";
         Connection con = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -165,8 +165,14 @@ public class BookingRoomDao {
                 Room r = new Room();
                 r.setRoomName(rs.getString(1));
                 r.setRoomId(rs.getString(2));
-                b.setRoom(r);
+
                 b.setBooking_id(rs.getString(3));
+                b.setDate(rs.getString(4));
+                b.setMonth(rs.getString(5));
+                b.setEnd_date(rs.getString(6));
+                b.setStatus(rs.getString(7));
+                r.setPrice(rs.getFloat(8));
+                b.setRoom(r);
                 listName.add(b);
             }
             return listName;
@@ -273,47 +279,294 @@ public class BookingRoomDao {
         }
         return null;
     }
-    public ArrayList<BookingRoom> getCusTomerBooking(String ownerID){
-        String sql = "select r.room_name, b.user_id from Rooms as r, Booking as b where r.room_id = b.room_id and r.user_id=? and b.status=1";
-         Connection con = null;
+
+    public ArrayList<BookingRoom> getCusTomerBooking(String ownerID) {
+        String sql = "select r.room_name, b.user_id, b.start_date , b.months, b.end_date, b.status,b.booking_id from Rooms as r, Booking as b where r.room_id = b.room_id and r.user_id=? and ( b.status=1 or b.status =5)";
+        Connection con = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
         ArrayList<BookingRoom> list = new ArrayList<>();
-        try{
-            con=database.getConnection();
-            pr=con.prepareStatement(sql);
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
             pr.setString(1, ownerID);
-            rs=pr.executeQuery();
-            while(rs.next()){
+            rs = pr.executeQuery();
+            while (rs.next()) {
                 BookingRoom b = new BookingRoom();
                 Room r = new Room();
                 r.setRoomName(rs.getString(1));
                 b.setUser_id(rs.getString(2));
+                b.setDate(rs.getString(3));
+                b.setMonth(rs.getString(4));
+                b.setEnd_date(rs.getString(5));
+                b.setStatus(rs.getString(6));
+                b.setBooking_id(rs.getString(7));
                 b.setRoom(r);
-               list.add(b);
+                list.add(b);
             }
             return list;
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return null;
     }
-    public int CheckBooking(String id_room){
-        String sql = "select count(*) from Booking as b , Rooms as r where r.room_id= b.room_id and r.room_id = ? and b.status =1";
+
+    public int CheckBooking(String id_room) {
+        String sql = "select count(*) from Booking as b , Rooms as r where r.room_id= b.room_id and r.room_id = ? and (b.status =1 or b.status=5) ";
         Connection con = null;
-        PreparedStatement pr= null;
+        PreparedStatement pr = null;
         ResultSet rs = null;
-        try{
-            con=database.getConnection();
-            pr=con.prepareStatement(sql);
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
             pr.setString(1, id_room);
-            rs=pr.executeQuery();
-            if(rs.next()){
+            rs = pr.executeQuery();
+            if (rs.next()) {
                 return rs.getInt(1);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return 0;
+    }
+
+    public ArrayList<String> imaglist(String room_id) {
+        String sql = "select i.image_url  from Images as i , Rooms as r where i.room_id = r.room_id and r.room_id = ?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, room_id);
+            rs = pr.executeQuery();
+            while (rs.next()) {
+                String image = rs.getString(1);
+                list.add(image);
+            }
+            return list;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public void CancelBookingRoom(String bookingRoom_id) {
+        String sql = "update Booking set status =3 where booking_id=?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, bookingRoom_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void setStartDatebyBookingId(String start_date, String Booking_id) {
+        String sql = "update Booking set start_date=? where booking_id=?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, start_date);
+            pr.setString(2, Booking_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void upadateMonth(String booking_id) {
+        String sql = "update Booking set months =1 where booking_id=?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, booking_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+    // lấy ra người đang đợi đê phê duyệt gia hạn 
+
+    public ArrayList<BookingRoom> getUserPendingExtend(String email_owner) {
+        String sql = "SELECT u.full_name AS customer_name, \n"
+                + "       r.room_name, \n"
+                + "       b.booking_id, \n"
+                + "       b.start_date, \n"
+                + "       b.months, \n"
+                + "       b.end_date, \n"
+                + "       b.status,\n"
+                + "       r.price,\n"
+                + "       r.room_id\n  "
+                + "FROM Booking b \n"
+                + "JOIN Users u ON b.user_id = u.user_id  -- Người đặt phòng\n"
+                + "JOIN Rooms r ON b.room_id = r.room_id  -- Phòng được đặt\n"
+                + "JOIN Users owner ON r.user_id = owner.user_id -- Chủ phòng\n"
+                + "WHERE b.status = 4 \n"
+                + "AND owner.email = ?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        ArrayList<BookingRoom> list = new ArrayList<>();
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, email_owner);
+            rs = pr.executeQuery();
+            while (rs.next()) {
+                BookingRoom b = new BookingRoom();
+                Room r = new Room();
+                Customer c = new Customer();
+                c.setFullName(rs.getString("customer_name"));
+                r.setRoomName(rs.getString("room_name"));
+                b.setBooking_id(rs.getString("booking_id"));
+                b.setDate(rs.getString("start_date"));
+                b.setMonth(rs.getString("months"));
+                b.setEnd_date(rs.getString("end_date"));
+                b.setStatus(rs.getString("status"));
+                r.setPrice(rs.getFloat("price"));
+                r.setRoomId(rs.getString("room_id"));
+                b.setCustomer(c);
+                b.setRoom(r);
+                list.add(b);
+            }
+            return list;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public void updatePendingContract(String booking_id) {
+        String sql = "update Booking set status=4 where booking_id=?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, booking_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void AcceptPendingContract(String booking_id) {
+        String sql = "update Booking set status=1 where booking_id=?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, booking_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public String getIdCustomer(String booking_id) {
+        String sql = "select user_id from Booking where booking_id = ?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, booking_id);
+            rs = pr.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public void viPhamHopDong(String booking_id) {
+        String sql = "update Booking set status = 5  where  booking_id= ?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, booking_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public ArrayList<BookingRoom> getListViPham() {
+        String sql = "   select r.room_name, b.user_id, b.start_date , b.months, b.end_date , b.status,b.booking_id, r.room_id\n"
+                + "from Rooms as r, Booking as b where r.room_id = b.room_id and b.status =5";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        ArrayList<BookingRoom> list = new ArrayList<>();
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            rs = pr.executeQuery();
+            while (rs.next()) {
+                BookingRoom b = new BookingRoom();
+                Room r = new Room();
+                r.setRoomName(rs.getString(1));
+                b.setUser_id(rs.getString(2));
+                b.setDate(rs.getString(3));
+                b.setMonth(rs.getString(4));
+                b.setEnd_date(rs.getString(5));
+                b.setStatus(rs.getString(6));
+                b.setBooking_id(rs.getString(7));
+                r.setRoomId(rs.getString(8));
+                b.setRoom(r);
+                list.add(b);
+            }
+            return list;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    public void xulyvipham(String booking_id){
+        String sql ="update Booking set status = 2  where  booking_id= ?";
+         Connection con = null;
+        PreparedStatement pr = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, booking_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void tuChoiXuLyViPham(String booking_id){
+         String sql = "update Booking set status = 1  where  booking_id= ?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, booking_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

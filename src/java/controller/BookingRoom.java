@@ -1,7 +1,9 @@
 package controller;
 
 import dao.BookingRoomDao;
+import dao.CustomerDao;
 import dao.RoomDao;
+import dao.WalletDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -9,7 +11,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.Room;
+import java.util.ArrayList;
 
 @WebServlet(name = "BookingRoom", urlPatterns = {"/BookingRoom"})
 public class BookingRoom extends HttpServlet {
@@ -45,7 +49,46 @@ public class BookingRoom extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+        CustomerDao csd = new CustomerDao();
+        String customerId = csd.getUserIdByEmail(email);
+
+        WalletDAO wd = new WalletDAO();
+        float balance = wd.getPrice(customerId);
+
+//        String startDate = LocalDate.now().toString(); // Lấy ngày hôm nay theo format "yyyy-MM-dd"
+//        System.out.println("Ngày bắt đầu: " + startDate);
+        String booking_id = request.getParameter("booking_id");
+        BookingRoomDao brd = new BookingRoomDao();
+
+        String price = request.getParameter("price");
+        float price1 = Float.parseFloat(price);
+        if (balance < price1) {
+            // Số dư không đủ => Trả về trang ListContractCustomer.jsp với thông báo lỗi
+            request.setAttribute("errorMessage", "Số dư tài khoản không đủ để thanh toán!");
+            BookingRoomDao bd = new BookingRoomDao();
+            ArrayList<model.BookingRoom> list = bd.getNameRoombyEmail(email);
+            request.setAttribute("list", list);
+            request.getRequestDispatcher("ListContractCustomer.jsp").forward(request, response);
+            return;
+        }
+//        String room_id = request.getParameter("roomId");
+        RoomDao rd = new RoomDao();
+//        String owner_id= rd.getOwnerId(room_id);
+//        float price_owner = wd.getPrice(owner_id);
+//        brd.setStartDatebyBookingId(startDate, booking_id);
+//        brd.upadateMonth(booking_id);
+//        wd.updatePrice(balance - price1, customerId);
+//        wd.updatePrice(price_owner+price1, owner_id);
+        BookingRoomDao bd = new BookingRoomDao();
+        CustomerDao cd = new CustomerDao();
+        String owner_id = cd.getUserIdByEmail(email);
+        ArrayList<model.BookingRoom> list = bd.getCusTomerBooking(owner_id);
+        request.setAttribute("list", list);
+        System.out.println(list);
+        response.sendRedirect("ListContractCustomer");
     }
 
     @Override

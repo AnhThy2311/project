@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import dao.ChatBoxDao;
 import dao.CustomerDao;
+import dao.NotificationDao;
 import dao.RoomDao;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -18,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.ChatBox;
+import model.Notification;
 import model.Room;
 
 /**
@@ -72,11 +70,17 @@ public class RoomServlet extends HttpServlet {
             System.out.println("email: " + email);
             CustomerDao cud = new CustomerDao();
             String sendID = cud.getUserIdByEmail(email);
+            System.out.println("senid: " + sendID);
             System.out.println(sendID);
             ChatBoxDao cbd = new ChatBoxDao();
-            ArrayList<ChatBox> listreceicer = cbd.getSender(sendID);
+            ArrayList<ChatBox> listreceicer = cbd.getSender(sendID); // đây là danh sách id của người gửi do nhầm lẫn
             System.out.println(listreceicer);
             session.setAttribute("list", listreceicer);
+            NotificationDao ntd = new NotificationDao();
+            ArrayList<Notification> ListNotification = ntd.getListNo(sendID);
+            String countNotification = ntd.getCountNoti(sendID);
+             request.setAttribute("countNotification", countNotification);
+            request.setAttribute("ListNotification", ListNotification);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("GetAllRoom.jsp");
             dispatcher.forward(request, response);
@@ -89,7 +93,7 @@ public class RoomServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     @Override

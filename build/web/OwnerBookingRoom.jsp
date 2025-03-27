@@ -148,6 +148,7 @@ Integer state = (Integer) session.getAttribute("state");
                             <% if (list != null && !list.isEmpty()) { %>
                             <% for (BookingRoom br : list) { %>
                             <tr class="bg-gray-100 text-gray-800">
+                               
                                 <td class="py-2 px-4 border-b"><%= br.getCustomer().getFullName() %></td>
                                 <td class="py-2 px-4 border-b"><%= br.getRoomName() %></td>
                                 <td class="py-2 px-4 border-b"><%= sdf.format(java.sql.Date.valueOf(br.getDate())) %></td>

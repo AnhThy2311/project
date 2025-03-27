@@ -41,8 +41,10 @@ public class OwnerBookingRoom extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
+        System.out.println("eamil: "+email);
         CustomerDao cud = new CustomerDao();
         String ownerid = cud.getUserIdByEmail(email);
+        System.out.println("owner id: "+ownerid);
         BookingRoomDao bd = new BookingRoomDao();
         ArrayList<model.BookingRoom> b = bd.getPendingBooking(ownerid);
         System.out.println(b);

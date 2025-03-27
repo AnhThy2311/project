@@ -154,6 +154,12 @@ Integer state = (Integer) session.getAttribute("state");
                     <tr>
                         <th>TT</th>
                         <th>Hợp đồng phòng</th>
+                        <th>Giá Tiền</th>
+                        <th>Ngày Bắt Đầu</th>
+                        <th>Ngày Kết Thúc</th>
+                        <th>Thời gian còn lại</th>
+                        <th>Trạng thái</th>
+                        <th>Thanh toán</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -162,6 +168,7 @@ Integer state = (Integer) session.getAttribute("state");
                         if (list != null && !list.isEmpty()) {
                             int index = 1;
                             for (BookingRoom br : list) { 
+                                long daysLeft = br.getDaysLeft();
                     %>
                     <tr>
                         <td><%= index++ %></td>
@@ -170,18 +177,82 @@ Integer state = (Integer) session.getAttribute("state");
                                 <%= br.getRoom().getRoomName() %>
                             </a>
                         </td>
-
+                        <td><%= br.getRoom().getPrice() %></td>
+                        <td><%= br.getDate() %></td>
+                        <td><%= br.getEnd_date() %></td>
+                        <td>
+                            <% if (daysLeft > 0) { %>
+                            Còn <%= daysLeft %> ngày
+                            <% } else { %>
+                            Hết hạn
+                            <% } %>
+                        </td>
+                        <td>
+                            <% 
+                                String status = br.getStatus();
+                                if (status.equals("1")) {
+                            %>
+                            Đang thuê
+                            <% 
+                                } else if (status.equals("3")) {
+                            %>
+                            Hết hợp đồng thuê
+                            <% 
+                                } else if (status.equals("4")) {
+                            %>
+                            đang đợi gia hạn
+                            <% 
+                                }else {
+                            %>
+                            Trạng thái khác
+                            <% 
+                                }
+                            %>
+                        </td>
+                        <td>
+                            <% 
+                                String submitted = request.getParameter("submitted");
+                                if (daysLeft > -2 && daysLeft <=0 && status.equals("1")) { 
+                            %>
+                            <!-- Hiển thị nút thanh toán -->
+                            <form action="BookingRoom" method="post">
+                                <input type="hidden" name="roomId" value="<%= br.getRoom().getRoomId() %>">
+                                <input type="hidden" name="endDate" value="<%= br.getEnd_date() %>">
+                                <input type="hidden" name="booking_id" value="<%= br.getBooking_id() %>">
+                                <input type="hidden" name="price" value="<%= br.getRoom().getPrice() %>">
+                                <button type="submit" class="btn btn-warning btn-sm">Gia hạn thêm 1 tháng</button>
+                            </form>
+                            <% 
+                                } else if (daysLeft == -3 && (submitted == null || !"true".equals(submitted))) { 
+                            %>
+                            <form action="ListContractCustomer?submitted=true" method="post" id="autoSubmitForm">
+                                <input type="hidden" name="roomId" value="<%= br.getRoom().getRoomId() %>">
+                                <input type="hidden" name="booking_id" value="<%= br.getBooking_id() %>">
+                            </form>
+                            <script>
+                                document.getElementById("autoSubmitForm").submit();
+                            </script>
+                            <% } %>
+                        </td>
                     </tr>
                     <% 
                             } 
                         } else { 
                     %>
                     <tr>
-                        <td colspan="2" class="text-center">Không có hợp đồng nào</td>
+                        <td colspan="6" class="text-center">Không có hợp đồng nào</td>
                     </tr>
                     <% } %>
                 </tbody>
             </table>
+            <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+            <% if (errorMessage != null) { %>
+            <script>
+                alert("<%= errorMessage %>");
+            </script>
+            <% } %>
         </div>
+
+
     </body>
 </html>

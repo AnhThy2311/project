@@ -219,7 +219,7 @@
                         <div class="flex items-center space-x-2">
                             <i class="fas fa-user text-2xl"></i>
                             <div>
-                                <p>User Management</p>
+                                <p>Quản Lý Người dùng</p>
                             </div>
                         </div>
                         <img alt="Line chart showing members online trend" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/hRAS63IqZM36b-4wI_0OIIKZx3HcLWDkYaIzJ92I-TU.jpg" width="300"/>
@@ -228,7 +228,7 @@
                         <div class="flex items-center space-x-2">
                             <i class="fas fa-shopping-cart text-2xl"></i>
                             <div>
-                                <p>Approve Post Room</p>
+                                <p>Phê duyệt bài đăng phòng trọ </p>
                             </div>
                         </div>
                         <img alt="Line chart showing items sold trend" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/jnEvh5_WhCJPCgo1zMgozUzG-KtGuvvb6W91VMIkknE.jpg" width="300"/>
@@ -238,8 +238,8 @@
                         <div class="flex items-center space-x-2">
                             <i class="fas fa-calendar-alt text-2xl"></i>
                             <div>
-                               
-                                <p>Report Comment</p>
+
+                                <p>Báo cáo bình luận</p>
                             </div>
                         </div>
                         <img alt="Line chart showing weekly trend" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/mJd9u4hAKkXsNd1qkyCZIm7Q_dLCR1YJmzqt5Eol0Qw.jpg" width="300"/>
@@ -250,12 +250,43 @@
                             <i class="fas fa-dollar-sign text-2xl"></i>
                             <div>
                                 <h2 class="text-xl font-semibold">$1,080,386</h2>
-                                <p>Report Room</p>
+                                <p>báo cáo Bài Đăng phòng trọ</p>
                             </div>
                         </div>
                         <img alt="Bar chart showing total earnings trend" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/Yc5GzORqvlr8phzEYRXLhmV3O5eHwCzlsHyQLS2UrJg.jpg" width="300"/>
                     </a>
+                    <a href="AdminContractViolationServlet" class="block bg-gradient-to-r from-green-400 to-yellow-500 text-white p-4 rounded focus:outline-none hover:shadow-lg active:scale-95 transition transform duration-200 cursor-pointer">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-dollar-sign text-2xl"></i>
+                            <div>
+                                <h2 class="text-xl font-semibold">$1,080,386</h2>
+                                <p>Báo cáco vi phạm hợp đồng</p>
+                            </div>
+                        </div>
+                        <img alt="Bar chart showing total earnings trend" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/Yc5GzORqvlr8phzEYRXLhmV3O5eHwCzlsHyQLS2UrJg.jpg" width="300"/>
+                    </a>
+                     <a href="AdminGetAllGiaoDich" class="block bg-gradient-to-r from-orange-400 to-pink-500 text-white p-4 rounded focus:outline-none hover:shadow-lg active:scale-95 transition transform duration-200 cursor-pointer">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-calendar-alt text-2xl"></i>
+                        <div>
+
+                            <p>Yêu cầu rút tiền</p>
+                        </div>
+                    </div>
+                    <img alt="Line chart showing weekly trend" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/mJd9u4hAKkXsNd1qkyCZIm7Q_dLCR1YJmzqt5Eol0Qw.jpg" width="300"/>
+                </a>
+                <a href="AdminFinancialManagement" class="block bg-gradient-to-r from-orange-400 to-pink-500 text-white p-4 rounded focus:outline-none hover:shadow-lg active:scale-95 transition transform duration-200 cursor-pointer">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-calendar-alt text-2xl"></i>
+                        <div>
+
+                            <p>Quản lý tài chính</p>
+                        </div>
+                    </div>
+                    <img alt="Line chart showing weekly trend" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/mJd9u4hAKkXsNd1qkyCZIm7Q_dLCR1YJmzqt5Eol0Qw.jpg" width="300"/>
+                </a>    
                 </div>
+
 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-white p-4 rounded shadow">
@@ -267,6 +298,7 @@
                         <img alt="Pie chart showing percentage distribution" class="w-full" height="300" src="https://storage.googleapis.com/a1aa/image/Kt32K5khOJ7yRIG0VGrFyuV1xbkbD24IOep4V7ASsfk.jpg" width="300"/>
                     </div>
                 </div>
+               
             </div>
 
     </body>

@@ -177,11 +177,11 @@
                             <td class="py-2 px-4 border-b border-gray-300 text-gray-700"><%= r.getCustomer().getFullName() %></td>
                             <td class="py-2 px-4 border-b border-gray-300 text-gray-700"><%= r.getCustomer().getPhone() %></td>
                             <td class="py-2 px-4 border-b border-gray-300">
-                                <form action="AcceptRoom" method="post" style="display:inline;">
+                                <form action="AcceptRoom" method="get" style="display:inline;">
                                     <input type="hidden" name="roomId" value="<%= r.getRoomId() %>">
                                     <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Đồng ý</button>
                                 </form>
-                                <form action="CancelRoom" method="post" style="display:inline;">
+                                <form action="AcceptRoom" method="post" style="display:inline;">
                                     <input type="hidden" name="roomId" value="<%= r.getRoomId() %>">
                                     <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">hủy</button>
                                 </form>

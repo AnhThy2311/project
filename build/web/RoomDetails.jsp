@@ -63,7 +63,7 @@
                 <div class="d-flex justify-content-between align-items-center py-2">
                     <!-- Logo và Home -->
                     <div class="d-flex align-items-center">
-                        <a href="/" class="navbar-brand">
+                        <a href="RoomServlet" class="navbar-brand">
                             <img
                                 src="https://static.muonnha.com.vn/images/logo.png?w=384&p=100"
                                 alt="Muôn Nhà"
@@ -71,80 +71,94 @@
                                 height="46"
                                 />
                         </a>
-                        <a class="nav-link active" href="/" style="padding-left: 20px"
-                           >Home</a
+                        <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
+                           >Trang Chủ</a
                         >
-
-                        <!-- Thanh tìm kiếm -->
-                        <div class="d-none d-md-flex ms-3">
-                            <div class="filter__bar pb-2">
-                                <div class="w-100">
-                                    <div class="d-flex position-relative bg-white">
-                                        <!-- Nút tìm theo khu vực -->
-                                        <div
-                                            data-bs-toggle="offcanvas"
-                                            data-bs-target="#offcanvasLocation"
-                                            aria-controls="offcanvasLocation"
-                                            class="btn__search d-flex align-items-center"
-                                            >
-                                            <span class="material-icons me-2">location_on</span>
-                                            <span
-                                                class="fw-normal flex-grow-1 line-clamp-1 text-body"
-                                                >
-                                                Tìm theo khu vực
-                                            </span>
-                                        </div>
-
-                                        <!-- Nút bộ lọc -->
-                                        <button
-                                            type="button"
-                                            data-bs-toggle="offcanvas"
-                                            data-bs-target="#offcanvasAdvance"
-                                            aria-controls="offcanvasAdvance"
-                                            class="btn btn__funnel ms-2"
-                                            >
-                                            <i class="bi-funnel me-1"></i>
-                                            <span>Bộ lọc</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+                    <% if(username == null){ %>
+                    <a href="#" class="btn btn-outline-secondary me-2">
+                        <i class="bi bi-heart"></i>
+                    </a>
+                    <% } else { %>
+                    <a href="WishListServlet" class="btn btn-outline-secondary me-2">
+                        <i class="bi bi-heart"></i>
+                    </a>
+                    <% } %>
+                    <% if (username != null) { %>
+                    <a href="ListContractCustomer">
+                        <button class="btn btn-outline-secondary me-2">DS hợp đồng thuê</button>
+                    </a>
 
-                    <!-- Các nút đăng ký, đăng nhập, đăng tin -->
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary me-2">
-                            <i class="bi-heart"></i>
+                    <% } %>
+                    <% if (userRole == 3) { %>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle me-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Quản lý hợp đồng
                         </button>
-                        <% 
-     if (username != null) { 
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <a class="dropdown-item" href="OwnerListContractCustomer">DS hợp đồng cho thuê</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="OwnerBookingRoom">DS  phê duyệt cho thuê</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <% } %>
+                    <!-- Các nút đăng ký, đăng nhập, đăng tin -->
+                    <% 
+    if (username != null) { 
+                    %>
+                    <div class="dropdown">
+                        <img class="avatar rounded-circle me-2"
+                             src="${pageContext.request.contextPath}/images/<%= userImage %>"
+                             alt="Ảnh đại diện tài khoản" width="33" height="33" />
+                        <button class="btn btn-outline-secondary dropdown-toggle me-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <%= username %>
+                        </button>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="ChangePassword.jsp">Đổi mật khẩu</a></li>
+                            <li><a class="dropdown-item" href="Profile">Thông tin</a></li>
+                            <li> <a class="dropdown-item" href="Logout.jsp">
+                                    Đăng xuất
+                                </a></li>
+                        </ul>
+                        <a href="WalletServlet">
+                            <button class="btn btn-outline-secondary me-2">ví</button>
+                        </a>
+                        <a href="RoomAppointmentServlet">
+                            <button class="btn btn-outline-secondary me-2">Lịch Xem Phòng</button>
+                        </a>
+
+
+                        <%
+        if (userRole == 3) {
                         %>
-                        <span class="me-2">👤 <%= username %></span>
-                        <a href="Register.jsp">
-                            <button class="btn btn-outline-secondary me-2">Thông tin</button>
-                        </a>
-                        <a href="Logout.jsp">
-                            <button class="btn btn-outline-secondary me-2">Logout</button>
-                        </a>
-                        <button class="btn btn-outline-danger me-2">Nâng câp tài khoản</button>
-                        <% 
+                        <a  href="OwnerRoomAppointment" class="btn btn-outline-danger me-2"> Lịch Đặt Xem Phòng</a>
+                        <a  href="GetPostRooms?email=<%=username%>" class="btn btn-outline-danger me-2">Đăng tin</a>
+
+                        <%
+                                } else if(userRole==2){
+                        %>
+                        <a class="btn btn-outline-danger me-2" href="Ugradeaccount.jsp">Nâng cấp tài khoản</a>
+                        <%
+                                }
                             } else { 
                         %>
-                        <a href="Register.jsp">
-                            <button class="btn btn-outline-secondary me-2">Đăng ký</button>
-                        </a>
-                        <a href="Loggin.jsp">
-                            <button class="btn btn-outline-secondary me-2">Đăng nhập</button>
-                        </a>
-                        <% } %>
-
+                        <a href="Register.jsp" class="btn btn-outline-secondary me-2">Đăng ký</a>
+                        <a href="Loggin.jsp" class="btn btn-outline-secondary me-2">Đăng nhập</a>
                         <button class="btn btn-outline-danger me-2">Đăng tin</button>
+                        <%
+                            }
+                        %>
+
+
                     </div>
                 </div>
             </div>
         </header>
-                        <% int count_checkBooking = (int) request.getAttribute("count_checkBooking") ;%>
+        <% int count_checkBooking = (int) request.getAttribute("count_checkBooking") ;%>
         <main>
             <div class="container mt-4">
                 <div class="row mt-3">
@@ -162,6 +176,36 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="roomCarousel" class="carousel slide carousel-vertical mt-4" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <%
+                                    ArrayList<String> listimage = (ArrayList<String>) request.getAttribute("listimage");
+                                    for (int i = 0; i < listimage.size(); i++) {
+                                        String image = listimage.get(i);
+                                %>
+                                <div class="carousel-item <%= i == 0 ? "active" : "" %>">
+                                    <img src="${pageContext.request.contextPath}/images/<%= image %>" 
+                                         class="d-block w-100" 
+                                         alt="Room Image" 
+                                         style="height: 250px; max-height: 300px; object-fit: contain; margin: 0 auto;">
+
+                                </div>
+                                <% } %>
+                            </div>
+                            <!-- Nút điều khiển chiều dọc -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#roomCarousel" data-bs-slide="prev" 
+                                    style="top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; width: 30px; height: 30px;">
+                                <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1); width: 15px; height: 15px;"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#roomCarousel" data-bs-slide="next" 
+                                    style="top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; width: 30px; height: 30px;">
+                                <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1); width: 15px; height: 15px;"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+
+                        </div>
+
 
                         <div class="bg-white shadow-sm rounded p-4 mb-3">
                             <h2 class="fs-5 fw-semibold lh-sm mb-3 text-center" style="color:#ff5723">Chi tiết phòng</h2>
@@ -194,7 +238,18 @@
                                         <th class="table-secondary">Giá thuê</th>
                                         <td class="fw-bold text-danger"><%= room.getPrice() %> VND/tháng</td>
                                     </tr>
-
+                                    <tr>
+                                        <th class="table-secondary">Diện tích</th>
+                                        <td ><%= room.getArea() %>  m²</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-secondary">Tiền điện</th>
+                                        <td ><%= room.getElectricity_price() %> VND/số</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-secondary">Tiền Nước</th>
+                                        <td><%= room.getWater_price() %> VND/khối</td>
+                                    </tr>
                                     <tr>
                                         <th class="table-secondary">Mã tin</th>
                                         <td>#<%= room.getRoomId() %></td>
@@ -219,6 +274,7 @@
                             </div>
                         </div>
                     </div>
+                    <%   if (username != null) { %>
                     <div class="col-md-9 col-lg-4">
                         <div class="bg-white shadow-sm rounded p-3 mb-3 d-none d-lg-block" style="height:300px">
                             <div class="mb-3">
@@ -227,15 +283,16 @@
                                     <span class="fs-5 fw-medium"><%= room.getCustomer().getFullName()%></span>
                                 </div>
                             </div>
+
                             <div class="d-flex gap-2">
                                 <a class="btn btn-primary text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
                                    target="_blank" rel="nofollow" href="Chatbox?roomid=<%= room.getRoomId()%>"
                                    onclick="return checkLogin(event)">
                                     <i class="icon chat-text white me-2"></i> Liên Hệ
                                 </a>
-                                   <% if(count_checkBooking==0) {%>
+                                <% if(count_checkBooking==0) {%>
                                 <a class="btn btn-success text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
-                                   href="Contract.jsp?roomid=<%=room.getRoomId()%>"
+                                   href="BookingRoom?roomid=<%=room.getRoomId()%>"
                                    onclick="return checkLogin(event)">
                                     <i class="icon house white me-2"></i> Thuê Trọ
                                 </a>
@@ -245,15 +302,20 @@
                                    onclick="openDatePickerModal(event)">
                                     <i class="icon calendar white me-2"></i> Đặt Lịch
                                 </a>
-                                   <% }else if(count_checkBooking>0){%>
-                                   phòng trọ đã được thuê
-                                    <% } %>
+
+                                <% }else if(count_checkBooking>0){%>
+                                phòng trọ đã được thuê
+                                <% }  %>
+
                             </div>
                             <div class="d-flex justify-content-between mt-3">
-                                <button class="btn btn-white btn__save__lg fs-7 d-flex text-nowrap js-btn-save" 
-                                        data-post-id="593916" title="Tin đã lưu" onclick="return checkLogin(event)">
-                                    <i class="icon heart me-2"></i><span>Lưu tin</span>
-                                </button>
+                                <form action="SendWishList" method="post">
+                                    <input type="hidden" name="roomId" value="<%= room.getRoomId() %>">
+                                    <button class="btn btn-white btn__save__lg fs-7 d-flex text-nowrap js-btn-save" 
+                                            data-post-id="593916" title="Tin đã lưu" onclick="return checkLogin(event)">
+                                        <i class="icon heart me-2"></i><span>Lưu tin</span>
+                                    </button>
+                                </form>
                                 <% if ((Boolean) request.getAttribute("canFeedback")) { %>
                                 <form action="BadnewsRoom" method="get" onsubmit="return checkLogin(event) && confirm('Bạn có chắc muốn báo cáo phòng trọ này không?')"
                                       >
@@ -266,9 +328,59 @@
                                     </button>
                                 </form>
                                 <% } %>
+
                             </div>
                         </div>
                     </div>
+                    <% } else{ %>
+                    <div class="col-md-9 col-lg-4">
+                        <div class="bg-white shadow-sm rounded p-3 mb-3 d-none d-lg-block" style="height:300px">
+                            <div class="mb-3">
+                                <img style = "height: 100px"class="avatar size-100 d-block p-1 m-auto" src="https://phongtro123.com/images/default-user.svg">
+                                <div class="mt-3 text-center">
+                                    <span class="fs-5 fw-medium"><%= room.getCustomer().getFullName()%></span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <a class="btn btn-warning text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" href="#">
+
+                                    <i class="icon chat-text white me-2"></i> Liên Hệ
+                                </a>
+
+                                <a class="btn btn-success text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
+                                   href="#"
+                                   >
+                                    <i class="icon house white me-2"></i> Thuê Trọ
+                                </a>
+
+                                <a class="btn btn-warning text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
+                                   href="#" 
+                                   >
+                                    <i class="icon calendar white me-2"></i> Đặt Lịch
+                                </a>
+
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+
+                                <button class="btn btn-white btn__save__lg fs-7 d-flex text-nowrap js-btn-save" 
+                                        data-post-id="593916" title="Tin đã lưu" >
+                                    <i class="icon heart me-2"></i><span>Lưu tin</span>
+                                </button>
+                                <form action="#" method="#"
+                                      >
+                                    <input type="hidden" name="roomId" value="<%= room.getRoomId() %>">
+                                    <button type="submit" class="btn btn-white fs-7 text-nowrap d-flex" 
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasReportPost" 
+                                            aria-controls="offcanvasReportPost">
+                                        <i class="icon exclamation-triangle me-2"></i>
+                                        <span>Báo xấu</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
                 </div>
                 <div class="bg-white shadow-sm rounded p-3 mb-3">
                     <h2 class="fs-5 mb-3">Đánh giá khách thuê</h2>
@@ -386,7 +498,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="container mt-4">
                 <div class="bg-white shadow-sm rounded">
                     <div class="row">
@@ -401,7 +512,7 @@
                 </div>
             </div>
         </main>
-                    
+
         <!-- Modal để hiển thị lịch -->
         <form action="RoomAppointmentServlet?COMMAND=CREATE_APPOINTMENT" method="post">
             <input type="hidden" name="roomId" value="<%= room.getRoomId() %>">

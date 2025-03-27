@@ -50,6 +50,7 @@ public class Forgot_password extends HttpServlet {
         String email = request.getParameter("email");
         CustomerDao csd = new CustomerDao();
         Customer cus= csd.exitEmail(email);
+        System.out.println("cus"+cus);
         if (cus != null) {
           Email.sendEmail(email, "Xác thực tài khoản tại QuickRent.com", getContent(cus));
            RequestDispatcher re = request.getRequestDispatcher("SendGmail.jsp");

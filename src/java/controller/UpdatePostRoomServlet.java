@@ -54,44 +54,54 @@ public class UpdatePostRoomServlet extends HttpServlet {
         String id = request.getParameter("id");
         String room_name = request.getParameter("room_name");
         String price = request.getParameter("price");
+
 // Kiểm tra null và chuỗi rỗng trước khi parse
         float price1 = 0;
-        price1 = Float.parseFloat(price.trim());
-// In kiểm tra xem đã lấy được dữ liệu đúng chưa
+        if (price != null && !price.trim().isEmpty()) {
+            price1 = Float.parseFloat(price.trim());
+        }
+
+// In kiểm tra dữ liệu nhận được
         System.out.println("ID: " + id);
         System.out.println("Room Name: " + room_name);
         System.out.println("Price: " + price1);
+
+        PostRoomsDao prd = new PostRoomsDao();
+        String fileNameWithExtension = prd.getImageRoom(id);  // Lấy ảnh hiện tại trong DB
+        System.out.println("Ảnh cũ là: " + fileNameWithExtension);
+
         try {
             Part photo = request.getPart("image");
-            String uploadDir = "D:\\FPT-university\\chuyên ngành 4\\javawedd\\code\\DoAnSWP\\web\\images";
 
-            if (!Files.exists(Path.of(uploadDir))) {
-                Files.createDirectories(Path.of(uploadDir));
+            // Kiểm tra nếu người dùng có tải lên ảnh mới
+            if (photo != null && photo.getSize() > 0) {
+                String uploadDir = "D:\\FPT-university\\chuyên ngành 4\\javawedd\\code\\DoAnSWP\\web\\images";
+                if (!Files.exists(Path.of(uploadDir))) {
+                    Files.createDirectories(Path.of(uploadDir));
+                }
+
+                // Lấy tên file từ Part
+                String filename = Path.of(photo.getSubmittedFileName()).getFileName().toString();
+                String filePath = uploadDir + "/" + filename;
+
+                // Lưu file vào thư mục
+                photo.write(filePath);
+                System.out.println("File mới được lưu tại: " + filePath);
+
+                // Cập nhật ảnh mới
+                fileNameWithExtension = filename;
+                System.out.println("Ảnh mới là: " + fileNameWithExtension);
+            } else {
+                System.out.println("Không có file mới được tải lên, giữ nguyên ảnh cũ.");
             }
-
-            // Lấy tên file từ đối tượng Part
-            String filename = Path.of(photo.getSubmittedFileName()).getFileName().toString();
-
-            // Tạo đường dẫn đầy đủ để lưu file
-            String filePath = uploadDir + "/" + filename;
-
-            // Ghi file vào thư mục
-            photo.write(filePath);
-
-            // In ra console để kiểm tra
-            System.out.println("File saved at: " + filePath);
-
-            // Lấy tên file
-            String[] parts = filePath.split("/");
-            String fileNameWithExtension = parts[parts.length - 1];
-
             // Cập nhật thông tin phòng trong database
-            PostRoomsDao prd = new PostRoomsDao();
-                prd.updatePostRoom(room_name, price1, fileNameWithExtension, id);
+            prd.updatePostRoom(room_name, price1, fileNameWithExtension, id);
             response.sendRedirect("RoomServlet");
+
         } catch (IOException | ServletException ex) {
             ex.printStackTrace();  // In lỗi ra console để debug
         }
+
     }
 
     @Override

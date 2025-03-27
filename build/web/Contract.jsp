@@ -110,6 +110,12 @@
                     Xác nhận
                 </a>
             </div>
+            <div class="text-center mt-4">
+                <a href="DownloadContract" 
+                   class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 text-decoration-none">
+                    Tải Hợp Đồng
+                </a>
+            </div>
         </div>
         <script>
             document.getElementById("agree").addEventListener("change", function () {

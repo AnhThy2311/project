@@ -1,4 +1,3 @@
-
 package controller;
 
 import dao.CustomerDao;
@@ -17,10 +16,8 @@ import java.util.logging.Logger;
 import model.Customer;
 import model.Information;
 
-
 @WebServlet(name = "Profile", urlPatterns = {"/Profile"})
 public class Profile extends HttpServlet {
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,7 +36,6 @@ public class Profile extends HttpServlet {
         }
     }
 
- 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -47,9 +43,9 @@ public class Profile extends HttpServlet {
         String email = (String) session.getAttribute("email");
         CustomerDao dao = new CustomerDao();
         Customer c = dao.SelectCustomerByEmail(email);
-        System.out.println("customer la: "+c);
+        System.out.println("customer la: " + c);
         request.setAttribute("customer", c);
-        System.out.println("anh la: "+c.getImage());
+        System.out.println("anh la: " + c.getImage());
         InformationDAO informationDao = new InformationDAO();
         int userId = dao.getUserId(email);
         Information information = null;
@@ -60,13 +56,12 @@ public class Profile extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(Profile.class.getName()).log(Level.SEVERE, null, ex);
         }
-         request.setAttribute("information", information);
+        request.setAttribute("information", information);
         // Store Information in the session
         session.setAttribute("information", information);
         request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

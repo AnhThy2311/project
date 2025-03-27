@@ -1,5 +1,4 @@
 package model;
-
 public class Customer {
     public String email;
     public String password;

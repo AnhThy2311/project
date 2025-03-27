@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Room" %>
 <%@ page import="model.ChatBox" %>
+<%@ page import="model.Notification" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -323,8 +324,9 @@
                                     for (ChatBox receiver : listReceiver) { 
                                 %>
                                 <!-- Tin nhắn mới -->
+                                <!--receiver là id của người gửi-->
                                 <li>
-                                    <a href="OwnerChat?receiverId=<%= receiver.getSender() %>" 
+                                    <a href="OwnerChat?receiverId=<%= receiver.getSender() %>"   
                                        class="dropdown-item d-flex align-items-start py-2 text-decoration-none">
                                         <img src="${pageContext.request.contextPath}/images/<%= receiver.getImange() %>" 
                                              class="rounded-circle me-3" width="45" height="45" alt="User">
@@ -351,6 +353,66 @@
                                 </li>
                             </ul>
                         </div>
+                        <%
+     // Lấy danh sách thông báo và số lượng thông báo từ request
+     ArrayList<Notification> listNotification = (ArrayList<Notification>) request.getAttribute("ListNotification");
+     String countNotification = request.getAttribute("countNotification") != null ? 
+                                (String) request.getAttribute("countNotification") : "0";
+                        %>
+
+                        <div class="dropdown d-none d-lg-block">
+                            <!-- Nút Bell hiển thị thông báo -->
+                            <button type="button" class="btn btn-light border-0 d-flex align-items-center position-relative dropdown-toggle"
+                                    data-bs-toggle="dropdown" aria-expanded="false" aria-label="Thông báo"
+                                    onclick="<%= !countNotification.equals("0") ? "window.location.href='NotificationServlet'" : "" %>">
+                                <!-- Icon Bell -->
+                                <i class="bi bi-bell-fill text-primary fs-4"></i>
+
+                                <!-- Hiển thị số lượng thông báo nếu có -->
+                                <% if (!countNotification.equals("0")) { %>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    <%= countNotification %>
+                                </span>
+                                <% } %>
+                            </button>
+
+
+                            <!-- Danh sách thông báo -->
+                            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 p-3"
+                                style="width: 350px; max-height: 400px; overflow-y: auto; border-radius: 10px;">
+                                <%
+                                    if (listNotification != null && !listNotification.isEmpty()) {
+                                        for (Notification notification : listNotification) {
+                                %>
+                                <!-- Hiển thị từng thông báo -->
+                                <li>
+                                    <a href="#" class="dropdown-item d-flex align-items-start py-2 text-decoration-none">
+                                        <i class="bi bi-bell me-3 fs-4 text-warning"></i>
+                                        <div>
+                                            <strong class="d-block"><%= notification.getTitle() %></strong>
+                                        </div>
+                                    </a>
+                                </li>
+                                <%
+                                        }
+                                    } else {
+                                %>
+                                <!-- Không có thông báo -->
+                                <li class="dropdown-item text-center py-2">
+                                    <span class="text-muted">Không có thông báo</span>
+                                </li>
+                                <% } %>
+
+                                <!-- Link xem tất cả thông báo -->
+                                <li class="dropdown-item text-center py-2">
+                                    <a href="allNotifications.jsp" class="text-primary fw-semibold">Xem tất cả thông báo</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+
                         <% } %>
                         <% if(username == null){ %>
                         <a href="#" class="btn btn-outline-secondary me-2">
@@ -377,7 +439,7 @@
                                     <a class="dropdown-item" href="OwnerListContractCustomer">DS hợp đồng cho thuê</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="OwnerBookingRoom">DS cho thuê</a>
+                                    <a class="dropdown-item" href="OwnerBookingRoom">DS  phê duyệt cho thuê</a>
                                 </li>
                             </ul>
                         </div>
@@ -388,50 +450,52 @@
                         <% 
      if (username != null) { 
                         %>
-                        <img class="avatar rounded-circle me-2"
-                             src="${pageContext.request.contextPath}/images/<%= userImage %>" 
-                             alt="Ảnh đại diện tài khoản" width="33" height="33" />
-                        <span class="me-2"><%= username %></span>
-                        <a href="WalletServlet">
-                            <button class="btn btn-outline-secondary me-2">ví</button>
-                        </a>
-                        <a href="RoomAppointmentServlet">
-                            <button class="btn btn-outline-secondary me-2">Lịch Xem Phòng</button>
-                        </a>
-                        <a href="ChangePassword.jsp">
-                            <button class="btn btn-outline-secondary me-2">Đổi mật khẩu</button>
-                        </a>
-                        <a href="Profile">
-                            <button class="btn btn-outline-secondary me-2">Thông tin</button>
-                        </a>
-                        <a href="Logout.jsp">
-                            <button class="btn btn-outline-secondary me-2">Đăng xuất</button>
-                        </a>
-                        <%
-        if (state == 3) {
-                        %>
-                        <a  href="OwnerRoomAppointment" class="btn btn-outline-danger me-2"> Lịch Đặt Xem Phòng</a>
-                        <a  href="GetPostRooms?email=<%=username%>" class="btn btn-outline-danger me-2">Đăng tin</a>
+                        <div class="dropdown">
+                            <img class="avatar rounded-circle me-2"
+                                 src="${pageContext.request.contextPath}/images/<%= userImage %>"
+                                 alt="Ảnh đại diện tài khoản" width="33" height="33" />
+                            <button class="btn btn-outline-secondary dropdown-toggle me-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <%= username %>
+                            </button>
 
-                        <%
-                                } else if(state==2){
-                        %>
-                        <a class="btn btn-outline-danger me-2" href="Ugradeaccount.jsp">Nâng cấp tài khoản</a>
-                        <%
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="ChangePassword.jsp">Đổi mật khẩu</a></li>
+                                <li><a class="dropdown-item" href="Profile">Thông tin</a></li>
+                                <li> <a class="dropdown-item" href="Logout.jsp">
+                                        Đăng xuất
+                                    </a></li>
+                            </ul>
+                            <a href="WalletServlet">
+                                <button class="btn btn-outline-secondary me-2">ví</button>
+                            </a>
+                            <a href="RoomAppointmentServlet">
+                                <button class="btn btn-outline-secondary me-2">Lịch Xem Phòng</button>
+                            </a>
+
+
+                            <%
+            if (state == 3) {
+                            %>
+                            <a  href="OwnerRoomAppointment" class="btn btn-outline-danger me-2"> Lịch Đặt Xem Phòng</a>
+                            <a  href="GetPostRooms?email=<%=username%>" class="btn btn-outline-danger me-2">Đăng tin</a>
+
+                            <%
+                                    } else if(state==2){
+                            %>
+                            <a class="btn btn-outline-danger me-2" href="Ugradeaccount.jsp">Nâng cấp tài khoản</a>
+                            <%
+                                    }
+                                } else { 
+                            %>
+                            <a href="Register.jsp" class="btn btn-outline-secondary me-2">Đăng ký</a>
+                            <a href="Loggin.jsp" class="btn btn-outline-secondary me-2">Đăng nhập</a>
+                            <button class="btn btn-outline-danger me-2">Đăng tin</button>
+                            <%
                                 }
-                            } else { 
-                        %>
-                        <a href="Register.jsp" class="btn btn-outline-secondary me-2">Đăng ký</a>
-                        <a href="Loggin.jsp" class="btn btn-outline-secondary me-2">Đăng nhập</a>
-                        <button class="btn btn-outline-danger me-2">Đăng tin</button>
-                        <%
-                            }
-                        %>
-
-
+                            %>
+                        </div>
                     </div>
                 </div>
-            </div>
         </header>
         <!-- Phần tìm kiếm -->
         <div id="search-section" class="home-banner">
@@ -578,7 +642,19 @@
             <% } %>
 
         </div>
-
+        <div class="container mt-4">
+            <div class="bg-white shadow-sm rounded">
+                <div class="row">
+                    <div class="col-md-6"><img class="d-block object-fit-contain mx-auto" src="https://th.bing.com/th/id/OIP.SZyknYljr3lMy37E5S8vkAHaI2?rs=1&pid=ImgDetMain" style="max-height: 390px;" alt="Hỗ trợ chủ nhà đăng tin"></div>
+                    <div class="col-md-6 text-center p-5">
+                        <i class="icon headset size-30 d-block mx-auto"></i>
+                        <div class="fs-2 mt-2" id="offcanvasSupportLabel">Hỗ trợ chủ nhà đăng tin</div>
+                        <p class="mt-3 lead">Nếu bạn cần hỗ trợ đăng tin, vui lòng liên hệ số điện thoại bên dưới:</p>
+                        <div class="rounded-4 p-4 mb-4 text-center"><a class="btn btn-red btn-lg text-white d-flex justify-content-center rounded-4" target="_blank" rel="nofollow" href="tel:0909316890"><i class="icon telephone-fill white me-2"></i>ĐT: 0909316890 </a><a class="btn btn-primary btn-lg text-white d-flex justify-content-center rounded-4 mt-2" target="_blank" rel="nofollow" href="https://zalo.me/0909316890"><i class="icon chat-text white me-2"></i>Zalo: 0909316890 </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
