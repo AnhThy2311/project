@@ -1,10 +1,10 @@
 body {
     background-color: #FDF5ED;
 }
-a {
-            text-decoration: none;
-            color: inherit;
-        }
+.heart-btn {
+    margin-left: 40px;
+    display: block;
+}
 a:hover {
     color: var(--color-red);
 }

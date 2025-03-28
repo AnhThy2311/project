@@ -51,7 +51,6 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         // lấy toàn bộ user lên 
         AdminDao ad = new AdminDao();
         ArrayList<Customer> list = ad.getAllUser();

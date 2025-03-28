@@ -50,6 +50,7 @@ public class Forgot_password extends HttpServlet {
         String email = request.getParameter("email");
         CustomerDao csd = new CustomerDao();
         Customer cus= csd.exitEmail(email);
+        System.out.println("cus"+cus);
         if (cus != null) {
           Email.sendEmail(email, "Xác thực tài khoản tại QuickRent.com", getContent(cus));
            RequestDispatcher re = request.getRequestDispatcher("SendGmail.jsp");
@@ -64,7 +65,7 @@ public class Forgot_password extends HttpServlet {
 
     
         public static String getContent(Customer cter) {
-        String link = "http://localhost:8082/DoAnSWP/change_password.jsp?email=" + cter.getEmail();
+        String link = "http://localhost:8082/DoAnSWP1/change_password.jsp?email=" + cter.getEmail();
         String noiDung = "<p>Bạn đã đăng ký thành công. Vui lòng không cung cấp email và mã xác thực cho ai.</p>\n"
                 + "<p>Để đặt lại mật khẩu, vui lòng nhấp vào liên kết sau:</p>\n"
                 + "<a href='" + link + "'>Resert Paswword</a>\n"

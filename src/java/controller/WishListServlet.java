@@ -44,7 +44,6 @@ public class WishListServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
-
         WishListDAO wld = new WishListDAO();
         String id = wld.getUserIdByEmail(email);
         System.out.println("id la:"+id);

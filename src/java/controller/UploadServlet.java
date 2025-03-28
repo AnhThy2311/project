@@ -87,7 +87,7 @@ public class UploadServlet extends HttpServlet {
 
         try {
             Part photo = request.getPart("file");
-            String uploadDir = "D:\\FPT-university\\chuyên ngành 4\\javawedd\\code\\DoAnSWP\\web\\images";
+            String uploadDir = "D:\\FPT-university\\chuyên ngành 4\\javawedd\\code\\DoAnSWP1\\web\\images";
             if (!Files.exists(Path.of(uploadDir))) {
                 Files.createDirectories(Path.of(uploadDir));
             }

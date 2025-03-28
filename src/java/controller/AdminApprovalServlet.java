@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 
 package controller;
 
@@ -66,7 +63,11 @@ public class AdminApprovalServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        AdminDao ad = new AdminDao();
+        String postionId = request.getParameter("positionId");
+        System.out.println("positionID là : "+postionId);
+          ad.CancelPost(postionId);
+        response.sendRedirect("AdminGetPendingapproval");
     }
 
     /** 

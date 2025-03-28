@@ -3,45 +3,60 @@
 <!DOCTYPE html>
 <html lang="vi">
     <head>
-        <title>Change Password</title>
-        <link 
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
-            rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
-            crossorigin="anonymous"
-            />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Muôn Nhà - Kênh thông tin bất động sản</title>
+        <!-- Bootstrap CSS -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous"
             />
+        <!-- Bootstrap Icons -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet"
+            />
+        <!-- Material Icons -->
         <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
             />
-        <link href="./css/header.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/dau.css" />
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
-        <header class="bg-white text-body shadow-sm sticky-top z-1021" id="header">
-            <div class="container-xl">
-                <div
-                    class="d-flex justify-content-between border-bottom"
-                    style="--bs-border-color: #f1f1f1"
-                    >
-                    <div class="d-flex">
-                        <a href="#"
-                           ><img
-                                class="object-fit-contain"
-                                style="width: 190px; height: 60px"
-                                src="${pageContext.request.contextPath}/images/anhthuetro.png" 
-                                alt="Kênh thông tin cho thuê phòng trọ số 1 Việt Nam"
-                                title="Phongtro123.com"
-                                /></a>
-                        <div class="d-none d-md-flex ms-4">
+        <%
+                                       HttpSession sessionUser = request.getSession(false); // Không tạo session mới nếu chưa tồn tại
+                                       String username = (sessionUser != null) ? (String) sessionUser.getAttribute("email") : null;
+                                       String userImage = (sessionUser != null && sessionUser.getAttribute("userImage") != null) 
+                                           ? (String) sessionUser.getAttribute("userImage") 
+                                           : "default_user.jpg"; // Mặc định nếu không có ảnh
+        %>
+
+        <header class="navbar-custom sticky-top">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center py-2">
+                    <!-- Logo và Home -->
+                    <div class="d-flex align-items-center">
+                        <a href="/" class="navbar-brand">
+                            <img
+                                src="https://static.muonnha.com.vn/images/logo.png?w=384&p=100"
+                                alt="Muôn Nhà"
+                                width="160"
+                                height="46"
+                                />
+                        </a>
+                        <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
+                           >Trang Chủ</a
+                        >
+
+                        <!-- Thanh tìm kiếm -->
+                        <div class="d-none d-md-flex ms-3">
                             <div class="filter__bar pb-2">
                                 <div class="w-100">
                                     <div class="d-flex position-relative bg-white">
+                                        <!-- Nút tìm theo khu vực -->
                                         <div
                                             data-bs-toggle="offcanvas"
                                             data-bs-target="#offcanvasLocation"
@@ -56,273 +71,103 @@
                                             </span>
                                         </div>
 
-                                        <button
-                                            type="button"
-                                            data-bs-toggle="offcanvas"
-                                            data-bs-target="#offcanvasAdvance"
-                                            aria-controls="offcanvasAdvance"
-                                            class="btn btn__funnel"
-                                            >
-                                            <i class="icon funnel size-14 me-1"></i>
-                                            <span>Bộ lọc</span>
-                                        </button>
+                                        <!-- Nút bộ lọc -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex">
-                        <div class="d-flex js-reload-html-header">
-                            <!-- <a
-                              class="btn btn-white d-none d-lg-flex align-items-center text-body rounded-4"
-                              href="https://phongtro123.com/tin-da-luu.html"
-                              ><i class="icon heart size-16 me-2"></i>Tin đã lưu</a
-                            > -->
-                            <!-- <a
-                              class="btn btn-white d-none d-xl-flex align-items-center text-body rounded-4 me-4"
-                              href="https://phongtro123.com/quan-ly/tin-dang.html"
-                              ><i class="icon folder size-18 me-2"></i>Quản lý</a
-                            > -->
-                            <%
-    HttpSession sessionUser = request.getSession(false); // Không tạo session mới nếu chưa tồn tại
-    String username = (sessionUser != null) ? (String) sessionUser.getAttribute("email") : null;
-     String userImage = (sessionUser != null && sessionUser.getAttribute("userImage") != null) 
-                        ? (String) sessionUser.getAttribute("userImage") 
-                        : "default_user.jpg"; // Mặc định nếu không có ảnh
-                            %>
-                            <div class="dropdown d-none d-lg-block">
-                                <button class="btn border-0 text-body d-flex align-items-center dropdown-toggle"
-                                        type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Tài khoản">
-                                    <img class="avatar rounded-circle me-2"
-                                         src="${pageContext.request.contextPath}/images/<%= userImage %>" 
-                                         alt="Ảnh đại diện tài khoản" width="33" height="33" />
-                                    <span class="fs-6">
-                                        <%= (username != null) ? username : "Tài khoản" %>
-                                    </span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 pt-3 pb-3">
-                                    <% if (username == null) { %>
-                                    <!-- Chưa đăng nhập -->
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Register.jsp">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon register size-16"></i>
-                                                </span>
-                                                Tạo tài khoản mới
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Loggin.jsp">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon login size-16"></i>
-                                                </span>
-                                                Đăng nhập
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <% } else { %>
-                                    <!-- Đã đăng nhập -->
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Profile">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon user size-16"></i>
-                                                </span>
-                                                Cập nhật thông tin
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Logout.jsp">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon logout size-16"></i>
-                                                </span>
-                                                Thay Đổi Mật Khẩu
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Logout.jsp">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon logout size-16"></i>
-                                                </span>
-                                                Đăng xuất
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <% } %>
-                                </ul>
-                            </div>
-                            <a
-                                class="btn btn-red text-white rounded-4 align-items-center justify-content-center ms-4"
-                                style="
-                                background-color: red;
-                                width: 150px;
-                                height: 40px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                "
-                                rel="nofollow"
-                                href="#"
-                                >
-                                <i class="icon posting white me-2"></i>Đăng tin
-                            </a>
-                        </div>
+
+                    <!-- Các nút đăng ký, đăng nhập, đăng tin -->
+                    <div class="d-flex align-items-center">
+                        <% if(username == null){ %>
+                        <a href="#" class="btn btn-outline-secondary me-2">
+                            <i class="bi bi-heart"></i>
+                        </a>
+                        <% } else { %>
+                        <a href="WishListServlet" class="btn btn-outline-secondary me-2">
+                            <i class="bi bi-heart"></i>
+                        </a>
+                        <% } %>
+
+                        <% 
+     if (username != null) { 
+                        %>
+                        <img class="avatar rounded-circle me-2"
+                             src="${pageContext.request.contextPath}/images/<%= userImage %>" 
+                             alt="Ảnh đại diện tài khoản" width="33" height="33" />
+                        <span class="me-2"><%= username %></span>
+                        <a href="ChangePassword.jsp">
+                            <button class="btn btn-outline-secondary me-2">Thay Đổi mật khẩu</button>
+                        </a>
+                        <a href="Profile">
+                            <button class="btn btn-outline-secondary me-2">Thông tin</button>
+                        </a>
+                        <a href="Logout.jsp">
+                            <button class="btn btn-outline-secondary me-2">Đăng xuất</button>
+                        </a>
+                        <%
+    Integer state = (Integer) session.getAttribute("state");
+
+        if (state != null) {
+                        %>
+                        <a  href="GetPostRooms?email=<%=username%>" class="btn btn-outline-danger me-2">Đăng tin</a>
+
+                        <%
+                                } else {
+                        %>
+                        <button class="btn btn-outline-danger me-2">Nâng cấp tài khoản</button>
+                        <%
+                                }
+                            } else { 
+                        %>
+                        <a href="Register.jsp" class="btn btn-outline-secondary me-2">Đăng ký</a>
+                        <a href="Loggin.jsp" class="btn btn-outline-secondary me-2">Đăng nhập</a>
+                        <button class="btn btn-outline-danger me-2">Đăng tin</button>
+                        <%
+                            }
+                        %>
+
+
                     </div>
                 </div>
             </div>
-            <div
-                class="d-flex d-lg-none align-items-center p-2 pe-0 ms-4 text-nowrap text-body cursor-pointer"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasRight"
-                aria-controls="offcanvasRight"
-                style="
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                background-color: #f8f9fa;
-                transition: background-color 0.3s;
-                "
-                >
-                <i class="icon list size-25 me-2" style="color: #6c757d"></i>
-                <span style="font-size: 14px; font-weight: 500; color: #343a40"
-                      >Danh mục</span
-                >
-            </div>
-            <div class="container d-none d-lg-block">
-                <nav class="pt123__nav">
-                    <ul class="d-flex h-100" id="cha">
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê phòng trọ"
-                                href="#"
-                                >Phòng trọ</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê nhà nguyên căn"
-                                href="#"
-                                >Nhà nguyên căn</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê căn hộ chung cư"
-                                href="#"
-                                >Căn hộ chung cư</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê căn hộ mini"
-                                href="#"
-                                >Căn hộ mini</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê căn hộ dịch vụ"
-                                href="#"
-                                >Căn hộ dịch vụ</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Tìm người ở ghép"
-                                href="#"
-                                >Ở ghép</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê mặt bằng"
-                                href="#"
-                                >Mặt bằng</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Blog"
-                                href="/blog.html"
-                                >Blog</a
-                            >
-                        </li>
-                        <li class="h-100">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Bảng giá dịch vụ"
-                                href="/bang-gia-dich-vu"
-                                >Bảng giá dịch vụ</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="diendan"
-                                href="/blog.html"
-                                >Diễn Đàn</a
-                            >
-                        </li>
-                    </ul>
-                </nav>
-            </div>
         </header>
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card shadow-lg">
-
-                        <div class="card-header text-center bg-primary text-white">
-                            <h4>Change Password</h4>
+        <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
+            <div class="bg-white shadow-lg rounded-lg w-full max-w-md p-6">
+                <div class="bg-blue-600 text-white text-center py-4 rounded-t-lg">
+                    <h4 class="text-2xl font-bold">Đổi mật khẩu</h4>
+                </div>
+                <div class="mt-6">
+                    <form action="ChangePassword" method="post" class="space-y-6">
+                        <div>
+                            <label class="block text-gray-700 font-medium">Mật Khẩu Cũ</label>
+                            <input type="password" name="oldPassword" class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
-                        <div class="card-body">
-                            <%-- Hiển thị thông báo nếu có --%>
+                        <% String errorMessage = (String) request.getAttribute("errorMessage"); 
+                   if (errorMessage != null) { %>
+                        <p class="text-red-500"><%= errorMessage %></p>
+                        <% } %>
 
-                            <form action="ChangePassword" method="post">
-                                <div class="mb-3">
-                                    <label class="form-label">Old Password:</label>
-                                    <input type="password" name="oldPassword" class="form-control" required>
-                                </div>
-                                <% String errorMessage = (String) request.getAttribute("errorMessage");
-                                   if (errorMessage != null) { %>
-                                <p style="color: red;"><%= errorMessage %></p>
-                                <% } %>
-
-                                <div class="mb-3">
-                                    <label class="form-label">New Password:</label>
-                                    <input type="password" name="newPassword" class="form-control" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Confirm New Password:</label>
-                                    <input type="password" name="confirmPassword" class="form-control" required>
-                                </div>
-                                <% String errorMessage1 = (String) request.getAttribute("errorMessage1");
-                                   if (errorMessage1 != null) { %>
-                                <p style="color: red;"><%= errorMessage1 %></p>
-                                <% } %>
-                                <button type="submit" class="btn btn-primary w-100">Change Password</button>
-                            </form>
+                        <div>
+                            <label class="block text-gray-700 font-medium">Mật Khẩu Mới</label>
+                            <input type="password" name="newPassword" class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
-                    </div>
+
+                        <div>
+                            <label class="block text-gray-700 font-medium">Nhập Lại Mật Khẩu Mới</label>
+                            <input type="password" name="confirmPassword" class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <% String errorMessage1 = (String) request.getAttribute("errorMessage1"); 
+                   if (errorMessage1 != null) { %>
+                        <p class="text-red-500"><%= errorMessage1 %></p>
+                        <% } %>
+
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Change Password</button>
+                    </form>
                 </div>
             </div>
         </div>
-
         <script 
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 

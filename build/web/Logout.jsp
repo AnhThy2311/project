@@ -19,7 +19,7 @@
             if(session!=null){
             session.invalidate(); // xóa session hiện tại 
             }
-             response.sendRedirect("Header.jsp"); // Chuyển hướng đến trang đăng nhập
+             response.sendRedirect("RoomServlet"); // Chuyển hướng đến trang đăng nhập
         %>
     </body>
 </html>

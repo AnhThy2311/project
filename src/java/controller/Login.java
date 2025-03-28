@@ -9,13 +9,34 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.HashSet;
-import java.util.Set;
 import model.Customer;
 import util.EncryptionPasword;
 
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Login</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -26,25 +47,38 @@ public class Login extends HttpServlet {
         CustomerDao cd = new CustomerDao();
         password = EncryptionPasword.toSHA1(password);
         Customer c = cd.getCustomer(email, password);
+        int entity_state = cd.getEntityState(email);
         System.out.println(c);
 //        System.out.println("anh dai dien: " +c.getImage());
         int state = cd.getState(email);
         if (c != null) {
-            int userRole = cd.getRoleByEmail(email);
-            System.out.println("anh dai dien: " + c.getImage());
-            HttpSession http = request.getSession();
-            http.setAttribute("email", c.getEmail());
-            http.setAttribute("userImage", c.getImage());
-            http.setAttribute("userName", c.getFullName());
-            http.setAttribute("role", userRole);
-            // Lưu đường dẫn ảnh
-             if(state==3){
-                 http.setAttribute("state", state);
-             }
-               response.sendRedirect("RoomServlet");
+            if (entity_state == 1) {
+                System.out.println("anh dai dien: " + c.getImage());
+                HttpSession http = request.getSession();
+                http.setAttribute("email", c.getEmail());
+                http.setAttribute("userImage", c.getImage());  
+                http.setAttribute("state", state);
+                if (state == 3) {
+                    response.sendRedirect("RoomServlet");
+                } else if (state == 1) {
+                    request.getRequestDispatcher("Admin.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("RoomServlet");
+                }
+            } else {
+                request.setAttribute("errorMessage1", "Tài khoản cửa bạn đã bị khóa!");
+                request.getRequestDispatcher("Loggin.jsp").forward(request, response);
+            }
+
         } else {
-            request.setAttribute("errorMessage", "Email or password is incorrect!");
+            request.setAttribute("errorMessage", "Email hoặc mật khẩu bị sai!");
             request.getRequestDispatcher("Loggin.jsp").forward(request, response);
         }
     }
+
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
+
 }

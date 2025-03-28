@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package controller;
 
 import dao.CustomerDao;
@@ -54,30 +51,30 @@ public class Register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        System.out.println(email);
-        String fullName = request.getParameter("fullname");
-        System.out.println(fullName);
-        String passWord = request.getParameter("password");
-        System.out.println(passWord);
-        String date = request.getParameter("date_of_birth");
-        System.out.println(date);
-        String phone = request.getParameter("phone_number");
-        System.out.println(phone);
-        // mã hóa mật khẩu
-        String image = "";
-        passWord = EncryptionPasword.toSHA1(passWord);
-        image="default_user.jpg";
-        Customer cter = new Customer(email, passWord, phone, fullName, date, image);
-        CustomerDao cusd = new CustomerDao();
-        if (cusd.exitEmail(email) != null) {
-            request.setAttribute("errorMessage", "Email đã tồn tại!");
-            request.getRequestDispatcher("Register.jsp").forward(request, response);
-        } else {
-            cusd.inserintoCustomer(cter);
-            Email.sendEmail(cter.getEmail(), "Xác thực tài khoản tại QuickRent.vn", getContent(cter));
-            response.sendRedirect("Loggin.jsp");
-        }
+            String email = request.getParameter("email");
+            System.out.println(email);
+            String fullName = request.getParameter("fullname");
+            System.out.println(fullName);
+            String passWord = request.getParameter("password");
+            System.out.println(passWord);
+            String date = request.getParameter("date_of_birth");
+            System.out.println(date);
+            String phone = request.getParameter("phone_number");
+            System.out.println(phone);
+            // mã hóa mật khẩu
+            String image = "";
+            passWord = EncryptionPasword.toSHA1(passWord);
+            image="default_user.jpg";
+            Customer cter = new Customer(email, passWord, phone, fullName, date, image);
+            CustomerDao cusd = new CustomerDao();
+            if (cusd.exitEmail(email) != null) {
+                request.setAttribute("errorMessage", "Email đã tồn tại!");
+                request.getRequestDispatcher("Register.jsp").forward(request, response);
+            } else {
+                cusd.inserintoCustomer(cter);
+                Email.sendEmail(cter.getEmail(), "Xác thực tài khoản tại QuickRent.vn", getContent(cter));
+               response.sendRedirect("Loggin.jsp?success=true");
+            }
     }
 
     @Override

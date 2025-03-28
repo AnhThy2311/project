@@ -1,9 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
+import dao.ChatBoxDao;
+import dao.CustomerDao;
+import dao.NotificationDao;
 import dao.RoomDao;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -13,7 +12,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import model.ChatBox;
+import model.Notification;
 import model.Room;
 
 /**
@@ -49,34 +51,51 @@ public class RoomServlet extends HttpServlet {
         }
     }
 
-   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoomDao roomDao = new RoomDao();
-        ArrayList<Room> rooms = roomDao.getAllRooms(); // Fetch rooms from database
-        System.out.println(rooms);
-        if (rooms != null && !rooms.isEmpty()) {
-            // Setting the rooms attribute in the request
-            request.setAttribute("rooms", rooms);
-        } else {
-            // Handling the case where there are no rooms
-            request.setAttribute("rooms", null);
-        }
+        try {
+            RoomDao roomDao = new RoomDao();
+            ArrayList<Room> rooms = roomDao.getAllRooms();
+            System.out.println("room la: " + rooms);
+            System.out.println(rooms);
+            if (rooms != null && !rooms.isEmpty()) {
+                request.setAttribute("rooms", rooms);
+            } else {
+                request.setAttribute("rooms", null);
+            }
 
-        // Forwarding request to the JSP page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Header1.jsp");
-        dispatcher.forward(request, response);
+            HttpSession session = request.getSession();
+            String email = (String) session.getAttribute("email");
+            System.out.println("email: " + email);
+            CustomerDao cud = new CustomerDao();
+            String sendID = cud.getUserIdByEmail(email);
+            System.out.println("senid: " + sendID);
+            System.out.println(sendID);
+            ChatBoxDao cbd = new ChatBoxDao();
+            ArrayList<ChatBox> listreceicer = cbd.getSender(sendID); // đây là danh sách id của người gửi do nhầm lẫn
+            System.out.println(listreceicer);
+            session.setAttribute("list", listreceicer);
+            NotificationDao ntd = new NotificationDao();
+            ArrayList<Notification> ListNotification = ntd.getListNo(sendID);
+            String countNotification = ntd.getCountNoti(sendID);
+             request.setAttribute("countNotification", countNotification);
+            request.setAttribute("ListNotification", ListNotification);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("GetAllRoom.jsp");
+            dispatcher.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra stack trace để kiểm tra
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi: " + e.getMessage());
+        }
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
-   
     @Override
     public String getServletInfo() {
         return "Short description";

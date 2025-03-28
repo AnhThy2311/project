@@ -14,10 +14,6 @@ import database.database;
 import model.Customer;
 import model.Position;
 
-/**
- *
- * @author son
- */
 public class RoomDao {
 
     public ArrayList<Room> getAllRooms() {
@@ -27,7 +23,7 @@ public class RoomDao {
                 + "                     u.email, u.phone_number, u.full_name, u.date_of_birth, u.image AS user_image \n"
                 + "                   FROM Rooms r \n"
                 + "                   JOIN Positions p ON r.position_id = p.position_id \n"
-                + "                   JOIN Users u ON r.user_id = u.user_id";
+                + "                   JOIN Users u ON r.user_id = u.user_id and r.status=1 ";
         try (Connection con = database.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Position position = new Position(
@@ -96,7 +92,14 @@ public class RoomDao {
                     + "    p.city LIKE ? \n"
                     + "	 and p.district like ?\n"
                     + "    AND p.ward LIKE ? \n"
-                    + "    AND p.street LIKE ?";
+                    + "    AND p.street LIKE ? \n"
+                    + "AND r.status=1\n"
+                    + " AND NOT EXISTS (\n"
+                    + "        SELECT 1 \n"
+                    + "        FROM Booking b \n"
+                    + "        WHERE b.room_id = r.room_id \n"
+                    + "        AND b.status = 1\n"
+                    + "    )";
             con = database.getConnection();
             pr = con.prepareStatement(sql);
             pr.setString(1, "%" + city + "%");
@@ -143,7 +146,7 @@ public class RoomDao {
     public Room getRoomById(int roomId) {
         String sql = "SELECT r.room_id, r.room_name, r.description, r.price, r.status, r.image, \n"
                 + "                p.position_id, p.number_house,p.street, p.ward,p.district,p.city, p.description AS position_desc, \n"
-                + "               u.user_id, u.email, u.phone_number, u.full_name, u.date_of_birth, u.image AS user_image \n"
+                + "               u.user_id, u.email, u.phone_number, u.full_name, u.date_of_birth, u.image AS user_image,r.electricity_fee, r.water_fee,r.area\n"
                 + "               FROM Rooms r \n"
                 + "               JOIN Positions p ON r.position_id = p.position_id \n"
                 + "               JOIN Users u ON r.user_id = u.user_id \n"
@@ -177,7 +180,10 @@ public class RoomDao {
                             rs.getString("status"),
                             position,
                             customer,
-                            rs.getString("image")
+                            rs.getString("image"),
+                            rs.getDouble("electricity_fee"),
+                            rs.getDouble("water_fee"),
+                            rs.getDouble("area")
                     );
                 }
             }
@@ -185,6 +191,57 @@ public class RoomDao {
             e.printStackTrace();
         }
         return null;
+    }
+// lấy owner bằng cách dựa vào roomid
+
+    public String getOwnerId(String roomid) {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select u.user_id from Users as u , Rooms as r where u.user_id=r.user_id and r.room_id=?";
+            con = database.getConnection();
+            pr = con.prepareCall(sql);
+            pr.setString(1, roomid);
+            rs = pr.executeQuery();
+            if (rs.next()) {
+                String idOwner = rs.getString(1);
+                return idOwner;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public void updateStatusRoom(String room_id) {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            String sql = "update Rooms set  status=2, request_id = 1  where room_id=?";
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, room_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void cancelStatusRoom(String room_id) {
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            String sql = "update Rooms set  request_id = 1  where room_id=?";
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, room_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 }

@@ -1,45 +1,67 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 <%@ page import="model.Customer" %>
+<%@ page import="model.Information" %>
 <%@ page import="java.text.SimpleDateFormat, java.util.Date" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>User Profile</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Muôn Nhà - Kênh thông tin bất động sản</title>
+        <!-- Bootstrap CSS -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous"
             />
+        <!-- Bootstrap Icons -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet"
+            />
+        <!-- Material Icons -->
         <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
             />
-        <link href="./css/header.css" rel="stylesheet" />
+        <link rel="stylesheet" href="#" />
+        <script src="https://cdn.tailwindcss.com">
+        </script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     </head>
     <body>
-        <header class="bg-white text-body shadow-sm sticky-top z-1021" id="header">
-            <div class="container-xl">
-                <div
-                    class="d-flex justify-content-between border-bottom"
-                    style="--bs-border-color: #f1f1f1"
-                    >
-                    <div class="d-flex">
-                        <a href="#"
-                           ><img
-                                class="object-fit-contain"
-                                style="width: 190px; height: 60px"
-                                src="${pageContext.request.contextPath}/images/anhthuetro.png" 
-                                alt="Kênh thông tin cho thuê phòng trọ số 1 Việt Nam"
-                                title="Phongtro123.com"
-                                /></a>
-                        <div class="d-none d-md-flex ms-4">
+        <%
+                                       HttpSession sessionUser = request.getSession(false); // Không tạo session mới nếu chưa tồn tại
+                                       String username = (sessionUser != null) ? (String) sessionUser.getAttribute("email") : null;
+                                       String userImage = (sessionUser != null && sessionUser.getAttribute("userImage") != null) 
+                                           ? (String) sessionUser.getAttribute("userImage") 
+                                           : "default_user.jpg"; // Mặc định nếu không có ảnh
+        %>
+
+        <header class="navbar-custom sticky-top">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center py-2">
+
+                    <div class="d-flex align-items-center">
+                        <a href="/" class="navbar-brand">
+                            <img
+                                src="https://static.muonnha.com.vn/images/logo.png?w=384&p=100"
+                                alt="Muôn Nhà"
+                                width="160"
+                                height="46"
+                                />
+                        </a>
+                        <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
+                           >Trang Chủ</a
+                        >
+
+                        <!-- Thanh tìm kiếm -->
+                        <div class="d-none d-md-flex ms-3">
                             <div class="filter__bar pb-2">
                                 <div class="w-100">
                                     <div class="d-flex position-relative bg-white">
+                                        <!-- Nút tìm theo khu vực -->
                                         <div
                                             data-bs-toggle="offcanvas"
                                             data-bs-target="#offcanvasLocation"
@@ -54,14 +76,15 @@
                                             </span>
                                         </div>
 
+                                        <!-- Nút bộ lọc -->
                                         <button
                                             type="button"
                                             data-bs-toggle="offcanvas"
                                             data-bs-target="#offcanvasAdvance"
                                             aria-controls="offcanvasAdvance"
-                                            class="btn btn__funnel"
+                                            class="btn btn__funnel ms-2"
                                             >
-                                            <i class="icon funnel size-14 me-1"></i>
+                                            <i class="bi-funnel me-1"></i>
                                             <span>Bộ lọc</span>
                                         </button>
                                     </div>
@@ -69,283 +92,171 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex">
-                        <div class="d-flex js-reload-html-header">
-                            <!-- <a
-                              class="btn btn-white d-none d-lg-flex align-items-center text-body rounded-4"
-                              href="https://phongtro123.com/tin-da-luu.html"
-                              ><i class="icon heart size-16 me-2"></i>Tin đã lưu</a
-                            > -->
-                            <!-- <a
-                              class="btn btn-white d-none d-xl-flex align-items-center text-body rounded-4 me-4"
-                              href="https://phongtro123.com/quan-ly/tin-dang.html"
-                              ><i class="icon folder size-18 me-2"></i>Quản lý</a
-                            > -->
-                            <%
-    HttpSession sessionUser = request.getSession(false); // Không tạo session mới nếu chưa tồn tại
-    String username = (sessionUser != null) ? (String) sessionUser.getAttribute("email") : null;
-     String userImage = (sessionUser != null && sessionUser.getAttribute("userImage") != null) 
-                        ? (String) sessionUser.getAttribute("userImage") 
-                        : "default_user.jpg"; // Mặc định nếu không có ảnh
-                            %>
-                            <div class="dropdown d-none d-lg-block">
-                                <button class="btn border-0 text-body d-flex align-items-center dropdown-toggle"
-                                        type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Tài khoản">
-                                    <img class="avatar rounded-circle me-2"
-                                         src="${pageContext.request.contextPath}/images/<%= userImage %>" 
-                                         alt="Ảnh đại diện tài khoản" width="33" height="33" />
-                                    <span class="fs-6">
-                                        <%= (username != null) ? username : "Tài khoản" %>
-                                    </span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 pt-3 pb-3">
-                                    <% if (username == null) { %>
-                                    <!-- Chưa đăng nhập -->
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Register.jsp">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon register size-16"></i>
-                                                </span>
-                                                Tạo tài khoản mới
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Loggin.jsp">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon login size-16"></i>
-                                                </span>
-                                                Đăng nhập
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <% } else { %>
-                                    <!-- Đã đăng nhập -->
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Profile">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon user size-16"></i>
-                                                </span>
-                                                Cập nhật thông tin
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="ChangePassword.jsp">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon logout size-16"></i>
-                                                </span>
-                                                Thay Đổi Mật Khẩu
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between pt-1 pb-1 pe-5" rel="nofollow" href="Logout.jsp">
-                                            <div class="d-flex">
-                                                <span class="d-flex size-30 bg-light rounded-circle justify-content-center me-2">
-                                                    <i class="icon logout size-16"></i>
-                                                </span>
-                                                Đăng xuất
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <% } %>
-                                </ul>
-                            </div>
-                            <a
-                                class="btn btn-red text-white rounded-4 align-items-center justify-content-center ms-4"
-                                style="
-                                background-color: red;
-                                width: 150px;
-                                height: 40px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                "
-                                rel="nofollow"
-                                href="#"
-                                >
-                                <i class="icon posting white me-2"></i>Đăng tin
-                            </a>
-                        </div>
+
+                    <!-- Các nút đăng ký, đăng nhập, đăng tin -->
+                    <div class="d-flex align-items-center">
+                        <% if(username == null){ %>
+                        <a href="#" class="btn btn-outline-secondary me-2">
+                            <i class="bi bi-heart"></i>
+                        </a>
+                        <% } else { %>
+                        <a href="WishListServlet" class="btn btn-outline-secondary me-2">
+                            <i class="bi bi-heart"></i>
+                        </a>
+                        <% } %>
+
+                        <% 
+     if (username != null) { 
+                        %>
+                        <img class="avatar rounded-circle me-2"
+                             src="${pageContext.request.contextPath}/images/<%= userImage %>" 
+                             alt="Ảnh đại diện tài khoản" width="33" height="33" />
+                        <span class="me-2"><%= username %></span>
+                        <a href="Profile">
+                            <button class="btn btn-outline-secondary me-2">Thông tin</button>
+                        </a>
+                        <a href="Logout.jsp">
+                            <button class="btn btn-outline-secondary me-2">Logout</button>
+                        </a>
+                        <%
+    Integer state = (Integer) session.getAttribute("state");
+
+        if (state != null) {
+                        %>
+                        <button class="btn btn-outline-danger me-2">Đăng tin</button>
+                        <%
+                                } else {
+                        %>
+                        <button class="btn btn-outline-danger me-2">Nâng cấp tài khoản</button>
+                        <%
+                                }
+                            } else { 
+                        %>
+                        <a href="Register.jsp" class="btn btn-outline-secondary me-2">Đăng ký</a>
+                        <a href="Loggin.jsp" class="btn btn-outline-secondary me-2">Đăng nhập</a>
+                        <button class="btn btn-outline-danger me-2">Đăng tin</button>
+                        <%
+                            }
+                        %>
+
+
                     </div>
                 </div>
-            </div>
-            <div
-                class="d-flex d-lg-none align-items-center p-2 pe-0 ms-4 text-nowrap text-body cursor-pointer"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasRight"
-                aria-controls="offcanvasRight"
-                style="
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                background-color: #f8f9fa;
-                transition: background-color 0.3s;
-                "
-                >
-                <i class="icon list size-25 me-2" style="color: #6c757d"></i>
-                <span style="font-size: 14px; font-weight: 500; color: #343a40"
-                      >Danh mục</span
-                >
-            </div>
-            <div class="container d-none d-lg-block">
-                <nav class="pt123__nav">
-                    <ul class="d-flex h-100" id="cha">
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê phòng trọ"
-                                href="#"
-                                >Phòng trọ</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê nhà nguyên căn"
-                                href="#"
-                                >Nhà nguyên căn</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê căn hộ chung cư"
-                                href="#"
-                                >Căn hộ chung cư</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê căn hộ mini"
-                                href="#"
-                                >Căn hộ mini</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê căn hộ dịch vụ"
-                                href="#"
-                                >Căn hộ dịch vụ</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Tìm người ở ghép"
-                                href="#"
-                                >Ở ghép</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Cho thuê mặt bằng"
-                                href="#"
-                                >Mặt bằng</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Blog"
-                                href="/blog.html"
-                                >Blog</a
-                            >
-                        </li>
-                        <li class="h-100">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="Bảng giá dịch vụ"
-                                href="/bang-gia-dich-vu"
-                                >Bảng giá dịch vụ</a
-                            >
-                        </li>
-                        <li class="h-100 me-4">
-                            <a
-                                class="fs-6 d-flex h-100 border-bottom border-2 border-white text-link-body"
-                                title="diendan"
-                                href="/blog.html"
-                                >Diễn Đàn</a
-                            >
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </header>
-        <div class="container mt-5">
-            <h2 class="text-center">User Profile</h2>
-
-            <%
-                // Retrieve the customer object from the request attribute
-                Customer customer = (Customer) request.getAttribute("customer");
-
-                if (customer != null) {
-            %>
-            <div class="row">
-                <!-- Image Section -->
-                <div class="col-md-4 text-center">
-                    <img class="avatar rounded-circle" src="${pageContext.request.contextPath}/images/<%= userImage %>" 
-                         alt="Ảnh đại diện tài khoản" width="180" /> <!-- Tăng kích thước ảnh -->
-                </div>
-
-                <!-- Information Section -->
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title fs-4">FullName: <%= customer.getFullName() %></h5> <!-- Tăng kích thước font chữ cho tên -->
-                            <p class="card-title fs-4"><strong>Email:</strong> <%= customer.getEmail() %></p>
-                            <p class="card-title fs-4"><strong>Phone Number:</strong> <%= customer.getPhone() %></p>
-
-                            <p class="card-title fs-4"><strong>Date of Birth:</strong> 
-                                <%
-                                    // Lấy ngày sinh từ đối tượng Customer
-                                    String birthDateString = customer.getBirthDate();
-            
-                                    if (birthDateString != null) {
-                                        try {
-                                            // Chuyển đổi String thành Date (giả sử ngày sinh có định dạng "yyyy-MM-dd")
-                                            SimpleDateFormat sdfInput = new SimpleDateFormat("yyyy-MM-dd");
-                                            Date birthDate = sdfInput.parse(birthDateString);
-                
-                                            // Định dạng ngày tháng theo dạng "dd/MM/yyyy"
-                                            SimpleDateFormat sdfOutput = new SimpleDateFormat("dd/MM/yyyy");
-                                            String formattedDate = sdfOutput.format(birthDate);
-                                            out.print(formattedDate); // In ra ngày đã được định dạng
-                                        } catch (Exception e) {
-                                            out.print("Invalid Date Format");
-                                        }
-                                    } else {
-                                        out.print("N/A"); // Nếu không có ngày sinh, hiển thị "N/A"
-                                    }
-                                %>
-                            </p>
-                            <a href="upload.jsp" class="btn btn-primary">Edit Avatar</a>
-                            <a href="UpdateProfile?email=<%= customer.getEmail() %>" class="btn btn-primary">Edit Profile</a>
-                        </div>
+        <%
+                    // Retrieve the customer object from the request attribute
+                    Customer customer = (Customer) request.getAttribute("customer");
+                                // Retrieve Information from session
+                                Information information = (Information) request.getAttribute("information");
+                    if (customer != null) {
+        %>
+        <div class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 flex items-center justify-center min-h-screen">
+            <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-6xl">
+                <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">
+                    Thông Tin Người Dùng
+                </h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="flex flex-col items-center">
+                        <img alt="User avatar showing a person working on a laptop" class="rounded-full w-40 h-40 object-cover shadow-md mb-6" height="150" src="${pageContext.request.contextPath}/images/<%= (customer.getImage() != null) ? customer.getImage() : "default_user.jpg" %>" width="150"/>
+                        <a href="upload.jsp" class="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition duration-300">
+                            Thay Đổi Avatar
+                        </a>
                     </div>
+                    <form action="EditProfile" method="post" class="needs-validation" novalidate>
+                        <div class="bg-gray-50 p-6 rounded-lg shadow-inner w-full">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-lg font-bold mb-2">Họ và Tên</label>
+                                    <input type="text" class="form-control w-full" id="fullName" name="name" value="<%= customer.getFullName() %>" required oninvalid="this.setCustomValidity('Please fill out this field.')" oninput="setCustomValidity('')"/>
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-bold mb-2">Email:</label>
+                                    <input type="email" class="form-control w-full" id="email" name="email" value="<%= customer.getEmail() %>" readonly="readonly"/>
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-bold mb-2">Số Điện Thoại:</label>
+                                    <input type="text" class="form-control w-full" id="phone" name="phone" value="<%= customer.getPhone() %>" required oninvalid="this.setCustomValidity('Please fill out this field.')" oninput="setCustomValidity('')"/>
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-bold mb-2">Ngày Sinh:</label>
+                                    <input type="date" class="form-control w-full" id="dob" name="dob" value="<%
+                                        String birthDateString = customer.getBirthDate();
+                                        if (birthDateString != null) {
+                                            try {
+                                                SimpleDateFormat sdfInput = new SimpleDateFormat("yyyy-MM-dd");
+                                                Date birthDate = sdfInput.parse(birthDateString);
+                                                SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd");
+                                                String formattedDate = sdfOutput.format(birthDate);
+                                                out.print(formattedDate);
+                                            } catch (Exception e) {
+                                                out.print("");
+                                            }
+                                        } else {
+                                            out.print("");
+                                        }
+                                           %>" required oninvalid="this.setCustomValidity('Please fill out this field.')" oninput="setCustomValidity('')"/>
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-bold mb-2">CCCD:</label>
+                                    <input type="text" class="form-control w-full" 
+                                           value="<%= (information != null && information.getCCCD() != null) ? information.getCCCD() : "" %>" 
+                                           name="cccd" 
+                                           required 
+                                           oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                                           oninput="setCustomValidity('')" 
+                                           <%= (information != null && information.getCCCD() != null) ? "readonly" : "" %> />
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-bold mb-2">Ngày Cấp:</label>
+                                    <input type="date" class="form-control w-full" 
+                                           value="<%= (information != null && information.getIssueDate() != null) ? information.getIssueDate() : "" %>" 
+                                           name="date" 
+                                           required 
+                                           oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                                           oninput="setCustomValidity('')" 
+                                           <%= (information != null && information.getIssueDate() != null) ? "readonly" : "" %> />
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-bold mb-2">Nơi Cấp: </label>
+                                    <input type="text" class="form-control w-full" 
+                                           value="<%= (information != null && information.getPlaceOfIssue() != null) ? information.getPlaceOfIssue() : "" %>" 
+                                           name="placeOfIssue" 
+                                           required 
+                                           oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                                           oninput="setCustomValidity('')" 
+                                           <%= (information != null && information.getPlaceOfIssue() != null) ? "readonly" : "" %> />
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-bold mb-2">Địa chỉ thường trú</label>
+                                    <input type="text" class="form-control w-full" 
+                                           value="<%= (information != null && information.getPermanentAddress() != null) ? information.getPermanentAddress() : "" %>" 
+                                           name="permanentAddress" 
+                                           required 
+                                           oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                                           oninput="setCustomValidity('')" 
+                                           <%= (information != null && information.getPermanentAddress() != null) ? "readonly" : "" %> />
+                                </div>
+                            </div>
+                            <%   Integer state = (Integer) session.getAttribute("state");
+                               if (state != null && state != 1) { %>
+                            <div class="mt-6 text-center">
+                                <button type="submit" class="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Thay đổi thông tin</button>
+                            </div>
+                            <% } %>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <%
-                } else {
-            %>
-            <div class="alert alert-warning" role="alert">
-                No user found or session expired. Please <a href="login.jsp" class="alert-link">Login</a> again to view your profile.
-            </div>
-            <%
-                }
-            %>
         </div>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"
-        ></script>
+        <% } %>
+        <script>
+            document.querySelector('form').onsubmit = function (e) {
+                if (!this.checkValidity()) {
+                    e.preventDefault();
+                    alert('Vui lòng điền đầy đủ thông tin!');
+                }
+            };
+        </script>
     </body>
 </html>

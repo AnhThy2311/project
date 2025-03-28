@@ -9,6 +9,7 @@ import dao.PostRoomsDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,19 +18,13 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet(name = "UpdatePostRoomServlet", urlPatterns = {"/UpdatePostRoomServlet"})
+@MultipartConfig
 public class UpdatePostRoomServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -56,7 +51,6 @@ public class UpdatePostRoomServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String id = request.getParameter("id");
         String room_name = request.getParameter("room_name");
         String price = request.getParameter("price");
@@ -64,45 +58,49 @@ public class UpdatePostRoomServlet extends HttpServlet {
 // Kiểm tra null và chuỗi rỗng trước khi parse
         float price1 = 0;
         if (price != null && !price.trim().isEmpty()) {
-            try {
-                price1 = Float.parseFloat(price.trim());
-            } catch (NumberFormatException e) {
-                response.getWriter().println("Lỗi: Giá phòng không hợp lệ.");
-                return;
-            }
-        } else {
-            response.getWriter().println("Lỗi: Giá phòng không được để trống.");
-            return;
+            price1 = Float.parseFloat(price.trim());
         }
 
-// In kiểm tra xem đã lấy được dữ liệu đúng chưa
+// In kiểm tra dữ liệu nhận được
         System.out.println("ID: " + id);
         System.out.println("Room Name: " + room_name);
         System.out.println("Price: " + price1);
 
-        Part photo = request.getPart("image");
-        String uploadDir = "D:\\FPT-university\\chuyên ngành 4\\javawedd\\code\\DoAnSWP\\web\\images";
-        if (!Files.exists(Path.of(uploadDir))) {
-            Files.createDirectories(Path.of(uploadDir));
-        }
-        // Lấy tên file từ đối tượng Part
-        String filename = Path.of(photo.getSubmittedFileName()).getFileName().toString();
-        // Tạo đường dẫn đầy đủ để lưu file
-        String filePath = uploadDir + "/" + filename;
-
-        // Ghi file vào thư mục
-        photo.write(filePath);
-
-        // In ra console để kiểm tra
-        System.out.println("File saved at: " + filePath);
-        String[] parts = filePath.split("/");
-        // Lấy tên file (phần cuối của mảng parts)
-        String fileNameWithExtension = parts[parts.length - 1];
-        // Phản hồi lại cho người dùng
-//        response.getWriter().println("File uploaded successfully at: " + fileNameWithExtension);
         PostRoomsDao prd = new PostRoomsDao();
-        prd.updatePostRoom(room_name, price1, fileNameWithExtension, id);
-        response.sendRedirect("RoomServlet");
+        String fileNameWithExtension = prd.getImageRoom(id);  // Lấy ảnh hiện tại trong DB
+        System.out.println("Ảnh cũ là: " + fileNameWithExtension);
+
+        try {
+            Part photo = request.getPart("image");
+
+            // Kiểm tra nếu người dùng có tải lên ảnh mới
+            if (photo != null && photo.getSize() > 0) {
+                String uploadDir = "D:\\FPT-university\\chuyên ngành 4\\javawedd\\code\\DoAnSWP\\web\\images";
+                if (!Files.exists(Path.of(uploadDir))) {
+                    Files.createDirectories(Path.of(uploadDir));
+                }
+
+                // Lấy tên file từ Part
+                String filename = Path.of(photo.getSubmittedFileName()).getFileName().toString();
+                String filePath = uploadDir + "/" + filename;
+
+                // Lưu file vào thư mục
+                photo.write(filePath);
+                System.out.println("File mới được lưu tại: " + filePath);
+
+                // Cập nhật ảnh mới
+                fileNameWithExtension = filename;
+                System.out.println("Ảnh mới là: " + fileNameWithExtension);
+            } else {
+                System.out.println("Không có file mới được tải lên, giữ nguyên ảnh cũ.");
+            }
+            // Cập nhật thông tin phòng trong database
+            prd.updatePostRoom(room_name, price1, fileNameWithExtension, id);
+            response.sendRedirect("RoomServlet");
+
+        } catch (IOException | ServletException ex) {
+            ex.printStackTrace();  // In lỗi ra console để debug
+        }
 
     }
 

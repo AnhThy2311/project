@@ -1,25 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package model;
 
 import java.time.LocalDateTime;
 
-/**
- *
- * @author anleq
- */
+
 public class Feedback {
+
     private Integer feedbackId;
     private Customer customer;  // maps to user_id
     private Room room;         // maps to room_id
     private String content;
     private byte rating;       // using byte for tinyint
     private LocalDateTime creationDate;
-
     // Default constructor
-    public Feedback() {}
+
+    public Feedback() {
+    }
 
     // Getters and Setters
     public Integer getFeedbackId() {
