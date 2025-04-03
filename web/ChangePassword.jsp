@@ -163,7 +163,7 @@
                         <p class="text-red-500"><%= errorMessage1 %></p>
                         <% } %>
 
-                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Change Password</button>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Lưu</button>
                     </form>
                 </div>
             </div>

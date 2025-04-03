@@ -193,9 +193,13 @@
                                     <input type="hidden" name="price" value="<%= br.getRoom().getPrice() %>">
                                     <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">Đồng ý</button>
                                 </form>
-                                
+
                                 <!-- Form Từ chối -->
                                 <form action="your-servlet-url" method="post">
+                                    <input type="hidden" name="roomId" value="<%= br.getRoom().getRoomId()%>">
+                                    <input type="hidden" name="endDate" value="<%= br.getEnd_date() %>">
+                                    <input type="hidden" name="booking_id" value="<%= br.getBooking_id() %>">
+                                    <input type="hidden" name="price" value="<%= br.getRoom().getPrice() %>">
                                     <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Từ chối</button>
                                 </form>
 

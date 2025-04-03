@@ -67,7 +67,7 @@ public class AcceptPenCon extends HttpServlet {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
         CustomerDao csd = new CustomerDao();
-        String owner_id = csd.getUserIdByEmail(email);
+//        String owner_id = csd.getUserIdByEmail(email);
 
         WalletDAO wd = new WalletDAO();
         String room_id = request.getParameter("roomId");
@@ -76,20 +76,20 @@ public class AcceptPenCon extends HttpServlet {
         String booking_id = request.getParameter("booking_id");
         BookingRoomDao rkd = new BookingRoomDao();
         String customerId = rkd.getIdCustomer(booking_id);
-        float price_owner = wd.getPrice(owner_id);
-        System.out.println("tiền owner " + price_owner);
+//        float price_owner = wd.getPrice(owner_id);
+//        System.out.println("tiền owner " + price_owner);
         float balance = wd.getPrice(customerId);
         System.out.println("tiền customer: " + balance);
         String startDate = LocalDate.now().toString(); // Lấy ngày hôm nay theo format "yyyy-MM-dd"
         System.out.println("Ngày bắt đầu: " + startDate);
         BookingRoomDao brd = new BookingRoomDao();
-        String price = request.getParameter("price");
-        float price1 = Float.parseFloat(price); // tiền trọ 
-        System.out.println("tiền trọ : " + price1);
+//        String price = request.getParameter("price");
+//        float price1 = Float.parseFloat(price); // tiền trọ 
+//        System.out.println("tiền trọ : " + price1);
         brd.setStartDatebyBookingId(startDate, booking_id);
         brd.upadateMonth(booking_id);
-        wd.updatePrice(balance - price1, customerId);
-        wd.updatePrice(price_owner + price1, owner_id);
+//        wd.updatePrice(balance - price1, customerId);
+//        wd.updatePrice(price_owner + price1, owner_id);
         brd.AcceptPendingContract(booking_id);
         ArrayList<model.BookingRoom> list = brd.getUserPendingExtend(email);
         request.setAttribute("list", list);

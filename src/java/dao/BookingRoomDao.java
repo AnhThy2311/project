@@ -113,8 +113,8 @@ public class BookingRoomDao {
         return null;
     }
 
-    public void updateBooking(String roomID) {
-        String sql = "update Booking set status=1 where room_id=?";
+    public void updateBooking(String roomID, String customer_id, String booking_id) {
+        String sql = "update Booking set status=1 where room_id=? and user_id = ? and booking_id=?";
         Connection con = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -122,14 +122,32 @@ public class BookingRoomDao {
             con = database.getConnection();
             pr = con.prepareStatement(sql);
             pr.setString(1, roomID);
+            pr.setString(2, customer_id);
+            pr.setString(3, booking_id);
             pr.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
+// khi đồng ý hủy tất cả còn lại 
+//     public void huyTatCaConLai(String roomID ,String customer_id) {
+//        String sql = "UPDATE Booking SET status = 2 WHERE room_id = ?  AND user_id <> ?";
+//        Connection con = null;
+//        PreparedStatement pr = null;
+//        ResultSet rs = null;
+//        try {
+//            con = database.getConnection();
+//            pr = con.prepareStatement(sql);
+//            pr.setString(1, roomID);
+//            pr.setString(2, customer_id);
+//            pr.executeUpdate();
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//    }
 
-    public void cancelBooking(String roomID) {
-        String sql = "update Booking set status=2 where room_id=?";
+    public void cancelBooking(String roomID, String customer_id) {
+        String sql = "update Booking set status=2 where room_id=? and user_id = ?";
         Connection con = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -137,6 +155,8 @@ public class BookingRoomDao {
             con = database.getConnection();
             pr = con.prepareStatement(sql);
             pr.setString(1, roomID);
+            pr.setString(2, customer_id);
+
             pr.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -201,10 +221,10 @@ public class BookingRoomDao {
         return null;
     }
 
-    public ArrayList<BookingRoom> getContract(String Customer_id, String owner_id) {
+    public ArrayList<BookingRoom> getContract(String Customer_id, String owner_id, String contract_id) {
         String sql = "		select DISTINCT  c.contract_id, u.email, u.full_name,u.date_of_birth, i.CCCD, i.issue_date, i.permanent_address, i.place_of_issue, u.phone_number \n"
                 + "					from Contract as c , Information as i , Users as u, Booking as b  \n"
-                + "					where c.status=1 and (u.user_id=? or u.user_id=?) and u.user_id = i.user_id and (c.tenant_id= u.user_id or c.landlord_id= u.user_id)";
+                + "					where c.status=1 and ((u.user_id=? or u.user_id=?) and contract_id =?) and u.user_id = i.user_id and (c.tenant_id= u.user_id or c.landlord_id= u.user_id)";
         Connection con = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -214,6 +234,7 @@ public class BookingRoomDao {
             pr = con.prepareStatement(sql);
             pr.setString(1, Customer_id);
             pr.setString(2, owner_id);
+            pr.setString(3, contract_id);
             rs = pr.executeQuery();
             while (rs.next()) {
                 BookingRoom b = new BookingRoom();
@@ -241,10 +262,10 @@ public class BookingRoomDao {
         return null;
     }
 
-    public BookingRoom getInfoContract(String customer_id, String owner_id) {
+    public BookingRoom getInfoContract(String customer_id, String owner_id, String contract_id) {
         String sql = "select DISTINCT  c.contract_id  ,b.booking_id, b.months,b.start_date, p.number_house, p.street, p.ward, p.district, p.city, c.room_price\n"
                 + "					from Contract as c , Information as i , Users as u, Booking as b  , Rooms as r, Positions as p\n"
-                + "					where c.status=1 and (u.user_id=? or u.user_id=?) and u.user_id = i.user_id and (c.tenant_id= u.user_id or c.landlord_id= u.user_id) and r.room_id=b.room_id and p.position_id = r.position_id and b.status =1";
+                + "					where c.status=1 and ((u.user_id=? or u.user_id=?) and contract_id =?) and u.user_id = i.user_id and (c.tenant_id= u.user_id or c.landlord_id= u.user_id) and r.room_id=b.room_id and p.position_id = r.position_id and b.status =1";
         Connection con = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -253,6 +274,7 @@ public class BookingRoomDao {
             pr = con.prepareStatement(sql);
             pr.setString(1, customer_id);
             pr.setString(2, owner_id);
+            pr.setString(3, contract_id);
             rs = pr.executeQuery();
             if (rs.next()) {
                 BookingRoom br = new BookingRoom();
@@ -281,7 +303,7 @@ public class BookingRoomDao {
     }
 
     public ArrayList<BookingRoom> getCusTomerBooking(String ownerID) {
-        String sql = "select r.room_name, b.user_id, b.start_date , b.months, b.end_date, b.status,b.booking_id from Rooms as r, Booking as b where r.room_id = b.room_id and r.user_id=? and ( b.status=1 or b.status =5)";
+        String sql = "select r.room_name, b.user_id, b.start_date , b.months, b.end_date, b.status,b.booking_id,r.room_id  from Rooms as r, Booking as b where r.room_id = b.room_id and r.user_id=? and ( b.status=1 or b.status =5)";
         Connection con = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -301,6 +323,7 @@ public class BookingRoomDao {
                 b.setEnd_date(rs.getString(5));
                 b.setStatus(rs.getString(6));
                 b.setBooking_id(rs.getString(7));
+                r.setRoomId(rs.getString(8));
                 b.setRoom(r);
                 list.add(b);
             }
@@ -543,21 +566,9 @@ public class BookingRoomDao {
         }
         return null;
     }
-    public void xulyvipham(String booking_id){
-        String sql ="update Booking set status = 2  where  booking_id= ?";
-         Connection con = null;
-        PreparedStatement pr = null;
-        try {
-            con = database.getConnection();
-            pr = con.prepareStatement(sql);
-            pr.setString(1, booking_id);
-            pr.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    public void tuChoiXuLyViPham(String booking_id){
-         String sql = "update Booking set status = 1  where  booking_id= ?";
+
+    public void xulyvipham(String booking_id) {
+        String sql = "update Booking set status = 2  where  booking_id= ?";
         Connection con = null;
         PreparedStatement pr = null;
         try {
@@ -568,5 +579,77 @@ public class BookingRoomDao {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public void tuChoiXuLyViPham(String booking_id) {
+        String sql = "update Booking set status = 1  where  booking_id= ?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, booking_id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // lấy ra booking id lớn nhất khi 
+    public String booking_ID_Max(String user_id) {
+        String sql = "SELECT Top 1* FROM Booking WHERE user_id = ? ORDER BY booking_id DESC ";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, user_id);
+            rs = pr.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public String Contract_id(String Booking_id) {
+        String sql = "select contract_id from Contract where booking_id=?";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, Booking_id);
+            rs = pr.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public String Booking_id(String Room_id) {
+        String sql = "select booking_id from Booking where room_id = ? and status=1";
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        try {
+            con = database.getConnection();
+            pr = con.prepareStatement(sql);
+            pr.setString(1, Room_id);
+            rs = pr.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }

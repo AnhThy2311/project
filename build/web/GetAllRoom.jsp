@@ -603,7 +603,7 @@
                             </p>
 
 
-                            <p class="property-meta">60 m² · 
+                            <p class="property-meta">
                                 <a href="#">
                                     <%= room.getPosition().getNumber_house() %>, 
                                     <%= room.getPosition().getStreet() %>, 

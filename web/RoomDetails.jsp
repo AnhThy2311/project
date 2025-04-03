@@ -46,7 +46,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
-
         <%
                                        HttpSession sessionUser = request.getSession(false); // Không tạo session mới nếu chưa tồn tại
                                       int userRole = (sessionUser != null && sessionUser.getAttribute("state") != null) 
@@ -287,7 +286,7 @@
                             <div class="d-flex gap-2">
                                 <a class="btn btn-primary text-white d-flex justify-content-center rounded-4 flex-grow-1 px-3 py-2" 
                                    target="_blank" rel="nofollow" href="Chatbox?roomid=<%= room.getRoomId()%>"
-                                   onclick="return checkLogin(event)">
+                                  >
                                     <i class="icon chat-text white me-2"></i> Liên Hệ
                                 </a>
                                 <% if(count_checkBooking==0) {%>
@@ -312,7 +311,7 @@
                                 <form action="SendWishList" method="post">
                                     <input type="hidden" name="roomId" value="<%= room.getRoomId() %>">
                                     <button class="btn btn-white btn__save__lg fs-7 d-flex text-nowrap js-btn-save" 
-                                            data-post-id="593916" title="Tin đã lưu" onclick="return checkLogin(event)">
+                                            data-post-id="593916" title="Tin đã lưu">
                                         <i class="icon heart me-2"></i><span>Lưu tin</span>
                                     </button>
                                 </form>
@@ -525,7 +524,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                            <button type="submit" id="confirmButton" class="btn btn-primary" style="display: none;">Xác nhận</button>
                         </div>
                     </div>
                 </div>
@@ -656,9 +655,23 @@
                 return true;
             }
         </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const datePickerInput = document.getElementById("datePickerInput");
+                const confirmButton = document.getElementById("confirmButton");
+
+                datePickerInput.addEventListener("input", function () {
+                    if (datePickerInput.value) {
+                        confirmButton.style.display = "inline-block";
+                    } else {
+                        confirmButton.style.display = "none";
+                    }
+                });
+            });
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/your_code.js" crossorigin="anonymous"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
-</html>
+</html> 

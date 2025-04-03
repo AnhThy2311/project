@@ -132,37 +132,37 @@
                 <h1 class="text-4xl font-bold mb-6 text-blue-600">Cập Nhật Chi Tiết Phòng</h1>
                 <% if (pr != null) { %>
                 <form action="UpdatePostRoomServlet" method="post" enctype="multipart/form-data">
-                    <!-- Truyền id ẩn để cập nhật đúng phòng -->
                     <input type="hidden" name="id" value="<%= pr.getId() %>">
-
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="room_name">Tên phòng:</label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                                id="room_name" type="text" name="room_name" value="<%= pr.getRoom_name() %>" required>
                     </div>
-
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Giá phòng:</label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                                id="price" type="text" name="price" value="<%= pr.getPrice() %>" required>
                     </div>
-
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Địa Chỉ:</label>
-                        <p class="text-gray-700"><%= pr.getNumber_house() %>, <%= pr.getStreet() %>, <%= pr.getWard() %>, <%= pr.getDistrict() %>, <%= pr.getCity() %></p>
+                        <p class="text-gray-700">
+                            <%= pr.getNumber_house() %>, <%= pr.getStreet() %>, <%= pr.getWard() %>, <%= pr.getDistrict() %>, <%= pr.getCity() %>
+                        </p>
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Cập nhật hình ảnh:</label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                               id="image" type="file" name="image" >
+                               id="image" type="file" name="image">
                     </div>
 
+                    <% if (pr.getImage() != null && !pr.getImage().isEmpty()) { %>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Ảnh hiện tại:</label>
                         <img class="w-full h-auto rounded-lg shadow-md" src="${pageContext.request.contextPath}/images/<%= pr.getImage() %>" 
                              alt="Hình ảnh phòng" width="600" height="400">
                     </div>
+                    <% } %>
 
                     <div class="flex items-center justify-between">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
@@ -174,6 +174,5 @@
                 <% } %>
             </div>
         </div>
-
     </body>
 </html>

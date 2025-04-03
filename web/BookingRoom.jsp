@@ -6,7 +6,6 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
-
         <% Room r = (Room) request.getAttribute("r"); %>
         <% String id = (String) request.getAttribute("id"); %>
         <form action="ConfirmBooking" method="get">

@@ -7,7 +7,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <%@ include file="./Header.jsp" %>
         <h1>Account Verification Successful</h1>
         <p>${message}</p>
         <a href="Loggin.jsp">

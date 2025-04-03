@@ -49,19 +49,15 @@ public class BookingRoom extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
         CustomerDao csd = new CustomerDao();
         String customerId = csd.getUserIdByEmail(email);
-
         WalletDAO wd = new WalletDAO();
         float balance = wd.getPrice(customerId);
-
 //        String startDate = LocalDate.now().toString(); // Lấy ngày hôm nay theo format "yyyy-MM-dd"
 //        System.out.println("Ngày bắt đầu: " + startDate);
         String booking_id = request.getParameter("booking_id");
-        BookingRoomDao brd = new BookingRoomDao();
 
         String price = request.getParameter("price");
         float price1 = Float.parseFloat(price);
@@ -74,17 +70,14 @@ public class BookingRoom extends HttpServlet {
             request.getRequestDispatcher("ListContractCustomer.jsp").forward(request, response);
             return;
         }
-//        String room_id = request.getParameter("roomId");
+        String room_id = request.getParameter("roomId");
         RoomDao rd = new RoomDao();
-//        String owner_id= rd.getOwnerId(room_id);
-//        float price_owner = wd.getPrice(owner_id);
-//        brd.setStartDatebyBookingId(startDate, booking_id);
-//        brd.upadateMonth(booking_id);
-//        wd.updatePrice(balance - price1, customerId);
-//        wd.updatePrice(price_owner+price1, owner_id);
+        String owner_id= rd.getOwnerId(room_id);
+        float price_owner = wd.getPrice(owner_id);
+        wd.updatePrice(balance - price1, customerId);
+        wd.updatePrice(price_owner+price1, owner_id);
         BookingRoomDao bd = new BookingRoomDao();
-        CustomerDao cd = new CustomerDao();
-        String owner_id = cd.getUserIdByEmail(email);
+        bd.updatePendingContract(booking_id);
         ArrayList<model.BookingRoom> list = bd.getCusTomerBooking(owner_id);
         request.setAttribute("list", list);
         System.out.println(list);

@@ -55,39 +55,30 @@ public class UpdatePostRoomServlet extends HttpServlet {
         String room_name = request.getParameter("room_name");
         String price = request.getParameter("price");
 
-// Kiểm tra null và chuỗi rỗng trước khi parse
         float price1 = 0;
         if (price != null && !price.trim().isEmpty()) {
             price1 = Float.parseFloat(price.trim());
         }
-
-// In kiểm tra dữ liệu nhận được
         System.out.println("ID: " + id);
         System.out.println("Room Name: " + room_name);
         System.out.println("Price: " + price1);
-
         PostRoomsDao prd = new PostRoomsDao();
         String fileNameWithExtension = prd.getImageRoom(id);  // Lấy ảnh hiện tại trong DB
         System.out.println("Ảnh cũ là: " + fileNameWithExtension);
-
         try {
             Part photo = request.getPart("image");
-
             // Kiểm tra nếu người dùng có tải lên ảnh mới
             if (photo != null && photo.getSize() > 0) {
                 String uploadDir = "D:\\FPT-university\\chuyên ngành 4\\javawedd\\code\\DoAnSWP\\web\\images";
                 if (!Files.exists(Path.of(uploadDir))) {
                     Files.createDirectories(Path.of(uploadDir));
                 }
-
                 // Lấy tên file từ Part
                 String filename = Path.of(photo.getSubmittedFileName()).getFileName().toString();
                 String filePath = uploadDir + "/" + filename;
-
                 // Lưu file vào thư mục
                 photo.write(filePath);
                 System.out.println("File mới được lưu tại: " + filePath);
-
                 // Cập nhật ảnh mới
                 fileNameWithExtension = filename;
                 System.out.println("Ảnh mới là: " + fileNameWithExtension);
@@ -101,7 +92,6 @@ public class UpdatePostRoomServlet extends HttpServlet {
         } catch (IOException | ServletException ex) {
             ex.printStackTrace();  // In lỗi ra console để debug
         }
-
     }
 
     @Override

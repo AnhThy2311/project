@@ -301,7 +301,7 @@ public class PostRoomsDao {
         PreparedStatement pr = null;
         ResultSet rs = null;
         try {
-            String sql = "select image from Rooms where room_id =?";
+            String sql = "select image from Rooms where position_id =?";
             con = database.getConnection();
             pr = con.prepareStatement(sql);
             pr.setString(1, id_room);

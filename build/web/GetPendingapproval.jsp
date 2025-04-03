@@ -153,7 +153,7 @@
                     </button>
 
                 </div>
-                <h1 class="text-4xl font-bold mb-8 text-center text-blue-600">Property List</h1>
+                <h1 class="text-4xl font-bold mb-8 text-center text-blue-600">Danh Sách Chờ Bài Đăng</h1>
                 <div class="overflow-x-auto shadow-lg rounded-lg bg-white p-6">
                     <table class="min-w-full bg-white border border-gray-300">
                         <thead class="bg-blue-500 text-white">

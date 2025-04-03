@@ -56,7 +56,7 @@
                                 height="46"
                                 />
                         </a>
-                        <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
+                        <a class="nav-link active" href="Admin.jsp" style="padding-left: 20px"
                            >Home</a
                         >
 
@@ -165,7 +165,6 @@
                         <th>Quận/Huyện</th>
                         <th>Thành phố</th>
                         <th>Hành động</th>
-
                     </tr>
                 </thead>
                 <tbody>

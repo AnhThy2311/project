@@ -197,7 +197,6 @@ public class PostRoom extends HttpServlet {
                 System.out.println("Không có ảnh để thêm vào bảng Image.");
             }
             response.sendRedirect("GetPendingapproval");
-
         }
     }
 

@@ -33,16 +33,16 @@
     </head>
     <body>
         <%
-                                      HttpSession sessionUser = request.getSession(false); // Không tạo session mới nếu chưa tồn tại
-                                      String username = (sessionUser != null) ? (String) sessionUser.getAttribute("email") : null;
-                                      String userImage = (sessionUser != null && sessionUser.getAttribute("userImage") != null) 
-                                          ? (String) sessionUser.getAttribute("userImage") 
-                                          : "default_user.jpg"; // Mặc định nếu không có ảnh
+                                        HttpSession sessionUser = request.getSession(false); // Không tạo session mới nếu chưa tồn tại
+                                        String username = (sessionUser != null) ? (String) sessionUser.getAttribute("email") : null;
+                                        String userImage = (sessionUser != null && sessionUser.getAttribute("userImage") != null) 
+                                            ? (String) sessionUser.getAttribute("userImage") 
+                                            : "default_user.jpg"; // Mặc định nếu không có ảnh
 
-    if (username == null) {
-        response.sendRedirect("Loggin.jsp"); // Chuyển hướng về trang đăng nhập
-        return;
-    }
+      if (username == null) {
+          response.sendRedirect("Loggin.jsp"); // Chuyển hướng về trang đăng nhập
+          return;
+      }
         %>
         <header class="navbar-custom sticky-top">
             <div class="container-fluid">
@@ -57,7 +57,7 @@
                                 height="46"
                                 />
                         </a>
-                        <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
+                        <a class="nav-link active" href="Admin.jsp" style="padding-left: 20px"
                            >Home</a
                         >
 
@@ -208,7 +208,7 @@
                             double totalRentAmount = 0;
                             if (list1 != null && !list1.isEmpty()) { 
                                 for (BookingRoom b : list1) { 
-                                    double roomPrice = b.getC().getRoom_price();
+                                    double roomPrice = b.getC().getAdmin_price();
                                     totalRentAmount += roomPrice;
                         %>
                         <tr>
@@ -218,7 +218,7 @@
                             <td class="border border-gray-400 px-4 py-2"><%= b.getDate() %></td>
                             <td class="border border-gray-400 px-4 py-2"><%= b.getMonth() %></td>
                             <td class="border border-gray-400 px-4 py-2"><%= b.getEnd_date() %></td>
-                            <td class="border border-gray-400 px-4 py-2"><%= roomPrice %></td>
+                            <td class="border border-gray-400 px-4 py-2"><%= b.getC().getRoom_price()%></td>
                             <td class="border border-gray-400 px-4 py-2"><%= b.getC().getAdmin_price() %></td>
                         </tr>
                         <% 

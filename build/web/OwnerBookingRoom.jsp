@@ -35,12 +35,13 @@
     <body>
         <%
                                        HttpSession sessionUser = request.getSession(false); // Không tạo session mới nếu chưa tồn tại
+                                      int userRole = (sessionUser != null && sessionUser.getAttribute("state") != null) 
+               ? (int) sessionUser.getAttribute("state") 
+               : -1; // Mặc định -1 nếu không có giá trị
                                        String username = (sessionUser != null) ? (String) sessionUser.getAttribute("email") : null;
                                        String userImage = (sessionUser != null && sessionUser.getAttribute("userImage") != null) 
                                            ? (String) sessionUser.getAttribute("userImage") 
                                            : "default_user.jpg"; // Mặc định nếu không có ảnh
-                                        
-Integer state = (Integer) session.getAttribute("state");
         %>
 
         <header class="navbar-custom sticky-top">
@@ -48,7 +49,7 @@ Integer state = (Integer) session.getAttribute("state");
                 <div class="d-flex justify-content-between align-items-center py-2">
                     <!-- Logo và Home -->
                     <div class="d-flex align-items-center">
-                        <a href="/" class="navbar-brand">
+                        <a href="RoomServlet" class="navbar-brand">
                             <img
                                 src="https://static.muonnha.com.vn/images/logo.png?w=384&p=100"
                                 alt="Muôn Nhà"
@@ -57,58 +58,71 @@ Integer state = (Integer) session.getAttribute("state");
                                 />
                         </a>
                         <a class="nav-link active" href="RoomServlet" style="padding-left: 20px"
-                           >Home</a
+                           >Trang Chủ</a
                         >
                     </div>
+                    <% if(username == null){ %>
+                    <a href="#" class="btn btn-outline-secondary me-2">
+                        <i class="bi bi-heart"></i>
+                    </a>
+                    <% } else { %>
+                    <a href="WishListServlet" class="btn btn-outline-secondary me-2">
+                        <i class="bi bi-heart"></i>
+                    </a>
+                    <% } %>
+                    <% if (username != null) { %>
+                    <a href="ListContractCustomer">
+                        <button class="btn btn-outline-secondary me-2">DS hợp đồng thuê</button>
+                    </a>
 
+                    <% } %>
+                    <% if (userRole == 3) { %>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle me-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Quản lý hợp đồng
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <a class="dropdown-item" href="OwnerListContractCustomer">DS hợp đồng cho thuê</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="OwnerBookingRoom">DS  phê duyệt cho thuê</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <% } %>
                     <!-- Các nút đăng ký, đăng nhập, đăng tin -->
-                    <div class="d-flex align-items-center">
-                        <% if(username == null){ %>
-                        <a href="#" class="btn btn-outline-secondary me-2">
-                            <i class="bi bi-heart"></i>
-                        </a>
-                        <% } else { %>
-                        <a href="WishListServlet" class="btn btn-outline-secondary me-2">
-                            <i class="bi bi-heart"></i>
-                        </a>
-                        <% } %>
-                        <% if (state == 3) { %>
-                        <a href="OwnerBookingRoom">
-                            <button class="btn btn-outline-secondary me-2">DS cho thuê</button>
-                        </a>
-                        <% } %>
-                        <% 
-     if (username != null) { 
-                        %>
-                        <img class="avatar rounded-circle me-2"
-                             src="${pageContext.request.contextPath}/images/<%= userImage %>" 
-                             alt="Ảnh đại diện tài khoản" width="33" height="33" />
-                        <span class="me-2"><%= username %></span>
+                    <% 
+    if (username != null) { 
+                    %>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle me-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <%= username %>
+                        </button>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="ChangePassword.jsp">Đổi mật khẩu</a></li>
+                            <li><a class="dropdown-item" href="Profile">Thông tin</a></li>
+                            <li> <a class="dropdown-item" href="Logout.jsp">
+                                    Đăng xuất
+                                </a></li>
+                        </ul>
                         <a href="WalletServlet">
-                            <button class="btn btn-outline-secondary me-2">wallet</button>
+                            <button class="btn btn-outline-secondary me-2">ví</button>
                         </a>
                         <a href="RoomAppointmentServlet">
-                            <button class="btn btn-outline-secondary me-2">Room View Schedule</button>
+                            <button class="btn btn-outline-secondary me-2">Lịch Xem Phòng</button>
                         </a>
-                        <a href="ChangePassword.jsp">
-                            <button class="btn btn-outline-secondary me-2">Change Password</button>
-                        </a>
-                        <a href="Profile">
-                            <button class="btn btn-outline-secondary me-2">Profile</button>
-                        </a>
-                        <a href="Logout.jsp">
-                            <button class="btn btn-outline-secondary me-2">Logout</button>
-                        </a>
-                        <%
-   
 
-        if (state == 3) {
+
+                        <%
+        if (userRole == 3) {
                         %>
                         <a  href="OwnerRoomAppointment" class="btn btn-outline-danger me-2"> Lịch Đặt Xem Phòng</a>
                         <a  href="GetPostRooms?email=<%=username%>" class="btn btn-outline-danger me-2">Đăng tin</a>
 
                         <%
-                                } else if(state==2){
+                                } else if(userRole==2){
                         %>
                         <a class="btn btn-outline-danger me-2" href="Ugradeaccount.jsp">Nâng cấp tài khoản</a>
                         <%
@@ -126,7 +140,7 @@ Integer state = (Integer) session.getAttribute("state");
                     </div>
                 </div>
             </div>
-        </header>
+        </header>   
         <div class="bg-gradient-to-r from-blue-100 to-blue-200 flex items-center justify-center min-h-screen">
 
             <div class="container mt-5">
@@ -148,7 +162,6 @@ Integer state = (Integer) session.getAttribute("state");
                             <% if (list != null && !list.isEmpty()) { %>
                             <% for (BookingRoom br : list) { %>
                             <tr class="bg-gray-100 text-gray-800">
-                               
                                 <td class="py-2 px-4 border-b"><%= br.getCustomer().getFullName() %></td>
                                 <td class="py-2 px-4 border-b"><%= br.getRoomName() %></td>
                                 <td class="py-2 px-4 border-b"><%= sdf.format(java.sql.Date.valueOf(br.getDate())) %></td>
@@ -157,7 +170,7 @@ Integer state = (Integer) session.getAttribute("state");
                                 <td class="py-2 px-4 border-b">
                                     <% if (br.getStatus().equals("0")) { %>
                                     Chưa giải quuyết
-                                    
+
                                 <td class="py-2 px-4 border-b">
                                     <form action="BookingActionServlet" method="get" style="display:inline-block;">
                                         <input type="hidden" name="idRooom" value="<%=br.getRoom_id() %>">
@@ -191,5 +204,9 @@ Integer state = (Integer) session.getAttribute("state");
                 </div>
             </div>
         </div>  
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/your_code.js" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
 </html>

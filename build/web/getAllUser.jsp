@@ -175,7 +175,7 @@
                             for (Customer admin : list) { 
                     %>
                     <tr>
-                        <td><a href="Profile"><%= admin.getEmail() %></a></td>
+                        <td><a href="ProfileUser?email=<%= admin.getEmail() %>"><%= admin.getEmail() %></a></td>
 
                         <td><%= admin.getPhone() %></td>
                         <td><%= admin.getFullName() %></td>

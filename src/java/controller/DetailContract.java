@@ -54,6 +54,7 @@ public class DetailContract extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
        String roomID= request.getParameter("roomId");
+        System.out.println("roomid: "+roomID);
           HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
         CustomerDao cd = new CustomerDao();
@@ -63,12 +64,20 @@ public class DetailContract extends HttpServlet {
         String ownerId= rd.getOwnerId(id);
         CustomerDao csd = new CustomerDao();
         String customerId= csd.getUserIdByEmail(email);
+        System.out.println("customer id: "+customerId);
         BookingRoomDao bd = new BookingRoomDao();
         String owner_id = bd.getOWnerID(roomID);
-        ArrayList<BookingRoom> list = bd.getContract(customerId, owner_id);
-        BookingRoom br = bd.getInfoContract(customerId, owner_id);
+          System.out.println("owner  id: "+owner_id);
+       
+        String boo_id = bd.Booking_id(roomID);
+        System.out.println("booking_id: "+boo_id);
+        String contract_id= bd.Contract_id(boo_id);
+          System.out.println("contract id: "+contract_id);
+           ArrayList<BookingRoom> list = bd.getContract(customerId, owner_id,contract_id);
+        BookingRoom br = bd.getInfoContract(customerId, owner_id,contract_id);
         request.setAttribute("br", br);
         request.setAttribute("list", list);
+        System.out.println("list là : "+br);
          request.getRequestDispatcher("DetailContract.jsp").forward(request, response);
     } 
 
